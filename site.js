@@ -97,8 +97,8 @@ mailForm?.addEventListener('submit', event => {
 if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location.replace(new URL('valores/',location.href).href);
 
 
-// Calm, slow-following halo behind the content. No grid, trails or particles,
-// so it never competes with reading. Disabled on touch and reduced-motion devices.
+// Faint background: a sparse dot mesh that gently parts around the cursor and
+// eases back, plus a soft halo. Calm by design; disabled on touch and reduced motion.
 (() => {
   if (matchMedia('(prefers-reduced-motion: reduce), (hover: none)').matches) return;
 
@@ -110,7 +110,7 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   const ctx = canvas.getContext('2d');
   const target = { x: -1000, y: -1000 };
   const halo = { x: -1000, y: -1000, alpha: 0 };
-  let width = 0, height = 0, running = false, active = false;
+  let width = 0, height = 0, running = false, active = false, points = [];
 
   const resize = () => {
     const scale = Math.min(devicePixelRatio || 1, 2);
@@ -118,29 +118,68 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
     canvas.width = width * scale; canvas.height = height * scale;
     canvas.style.width = width + 'px'; canvas.style.height = height + 'px';
     ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    const gap = Math.max(70, Math.min(110, width / 14));
+    points = [];
+    for (let y = gap / 2; y < height; y += gap)
+      for (let x = gap / 2; x < width; x += gap) {
+        const ox = x + (Math.random() - .5) * gap * .5, oy = y + (Math.random() - .5) * gap * .5;
+        points.push({ x: ox, y: oy, ox, oy });
+      }
   };
 
   const draw = () => {
-    const visible = active;
     if (halo.x < -900) { halo.x = target.x; halo.y = target.y; }
     halo.x += (target.x - halo.x) * .06;
     halo.y += (target.y - halo.y) * .06;
-    halo.alpha += ((visible ? 1 : 0) - halo.alpha) * .04;
+    halo.alpha += ((active ? 1 : 0) - halo.alpha) * .04;
+
+    const dark = document.documentElement.dataset.theme === 'dark';
+    const color = dark ? '211, 174, 223' : '214, 120, 160';
+    const radius = 180;
+    let moving = false;
 
     ctx.clearRect(0, 0, width, height);
+
+    for (const p of points) {
+      const dx = p.ox - halo.x, dy = p.oy - halo.y;
+      const d = Math.hypot(dx, dy) || 1;
+      const push = d < radius ? (1 - d / radius) ** 2 * 18 * halo.alpha : 0;
+      const tx = p.ox + dx / d * push, ty = p.oy + dy / d * push;
+      p.x += (tx - p.x) * .08; p.y += (ty - p.y) * .08;
+      if (Math.abs(tx - p.x) > .05 || Math.abs(ty - p.y) > .05) moving = true;
+    }
+
+    // Faint links only between close neighbours near the cursor.
+    ctx.lineWidth = 1;
+    for (let i = 0; i < points.length; i++) {
+      const a = points[i];
+      const na = Math.max(0, 1 - Math.hypot(a.x - halo.x, a.y - halo.y) / 240) * halo.alpha;
+      if (na <= 0) continue;
+      for (let j = i + 1; j < points.length; j++) {
+        const b = points[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d > 140) continue;
+        ctx.strokeStyle = `rgba(${color}, ${(dark ? .14 : .16) * na * (1 - d / 140)})`;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      }
+    }
+
+    for (const p of points) {
+      const near = Math.max(0, 1 - Math.hypot(p.x - halo.x, p.y - halo.y) / 240) * halo.alpha;
+      ctx.fillStyle = `rgba(${color}, ${(dark ? .10 : .12) + .22 * near})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 1.4 + near, 0, Math.PI * 2); ctx.fill();
+    }
+
     if (halo.alpha > .01) {
-      const dark = document.documentElement.dataset.theme === 'dark';
-      const color = dark ? '211, 174, 223' : '244, 160, 189';
-      const peak = (dark ? .10 : .14) * halo.alpha;
       const g = ctx.createRadialGradient(halo.x, halo.y, 0, halo.x, halo.y, 240);
-      g.addColorStop(0, `rgba(${color}, ${peak})`);
+      g.addColorStop(0, `rgba(${color}, ${(dark ? .08 : .10) * halo.alpha})`);
       g.addColorStop(1, `rgba(${color}, 0)`);
       ctx.fillStyle = g;
       ctx.fillRect(halo.x - 240, halo.y - 240, 480, 480);
     }
 
-    const settled = Math.abs(target.x - halo.x) < .5 && Math.abs(target.y - halo.y) < .5 &&
-      Math.abs((visible ? 1 : 0) - halo.alpha) < .01;
+    const settled = !moving && Math.abs(target.x - halo.x) < .5 && Math.abs(target.y - halo.y) < .5 &&
+      Math.abs((active ? 1 : 0) - halo.alpha) < .01;
     if (settled) { running = false; return; }
     requestAnimationFrame(draw);
   };
@@ -151,5 +190,5 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   const leave = () => { active = false; wake(); };
   addEventListener('blur', leave);
   document.documentElement.addEventListener('pointerleave', leave);
-  resize();
+  resize(); wake();
 })();
