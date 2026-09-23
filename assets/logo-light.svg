@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" role="img" aria-label="Logo Psivanoda">
+<title>Psivanoda</title>
+<defs>
+<clipPath id="d"><polygon points="625,220 1087,639 622,1058 165,639"/></clipPath>
+<clipPath id="o"><polygon points="625,172 1135,639 622,1106 117,639"/></clipPath>
+<clipPath id="b"><path d="M0,1254L0,700L150,600Q625,180 1100,600L1254,700L1254,1254Z"/></clipPath>
+<clipPath id="i"><circle cx="625" cy="585" r="270"/></clipPath>
+<clipPath id="u"><path clip-rule="evenodd" d="M0,0H1254V1254H0Z M287,850a338,338 0 1,0 676,0a338,338 0 1,0 -676,0Z"/></clipPath>
+<symbol id="psi" viewBox="0 0 240 160"><path d="M20,8H56V52C56,78 78,90 120,90C162,90 184,78 184,52V8H220V52C220,98 180,120 120,120C60,120 20,98 20,52Z M0,0H56V10H20C12,10 4,12 0,14Z M240,0H184V10H220C228,10 236,12 240,14Z M104,0H136V160H104Z M94,0H146V8H94Z"/></symbol>
+</defs>
+<rect width="1254" height="1254" fill="#FDFCFA"/>
+<g clip-path="url(#d)">
+<rect width="1254" height="1254" fill="#FDF0E4"/>
+<g clip-path="url(#i)">
+<rect width="1254" height="1254" fill="#6B2A8A"/>
+<circle cx="625" cy="850" r="338" fill="#A350A6"/>
+<rect x="625" y="560" width="400" height="400" fill="#FF6E73"/>
+</g>
+<circle cx="625" cy="610" r="192" fill="#A848C8" clip-path="url(#u)"/>
+<circle cx="625" cy="610" r="180" fill="#FDF0E4"/>
+<circle cx="625" cy="610" r="160" fill="#2D1040"/>
+<path d="M543,592A82,82 0 0 1 625,537" fill="none" stroke="#FDF0E4" stroke-width="26" stroke-linecap="round"/>
+<use href="#psi" x="500" y="848" width="250" height="167" fill="#95509E"/>
+</g>
+<polygon clip-path="url(#b)" points="625,220 1087,639 622,1058 165,639" fill="none" stroke="#2D1040" stroke-width="64"/>
+<g clip-path="url(#o)">
+<path d="M150,600Q625,180 1100,600L1100,0L150,0Z" fill="#9444B0"/>
+<path d="M150,600Q625,180 1100,600" fill="none" stroke="#2D1040" stroke-width="66"/>
+</g>
+<use href="#psi" x="507" y="240" width="240" height="160" fill="#2D1040"/>
+</svg>
