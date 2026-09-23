@@ -114,9 +114,9 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   let particles = [];
   let width = 0, height = 0, lastX = -500, lastY = -500;
 
-  // Site palette: rose, lilac, green, peach.
+  // Light mode: white and pink tones only. Dark mode keeps the fuller site palette.
   const palettes = {
-    light: [[146, 103, 126], [114, 81, 126], [101, 139, 124], [179, 124, 104]],
+    light: [[255, 255, 255], [252, 214, 226], [244, 160, 189], [255, 197, 214]],
     dark: [[239, 179, 210], [211, 174, 223], [145, 197, 176], [216, 163, 142]]
   };
   const rgba = (c, a) => `rgba(${c[0]}, ${c[1]}, ${c[2]}, ${Math.max(0, Math.min(1, a))})`;
@@ -230,7 +230,7 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
         if (d >= reach) continue;
         const fade = 1 - d / reach;
         const near = active ? Math.max(0, 1 - Math.hypot(pointer.x - (a.x + b.x) / 2, pointer.y - (a.y + b.y) / 2) / 280) : 0;
-        ctx.strokeStyle = rgba(mix(colors[1], colors[0], near), fade * ((darkTheme ? .1 : .08) + .55 * near));
+        ctx.strokeStyle = rgba(mix(colors[1], colors[0], near), fade * ((darkTheme ? .1 : .04) + .5 * near));
         ctx.lineWidth = 1 + near * 1.2;
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       }
@@ -238,7 +238,7 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
 
     for (const p of particles) {
       const near = active ? Math.max(0, 1 - Math.hypot(pointer.x - p.x, pointer.y - p.y) / 260) : 0;
-      ctx.fillStyle = rgba(mix(colors[1], colors[0], near), (darkTheme ? .14 : .12) + .6 * near);
+      ctx.fillStyle = rgba(mix(colors[1], colors[0], near), (darkTheme ? .14 : .06) + .5 * near);
       ctx.beginPath(); ctx.arc(p.x, p.y, 1.8 + 3 * near, 0, Math.PI * 2); ctx.fill();
     }
 
