@@ -192,3 +192,47 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   document.documentElement.addEventListener('pointerleave', leave);
   resize(); wake();
 })();
+
+// Scroll reveal: sections and cards fade up once as they enter the viewport.
+// Skipped on the emergency page (no .header) and when the user prefers reduced motion.
+(() => {
+  if (!document.querySelector('body > .header') || !('IntersectionObserver' in window) ||
+      matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const groups = [
+    '.section-heading', '.about > *', '.pillars > article', '.support > *', '.topics > li',
+    '.welcome-strip .wrap > *', '.contact-grid > *', '.quick-contact > *', '.approach-more',
+    '.therapy-intro > *', '.therapy-opening > *', '.reflection-grid > article', '.process-title',
+    '.process-list > li', '.purpose-grid > article', '.evidence-lead', '.evidence-grid > article',
+    '.evidence-context', '.therapy-relationship > *', '.price-grid > article', '.relationship-prices > h2',
+    '.extra-prices > details', '.rates-booking', '.learn-opening > *', '.learn-grid > *',
+    '.article-heading > *', '.learn-article > *'
+  ];
+  const items = [];
+  groups.forEach(selector => document.querySelectorAll(selector).forEach(el => {
+    if (el.closest('.hero') || items.includes(el)) return;
+    items.push(el);
+  }));
+  // Stagger siblings that share a parent so grids cascade instead of popping in together.
+  const counters = new Map();
+  items.forEach(el => {
+    const i = counters.get(el.parentElement) || 0;
+    counters.set(el.parentElement, i + 1);
+    el.style.setProperty('--reveal-i', Math.min(i, 5));
+    el.classList.add('reveal');
+  });
+  document.documentElement.classList.add('motion');
+  const done = el => {
+    el.classList.remove('reveal', 'is-visible');
+    el.style.removeProperty('--reveal-i');
+  };
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    observer.unobserve(el);
+    el.classList.add('is-visible');
+    setTimeout(() => done(el), 1000 + (parseInt(el.style.getPropertyValue('--reveal-i')) || 0) * 110);
+  }), { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+  items.forEach(el => observer.observe(el));
+  // Printing shows everything, even what was never scrolled into view.
+  addEventListener('beforeprint', () => items.forEach(done));
+})();
