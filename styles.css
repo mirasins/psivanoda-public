@@ -205,7 +205,6 @@ body{background:#ece7ee}
 :root[data-theme="dark"] .quick-contact input,:root[data-theme="dark"] .quick-contact textarea{background:#18131c;color:var(--ink);border-color:#806c89}
 :root[data-theme="dark"] .quick-contact input::placeholder,:root[data-theme="dark"] .quick-contact textarea::placeholder{color:#ab9caf}
 :root[data-theme="dark"] .theme-menu{box-shadow:0 16px 40px rgba(0,0,0,.45)}
-:root[data-theme="dark"] #gesture-trail{opacity:.85}
 @media(max-width:720px){:root[data-theme="dark"] #navegacion{background:#1c1621;color:var(--ink)}}
 
 /* Prominent access to Chile's official 24/7 suicide-prevention line. */
