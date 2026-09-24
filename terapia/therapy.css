@@ -85,18 +85,18 @@
 }
 /* Distinct, soft color families for each reading card. */
 .therapy-page .reflection-grid article,.therapy-page .purpose-grid article,.therapy-page .evidence-grid article{--card-accent:#826091;--card-bg:#f0e8f6;background:var(--card-bg);border:1px solid #ddd2e4;border-top:4px solid var(--card-accent);border-radius:16px;padding:28px;box-shadow:0 7px 20px #392d4207}
-.therapy-page .reflection-grid article:nth-child(2),.therapy-page .purpose-grid article:nth-child(2n),.therapy-page .evidence-grid article:nth-child(2){--card-accent:#658b7c;--card-bg:#edf5ef;border-color:#cddfd4;border-top-color:var(--card-accent)}
+.therapy-page .reflection-grid article:nth-child(2),.therapy-page .purpose-grid article:nth-child(2n),.therapy-page .evidence-grid article:nth-child(2){--card-accent:#1788d1;--card-bg:#e7f4fe;border-color:#b9e0fb;border-top-color:var(--card-accent)}
 .therapy-page .reflection-grid article:nth-child(3),.therapy-page .purpose-grid article:nth-child(3){--card-accent:#b37c68;--card-bg:#faf0e9;border-color:#ead7cb;border-top-color:var(--card-accent)}
 .therapy-page .reflection-grid .number{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#fff;color:var(--card-accent);border:1px solid currentColor}
 .therapy-page .purpose-grid{gap:24px}
 .therapy-page .purpose-grid article h3{padding-bottom:16px;border-bottom:1px solid #392d4220}
 .therapy-page .process-list li,.therapy-page .process-list li:last-child{padding:26px 26px 26px 80px;margin-bottom:18px;border:1px solid #ddd2e4;border-radius:14px;background:#f6f1f9}
-.therapy-page .process-list li:nth-child(even){background:#eef5f2;border-color:#d2e1d9}
+.therapy-page .process-list li:nth-child(even){background:#e7f4fe;border-color:#b9e0fb}
 .therapy-page .process-list li::before{left:23px;top:25px;background:#fff;border:1px solid #ddd2e4;border-radius:50%;width:36px;height:36px;display:grid;place-items:center;font-size:1rem}
 .therapy-page .evidence-context{max-width:none;padding:32px;background:#faf0e9;border:1px solid #ead7cb;border-left:5px solid #b37c68;border-radius:14px}
 .therapy-page .evidence-context p:last-child{margin-bottom:0}
 .therapy-page .therapy-opening>p{height:100%;max-width:none;margin:0;padding:28px;background:#f6f1f9;border:1px solid #e2d7e8;border-radius:14px}
-.therapy-page .therapy-opening>p:last-child{background:#edf5f1;border-color:#d2e1d9}
+.therapy-page .therapy-opening>p:last-child{background:#e7f4fe;border-color:#b9e0fb}
 .therapy-page .therapy-opening{gap:24px;align-items:stretch}
 .therapy-page .therapy-reading{padding:0 26px 12px;border:1px solid #ddd2e4;border-radius:14px;background:#f7f4f9}
 .therapy-page .therapy-keywords span{padding:8px 14px;border:1px solid #ddd2e4;border-radius:30px;background:#f7f3fa}
@@ -105,14 +105,14 @@
 /* Dark-theme refinements for the therapy-specific card system. */
 :root[data-theme="dark"] .therapy-meta,:root[data-theme="dark"] .therapy-purpose{background:#201923;color:var(--ink);border-color:var(--line)}
 :root[data-theme="dark"] .therapy-page .reflection-grid article,:root[data-theme="dark"] .therapy-page .purpose-grid article,:root[data-theme="dark"] .therapy-page .evidence-grid article{background:var(--card-bg);border-color:#55445d;box-shadow:none}
-:root[data-theme="dark"] .therapy-page .reflection-grid article:nth-child(2),:root[data-theme="dark"] .therapy-page .purpose-grid article:nth-child(2n),:root[data-theme="dark"] .therapy-page .evidence-grid article:nth-child(2){border-color:#3c5b50}
+:root[data-theme="dark"] .therapy-page .reflection-grid article:nth-child(2),:root[data-theme="dark"] .therapy-page .purpose-grid article:nth-child(2n),:root[data-theme="dark"] .therapy-page .evidence-grid article:nth-child(2){border-color:#25557a}
 :root[data-theme="dark"] .therapy-page .reflection-grid article:nth-child(3),:root[data-theme="dark"] .therapy-page .purpose-grid article:nth-child(3){border-color:#694b3f}
 :root[data-theme="dark"] .therapy-page .reflection-grid .number,:root[data-theme="dark"] .therapy-page .process-list li::before{background:#18131c}
 :root[data-theme="dark"] .therapy-page .process-list li,:root[data-theme="dark"] .therapy-page .process-list li:last-child,:root[data-theme="dark"] .therapy-page .therapy-opening>p{background:#281f2e;border-color:#55445d}
-:root[data-theme="dark"] .therapy-page .process-list li:nth-child(even),:root[data-theme="dark"] .therapy-page .therapy-opening>p:last-child{background:#20302b;border-color:#3c5b50}
+:root[data-theme="dark"] .therapy-page .process-list li:nth-child(even),:root[data-theme="dark"] .therapy-page .therapy-opening>p:last-child{background:#142a3b;border-color:#25557a}
 :root[data-theme="dark"] .therapy-page .evidence-context{background:#372720;border-color:#694b3f;border-left-color:var(--accent-peach)}
 :root[data-theme="dark"] .therapy-page .therapy-reading,:root[data-theme="dark"] .therapy-page .therapy-keywords span{background:#251d2a;border-color:#55445d}
 :root[data-theme="dark"] .therapy-evidence{background:#18131c}
 :root[data-theme="dark"] .therapy-page .reflection-grid article,:root[data-theme="dark"] .therapy-page .purpose-grid article,:root[data-theme="dark"] .therapy-page .evidence-grid article{--card-accent:var(--accent-lilac);--card-bg:var(--card-lilac)}
-:root[data-theme="dark"] .therapy-page .reflection-grid article:nth-child(2),:root[data-theme="dark"] .therapy-page .purpose-grid article:nth-child(2n),:root[data-theme="dark"] .therapy-page .evidence-grid article:nth-child(2){--card-accent:var(--accent-green);--card-bg:var(--card-green)}
+:root[data-theme="dark"] .therapy-page .reflection-grid article:nth-child(2),:root[data-theme="dark"] .therapy-page .purpose-grid article:nth-child(2n),:root[data-theme="dark"] .therapy-page .evidence-grid article:nth-child(2){--card-accent:var(--accent-sky);--card-bg:var(--card-sky)}
 :root[data-theme="dark"] .therapy-page .reflection-grid article:nth-child(3),:root[data-theme="dark"] .therapy-page .purpose-grid article:nth-child(3){--card-accent:var(--accent-peach);--card-bg:var(--card-peach)}
