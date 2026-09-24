@@ -126,12 +126,27 @@ body > .mobile-booking{position:fixed;z-index:40}
 body > .skip{position:fixed;z-index:100}
 @media (prefers-reduced-motion:reduce), (hover:none){#gesture-trail{display:none}}
 
-/* A softer, lower-luminance canvas behind the existing cards and content. */
-body{background:#ece7ee}
-.home-page,.therapy-page,.rates-page{background:#ece7ee}
-.header{background:#f7f4f8}
-.home-page .hero-copy{background:#eee9f1}
-.home-page .approach,.home-page .first-session{background:#e9e5ec}
+/* Light theme: soft but colourful washes built from the site palette (rose, lilac, sky, peach). */
+:root:not([data-theme="dark"]) body{background:linear-gradient(180deg,#fcf1f7 0,#f4eefc 38%,#eef6fe 72%,#fdf3ec 100%)}
+:root:not([data-theme="dark"]) :is(.home-page,.therapy-page,.rates-page,.learning){background:transparent}
+:root:not([data-theme="dark"]) .header{background:#fffafdeb;border-bottom:0;box-shadow:0 1px 0 #ecd9e6}
+:root:not([data-theme="dark"]) .header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#e58fb8,#a77bd0,#27a3f5,#f2a57e)}
+:root:not([data-theme="dark"]) h1 em,:root:not([data-theme="dark"]) h2 em{background:linear-gradient(90deg,#c2417f,#8a44b0);-webkit-background-clip:text;background-clip:text;color:transparent}
+:root:not([data-theme="dark"]) .eyebrow{color:#8a3f8f}
+:root:not([data-theme="dark"]) .booking-cta,:root:not([data-theme="dark"]) .button:not(.light){background:linear-gradient(135deg,#623174,#a23d78);border-color:transparent}
+:root:not([data-theme="dark"]) .booking-cta:hover,:root:not([data-theme="dark"]) .button:not(.light):hover{background:linear-gradient(135deg,#4c235c,#862e62)}
+:root:not([data-theme="dark"]) .home-page .hero-copy{background:linear-gradient(135deg,#fde8f2 0,#efe4fb 100%);border-color:#efcfe2}
+:root:not([data-theme="dark"]) .home-page .welcome-strip{background:linear-gradient(90deg,#f9dcea,#e6dcf8 50%,#d8eefd);border-color:#e8cfe0}
+:root:not([data-theme="dark"]) .home-page .approach{background:#f3e7fa}
+:root:not([data-theme="dark"]) .home-page .first-session{background:#e5f3fe}
+:root:not([data-theme="dark"]) .therapy-purpose{background:#f3e7fa}
+:root:not([data-theme="dark"]) .therapy-evidence{background:#e8f4fe;border-color:#c9e6fb}
+:root:not([data-theme="dark"]) .rates-page .rates-booking{background:linear-gradient(135deg,#fde8f2,#ece2fa)}
+:root:not([data-theme="dark"]) body > footer{background:#f6ecf8;border-top:1px solid #ead6ee}
+:root:not([data-theme="dark"]) .contact :is(h1,h2) em{background:none;color:#d7a7c1}
+:root:not([data-theme="dark"]) .contact .eyebrow{color:#d5aacd}
+:root:not([data-theme="dark"]) .therapy-meta{background:#fcecf3;border-color:#f0d3e2}
+:root:not([data-theme="dark"]) .rates-page .prices{background:transparent}
 
 /* Signature panel beside the portrait. */
 .home-page .portrait-caption{
