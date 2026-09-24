@@ -134,7 +134,7 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
     halo.alpha += ((active ? 1 : 0) - halo.alpha) * .04;
 
     const dark = document.documentElement.dataset.theme === 'dark';
-    const color = dark ? '222, 186, 236' : '214, 120, 160';
+    const color = dark ? '222, 186, 236' : '196, 88, 138';
     const radius = 180;
     let moving = false;
 
@@ -159,20 +159,20 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
         const b = points[j];
         const d = Math.hypot(a.x - b.x, a.y - b.y);
         if (d > 140) continue;
-        ctx.strokeStyle = `rgba(${color}, ${(dark ? .32 : .16) * na * (1 - d / 140)})`;
+        ctx.strokeStyle = `rgba(${color}, ${(dark ? .32 : .34) * na * (1 - d / 140)})`;
         ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
       }
     }
 
     for (const p of points) {
       const near = Math.max(0, 1 - Math.hypot(p.x - halo.x, p.y - halo.y) / 240) * halo.alpha;
-      ctx.fillStyle = `rgba(${color}, ${(dark ? .22 : .12) + (dark ? .38 : .22) * near})`;
+      ctx.fillStyle = `rgba(${color}, ${(dark ? .22 : .26) + (dark ? .38 : .4) * near})`;
       ctx.beginPath(); ctx.arc(p.x, p.y, 1.4 + near, 0, Math.PI * 2); ctx.fill();
     }
 
     if (halo.alpha > .01) {
       const g = ctx.createRadialGradient(halo.x, halo.y, 0, halo.x, halo.y, 240);
-      g.addColorStop(0, `rgba(${color}, ${(dark ? .16 : .10) * halo.alpha})`);
+      g.addColorStop(0, `rgba(${color}, ${(dark ? .16 : .15) * halo.alpha})`);
       g.addColorStop(1, `rgba(${color}, 0)`);
       ctx.fillStyle = g;
       ctx.fillRect(halo.x - 240, halo.y - 240, 480, 480);
