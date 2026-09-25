@@ -581,3 +581,5 @@ body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1
 /* Dark mode: softer section dividers on the home page */
 html:root[data-theme="dark"] :is(.home-page .approach,.home-page .first-session,.home-page .welcome-strip){border-color:#ffffff0a}
 html:root[data-theme="dark"] .home-page .quick-contact{border-color:#ffffff0f}
+/* Dark mode: home bands fade in and out so the sky changes color without a hard edge */
+html:root[data-theme="dark"] :is(.home-page .approach,.home-page .first-session){background:linear-gradient(180deg,#16142c00 0,#16142c99 160px,#16142c99 calc(100% - 160px),#16142c00 100%);border-color:transparent}
