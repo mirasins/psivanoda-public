@@ -113,21 +113,14 @@
     .header-nav { display: flex; align-items: center; gap: 8px; }
     .header-nav > a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 10px; font-size: 1rem; }
 
-    /* Selector de tema (lo inserta site.js dentro de .header-nav) */
-    .theme-picker { position: relative; }
-    .theme-toggle { display: flex; align-items: center; gap: 7px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font: inherit; font-size: .95rem; line-height: 1; cursor: pointer; }
+    /* Botón de tema (lo inserta site.js en .header-nav): sol en claro, luna en oscuro */
+    .theme-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--accent); cursor: pointer; }
     .theme-toggle:hover { border-color: var(--accent); }
-    .theme-toggle-icon { color: var(--accent); }
-    .theme-toggle-current { font-weight: 700; }
-    .theme-picker.open .theme-toggle-chevron { transform: rotate(180deg); }
-    .theme-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 30; width: 180px; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
-    .theme-menu[hidden] { display: none; }
-    .theme-menu button { display: grid; grid-template-columns: 22px 1fr 18px; align-items: center; gap: 7px; width: 100%; padding: 11px 10px; border: 0; border-radius: 6px; background: transparent; color: var(--text); font: inherit; font-size: .95rem; text-align: left; cursor: pointer; }
-    .theme-menu button:hover, .theme-menu button:focus-visible { background: var(--surface-2); }
-    .theme-check { opacity: 0; color: var(--accent); font-weight: 700; }
-    .theme-menu button.selected .theme-check { opacity: 1; }
+    .theme-toggle svg { width: 22px; height: 22px; }
+    .theme-toggle .icon-moon, .theme-toggle-text { display: none; }
+    :root[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+    :root[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
     @media (max-width: 480px) {
-      .theme-toggle-label { display: none; }
       .header-nav > a { padding-inline: 6px; }
     }
 
@@ -499,6 +492,6 @@
     })();
   </script>
   <!-- Selector de tema compartido con el resto del sitio -->
-  <script src="site.js?v=emergency-53"></script>
+  <script src="site.js?v=emergency-54"></script>
 </body>
 </html>

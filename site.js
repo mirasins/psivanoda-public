@@ -14,61 +14,43 @@ if (toggle && nav) {
   });
 }
 
-// Theme selector: follows the system by default and remembers explicit choices.
+// Theme button: a single round icon (sun in light mode, moon in dark mode) that switches
+// between the two. Until it is pressed the site follows the system; a press is remembered.
 (() => {
   if (!nav) return;
   const storageKey = 'psivanoda-theme';
   const systemTheme = matchMedia('(prefers-color-scheme: dark)');
-  const validThemes = new Set(['light', 'dark', 'system']);
-  const labels = { light: 'Claro', dark: 'Oscuro', system: 'Sistema' };
-  const icons = { light: '☀', dark: '☾', system: '◐' };
   let preference = document.documentElement.dataset.themePreference || 'system';
+  if (!['light', 'dark', 'system'].includes(preference)) preference = 'system';
 
-  const resolveTheme = value => value === 'system' ? (systemTheme.matches ? 'dark' : 'light') : value;
+  const resolve = value => value === 'system' ? (systemTheme.matches ? 'dark' : 'light') : value;
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'theme-toggle';
+  button.innerHTML = '<svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6 6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4 6 18M18 6l1.4-1.4"/></svg>'
+    + '<svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a7 7 0 0 0 10.7 10.7z"/></svg>'
+    + '<span class="theme-toggle-text"></span>';
+
   const applyTheme = (value, persist = true) => {
-    preference = validThemes.has(value) ? value : 'system';
-    const resolved = resolveTheme(preference);
-    document.documentElement.dataset.theme = resolved;
-    document.documentElement.dataset.themePreference = preference;
-    document.documentElement.style.colorScheme = resolved;
+    preference = value;
+    const resolved = resolve(preference);
+    const root = document.documentElement;
+    root.dataset.theme = resolved;
+    root.dataset.themePreference = preference;
+    root.style.colorScheme = resolved;
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', resolved === 'dark' ? '#0a0a1b' : '#e6e0f6');
     if (persist) {
       try { localStorage.setItem(storageKey, preference); } catch (_) {}
     }
-    document.querySelectorAll('[data-theme-option]').forEach(button => {
-      const selected = button.dataset.themeOption === preference;
-      button.setAttribute('aria-checked', String(selected));
-      button.classList.toggle('selected', selected);
-    });
-    const current = document.querySelector('.theme-toggle-current');
-    if (current) current.textContent = labels[preference];
-    const icon = document.querySelector('.theme-toggle-icon');
-    if (icon) icon.textContent = icons[preference];
+    const current = resolved === 'dark' ? 'Tema oscuro' : 'Tema claro';
+    const next = resolved === 'dark' ? 'cambiar a claro' : 'cambiar a oscuro';
+    button.querySelector('.theme-toggle-text').textContent = current;
+    button.setAttribute('aria-label', current + ': ' + next);
+    button.title = current + ' (' + next + ')';
   };
 
-  const picker = document.createElement('div');
-  picker.className = 'theme-picker';
-  picker.innerHTML = `<button class="theme-toggle" type="button" aria-haspopup="menu" aria-expanded="false" aria-controls="theme-menu"><span class="theme-toggle-icon" aria-hidden="true">${icons[preference]}</span><span class="theme-toggle-label">Tema</span><span class="theme-toggle-current">${labels[preference]}</span><span class="theme-toggle-chevron" aria-hidden="true">⌄</span></button><div class="theme-menu" id="theme-menu" role="menu" hidden>${['light', 'dark', 'system'].map(value => `<button type="button" role="menuitemradio" aria-checked="false" data-theme-option="${value}"><span aria-hidden="true">${icons[value]}</span><span>${labels[value]}</span><span class="theme-check" aria-hidden="true">✓</span></button>`).join('')}</div>`;
-  nav.insertBefore(picker, nav.querySelector('.nav-contact'));
-
-  const pickerToggle = picker.querySelector('.theme-toggle');
-  const pickerMenu = picker.querySelector('.theme-menu');
-  const setOpen = open => {
-    pickerToggle.setAttribute('aria-expanded', String(open));
-    pickerMenu.hidden = !open;
-    picker.classList.toggle('open', open);
-    if (open) pickerMenu.querySelector('[aria-checked="true"]')?.focus();
-  };
-  pickerToggle.addEventListener('click', () => setOpen(pickerMenu.hidden));
-  picker.querySelectorAll('[data-theme-option]').forEach(button => button.addEventListener('click', () => {
-    applyTheme(button.dataset.themeOption);
-    setOpen(false);
-    pickerToggle.focus();
-  }));
-  picker.addEventListener('keydown', event => {
-    if (event.key === 'Escape') { setOpen(false); pickerToggle.focus(); }
-  });
-  document.addEventListener('click', event => { if (!picker.contains(event.target)) setOpen(false); });
+  button.addEventListener('click', () => applyTheme(resolve(preference) === 'dark' ? 'light' : 'dark'));
+  nav.insertBefore(button, nav.querySelector('.nav-contact'));
   systemTheme.addEventListener?.('change', () => { if (preference === 'system') applyTheme('system', false); });
   applyTheme(preference, false);
 })();
