@@ -578,3 +578,6 @@ body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1
 .intake a:not(.button){text-decoration:underline;text-underline-offset:3px}
 .approach-more{display:flex;flex-wrap:wrap;gap:12px 32px}
 @media(max-width:720px){.intake-options{grid-template-columns:1fr;gap:18px;margin:28px 0 44px}.intake-card{padding:24px}.intake-heading{font-size:1.6rem}.intake-help{padding:20px}}
+/* Dark mode: softer section dividers on the home page */
+html:root[data-theme="dark"] :is(.home-page .approach,.home-page .first-session,.home-page .welcome-strip){border-color:#ffffff0a}
+html:root[data-theme="dark"] .home-page .quick-contact{border-color:#ffffff0f}
