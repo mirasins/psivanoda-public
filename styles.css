@@ -293,9 +293,14 @@ body > .skip{position:fixed;z-index:100}
 /* Where supported, the sun rises (and its rays turn) with the scroll position. */
 /* It climbs on a diagonal and ends up where the figure in the footer is looking. */
 @keyframes pv-sunrise{from{transform:translate(0,30vh) rotate(0)}to{transform:translate(16vw,-460px) rotate(28deg)}}
+/* Phones: the figure is smaller and closer to the edge, so the sun travels further right. */
+@keyframes pv-sunrise-narrow{from{transform:translate(0,30vh) rotate(0)}to{transform:translate(34vw,-470px) rotate(28deg)}}
 @supports (animation-timeline:scroll()){
   @media (prefers-reduced-motion:no-preference){
     :root:not([data-theme="dark"]) body::after{animation:pv-sunrise linear both;animation-timeline:scroll(root)}
+  }
+  @media (prefers-reduced-motion:no-preference) and (max-width:720px){
+    :root:not([data-theme="dark"]) body::after{animation-name:pv-sunrise-narrow}
   }
 }
 
@@ -377,6 +382,8 @@ html:root[data-theme="dark"] body,html:root[data-theme="dark"] :is(.home-page,.t
 html:root[data-theme="dark"] body::before,html:root[data-theme="dark"] body::after{content:'';position:fixed;z-index:-1;pointer-events:none}
 /* Sky with a moon high on the right. */
 html:root[data-theme="dark"] body::before{inset:0;background:radial-gradient(circle at 84% 13%,#f6efdc 0,#f6efdc 26px,#f6efdc40 29px,#c7b3f01f 70px,#c7b3f000 190px),linear-gradient(180deg,#0a0a1b 0,#121129 32%,#1f1838 60%,#34203f 84%,#4a2740 100%)}
+/* Phones: a smaller moon beside, not behind, the urgencias button. */
+@media(max-width:720px){html:root[data-theme="dark"] body::before{background:radial-gradient(circle at calc(100% - 30px) 118px,#f6efdc 0,#f6efdc 14px,#f6efdc40 16px,#c7b3f01f 40px,#c7b3f000 110px),linear-gradient(180deg,#0a0a1b 0,#121129 32%,#1f1838 60%,#34203f 84%,#4a2740 100%)}}}
 /* Afterglow: the sun just below the horizon. */
 html:root[data-theme="dark"] body::after{left:calc(30% - 60vmax);top:calc(100% - 22vmax);width:120vmax;height:60vmax;border-radius:50%;background:radial-gradient(closest-side,#f08a6a66 0,#d0607052 30%,#8a3f6a2e 58%,#8a3f6a00 100%);transform:translateY(0);opacity:.9;will-change:transform,opacity}
 @keyframes pv-nightfall{from{transform:translateY(-6vh);opacity:1}to{transform:translateY(22vh);opacity:.35}}
@@ -461,3 +468,6 @@ body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1
   }
 }
 @media print{body > footer::before{display:none}}
+/* Phones: the footer, not the page, reserves the room under the fixed booking bar,
+   so no strip of sky shows between the two. */
+@media(max-width:720px){body{padding-bottom:0}body > footer{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}}
