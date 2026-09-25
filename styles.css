@@ -531,3 +531,27 @@ body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1
    one line ("Psicoeducación" is the longest label) by dropping the "Tema" word and tightening gaps. */
 @media(min-width:1101px){.header nav>a,.header .booking-cta{white-space:nowrap}}
 @media(min-width:1101px) and (max-width:1280px){.header nav{gap:18px}.header .nav-wrap{gap:20px}}
+
+/* Privacy policy page and the short data notices next to the booking buttons. */
+.legal{max-width:800px}
+.legal h1{font-size:clamp(2.4rem,4vw,3.7rem)}
+.legal h2{font-size:1.7rem;margin:52px 0 16px;scroll-margin-top:100px}
+.legal p,.legal li{color:var(--muted)}
+.legal strong{color:var(--ink);font-weight:600}
+.legal a{text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.legal ul{padding-left:1.2em}
+.legal li{margin-bottom:8px}
+.legal-lead{font-size:1.1rem;line-height:1.75}
+.legal-toc{display:block;position:static;margin:30px 0 0;padding:22px 26px;border:1px solid var(--line);border-radius:8px;background:var(--wash)}
+.legal-toc ol{margin:0;padding-left:1.3em;columns:2;column-gap:36px}
+.legal-toc li{margin-bottom:6px;break-inside:avoid}
+.legal-table{overflow-x:auto;margin-bottom:22px}
+.legal table{width:100%;border-collapse:collapse;font-size:.95rem}
+.legal th,.legal td{text-align:left;vertical-align:top;padding:14px 16px 14px 0;border-bottom:1px solid var(--line)}
+.legal th{color:var(--ink);font-weight:600}
+.legal td{color:var(--muted)}
+.privacy-note{font-size:.875rem;line-height:1.6;margin-top:16px}
+.privacy-note a,.footer-legal{text-decoration:underline;text-underline-offset:3px}
+.rates-booking .privacy-note{color:var(--muted);margin-bottom:0}
+.footer-inner .footer-legal{font-size:.8rem;color:var(--muted)}
+@media(max-width:720px){.legal h2{font-size:1.45rem;margin-top:40px}.legal-toc{padding:18px 20px}.legal-toc ol{columns:1}.legal th,.legal td{padding-right:12px}.footer-inner .footer-legal{display:inline-flex;align-items:center;min-height:44px;font-size:.875rem}}
