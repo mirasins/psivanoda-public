@@ -282,8 +282,8 @@ body > .skip{position:fixed;z-index:100}
 
 /* ───────── Light theme: sunrise ─────────
    A dawn sky (lavender → lilac → violet-rose) behind the page, with a soft sun
-   that climbs as the reader scrolls. Warm hues only: rose, coral, apricot and gold. */
-:root:not([data-theme="dark"]){--ink:#3d2733;--purple:#9a3f4e;--muted:#6a5559;--rose:#c0533f;--line:#f0dacd;--paper:#fffaf4;--wash:#fdf1e7;--card-lilac:#fce9e6;--card-sky:#fdf1d8;--card-peach:#fde5d3;--accent-lilac:#b44a5c;--accent-sky:#9a5f10;--accent-peach:#bb5a33;background:#fdeee4}
+   that climbs as the reader scrolls. Lilac and pink hues only, boxes included. */
+:root:not([data-theme="dark"]){--ink:#3a2744;--purple:#7d3f8f;--muted:#66566d;--rose:#b0457f;--line:#e8d6ec;--paper:#fdf8fd;--wash:#f7eefa;--card-lilac:#fbe6f1;--card-sky:#efe6fb;--card-peach:#f6e2f5;--accent-lilac:#b0457f;--accent-sky:#7d4fb0;--accent-peach:#9a3f8f;background:#f3eaf8}
 :root:not([data-theme="dark"]) body,:root:not([data-theme="dark"]) :is(.home-page,.therapy-page,.rates-page,.learning){background:transparent}
 :root:not([data-theme="dark"]) body::before,:root:not([data-theme="dark"]) body::after{content:'';position:fixed;z-index:-1;pointer-events:none}
 /* Sky: pale lavender at the top deepening into a lilac-violet horizon. */
@@ -305,72 +305,72 @@ body > .skip{position:fixed;z-index:100}
 }
 
 /* Chrome and type. */
-:root:not([data-theme="dark"]) .header{background:#fff8f1e0;border-bottom:0;box-shadow:0 1px 0 #f0d6c8}
-:root:not([data-theme="dark"]) .header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#9a3f4e,#b04f8a 35%,#9b6fd0 65%,#c9a8ee)}
-:root:not([data-theme="dark"]) h1 em,:root:not([data-theme="dark"]) h2 em{background:linear-gradient(90deg,#b8472f,#a13a5a);-webkit-background-clip:text;background-clip:text;color:transparent}
-:root:not([data-theme="dark"]) .eyebrow{color:#9a3f4e}
-:root:not([data-theme="dark"]) .text-link{text-decoration-color:#e3a28c}
-:root:not([data-theme="dark"]) :focus-visible{outline-color:#c0533f}
-:root:not([data-theme="dark"]) :is(.booking-cta,.button:not(.light),.mobile-booking-primary,.contact .booking-cta){background:linear-gradient(135deg,#8f3548,#b54a33);border-color:transparent}
-:root:not([data-theme="dark"]) :is(.booking-cta,.button:not(.light),.mobile-booking-primary,.contact .booking-cta):hover{background:linear-gradient(135deg,#732a3a,#963b28)}
-:root:not([data-theme="dark"]) .button.light:hover{background:#fde6d3}
+:root:not([data-theme="dark"]) .header{background:#fdf7fce0;border-bottom:0;box-shadow:0 1px 0 #ecd6ec}
+:root:not([data-theme="dark"]) .header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#7d3f8f,#b04f8a 35%,#9b6fd0 65%,#c9a8ee)}
+:root:not([data-theme="dark"]) h1 em,:root:not([data-theme="dark"]) h2 em{background:linear-gradient(90deg,#b0457f,#7a3d96);-webkit-background-clip:text;background-clip:text;color:transparent}
+:root:not([data-theme="dark"]) .eyebrow{color:#7d3f8f}
+:root:not([data-theme="dark"]) .text-link{text-decoration-color:#d9a3c8}
+:root:not([data-theme="dark"]) :focus-visible{outline-color:#b0457f}
+:root:not([data-theme="dark"]) :is(.booking-cta,.button:not(.light),.mobile-booking-primary,.contact .booking-cta){background:linear-gradient(135deg,#7a3d96,#b0457f);border-color:transparent}
+:root:not([data-theme="dark"]) :is(.booking-cta,.button:not(.light),.mobile-booking-primary,.contact .booking-cta):hover{background:linear-gradient(135deg,#632f7c,#923568)}
+:root:not([data-theme="dark"]) .button.light:hover{background:#f3e3f7}
 :root:not([data-theme="dark"]) :is(.menu,.mobile-booking,.skip){background:var(--paper)}
 :root:not([data-theme="dark"]) body > footer{background:linear-gradient(transparent 0,transparent var(--scene-h),#e8d3ea var(--scene-h),#e8d3ea calc(var(--scene-h) + 1px),#fbf1f7d9 calc(var(--scene-h) + 1px));border-top:0}
 
 /* Sections: translucent so the sky shows through. */
-:root:not([data-theme="dark"]) :is(.home-page .approach,.therapy-meta,.therapy-purpose){background:#fff1ea8c;border-color:#f0d6c8}
+:root:not([data-theme="dark"]) :is(.home-page .approach,.therapy-meta,.therapy-purpose){background:#fbeefa8c;border-color:#ecd6ec}
 :root:not([data-theme="dark"]) :is(.home-page .first-session,.therapy-evidence){background:#f6eefc8c;border-color:#e3d3f0}
 :root:not([data-theme="dark"]) .prices{background:transparent;border-color:var(--line)}
-:root:not([data-theme="dark"]) .home-page .hero-copy{background:linear-gradient(135deg,#fff5eceb,#fde6dceb);border-color:#f2d2c4}
+:root:not([data-theme="dark"]) .home-page .hero-copy{background:linear-gradient(135deg,#fdf3faeb,#f6e6f6eb);border-color:#ecd2e6}
 :root:not([data-theme="dark"]) .home-page .welcome-strip{background:linear-gradient(90deg,#f3d9ec,#eadcf7 50%,#e0d8f8);border-color:#e2cfe9}
 
-/* Contact: the last of the night giving way to first light. */
-:root:not([data-theme="dark"]) :is(.contact,.home-page .contact){background:linear-gradient(160deg,#3d2733 0,#5c2b3b 55%,#83393a 100%)}
-:root:not([data-theme="dark"]) .contact :is(h1,h2) em{background:none;color:#f6b98f}
-:root:not([data-theme="dark"]) :is(.contact .eyebrow,.contact-info span){color:#f3c3a5}
-:root:not([data-theme="dark"]) .contact p{color:#f1ddd6}
-:root:not([data-theme="dark"]) :is(.home-page .contact-info,.home-page .quick-contact form){border-color:#a0706c}
-:root:not([data-theme="dark"]) :is(.quick-contact,.contact-info){border-color:#8a5a5c}
-:root:not([data-theme="dark"]) .contact .booking-cta{border-color:#f0b894}
-:root:not([data-theme="dark"]) .contact .whatsapp{border-color:#c98f86}
-:root:not([data-theme="dark"]) :is(.quick-contact input,.quick-contact textarea){border-color:#d2a598}
+/* Contact: the last of the night, plum warming to magenta. */
+:root:not([data-theme="dark"]) :is(.contact,.home-page .contact){background:linear-gradient(160deg,#3a2744 0,#5a2d62 55%,#83396f 100%)}
+:root:not([data-theme="dark"]) .contact :is(h1,h2) em{background:none;color:#f7b8da}
+:root:not([data-theme="dark"]) :is(.contact .eyebrow,.contact-info span){color:#efc3e3}
+:root:not([data-theme="dark"]) .contact p{color:#f1e0ee}
+:root:not([data-theme="dark"]) :is(.home-page .contact-info,.home-page .quick-contact form){border-color:#9a6c95}
+:root:not([data-theme="dark"]) :is(.quick-contact,.contact-info){border-color:#8a5a86}
+:root:not([data-theme="dark"]) .contact .booking-cta{border-color:#f0b8dc}
+:root:not([data-theme="dark"]) .contact .whatsapp{border-color:#c98fbd}
+:root:not([data-theme="dark"]) :is(.quick-contact input,.quick-contact textarea){border-color:#cfa2c6}
 
 /* Portrait signature and labels. */
-:root:not([data-theme="dark"]) .home-page .portrait-caption{background:linear-gradient(145deg,#6d2c43 0,#a4452f 100%);border-color:#c57a64;box-shadow:0 16px 34px #7a2f2a38}
-:root:not([data-theme="dark"]) .home-page .portrait-caption::before,:root:not([data-theme="dark"]) .home-page .caption-rule{background:#f7c08f}
-:root:not([data-theme="dark"]) .home-page .portrait-caption i{color:#ffd3ae}
-:root:not([data-theme="dark"]) :is(.portrait-label,.nature>span){background:#fffaf4}
+:root:not([data-theme="dark"]) .home-page .portrait-caption{background:linear-gradient(145deg,#5e2c6d 0,#a2437a 100%);border-color:#c27aae;box-shadow:0 16px 34px #6a2f6a38}
+:root:not([data-theme="dark"]) .home-page .portrait-caption::before,:root:not([data-theme="dark"]) .home-page .caption-rule{background:#f7bfe0}
+:root:not([data-theme="dark"]) .home-page .portrait-caption i{color:#ffd3ec}
+:root:not([data-theme="dark"]) :is(.portrait-label,.nature>span){background:#fdf8fd}
 
-/* Card families: rose, gold and apricot. */
-:root:not([data-theme="dark"]) .home-page .pillars article{border-color:#f1cfcb;border-top-color:var(--card-accent);box-shadow:0 7px 20px #8a3f2a0d}
-:root:not([data-theme="dark"]) .home-page .pillars article:nth-child(2){border-color:#f0dba6;border-top-color:var(--card-accent)}
-:root:not([data-theme="dark"]) .home-page .pillars article:nth-child(3){border-color:#efcdb5;border-top-color:var(--card-accent)}
-:root:not([data-theme="dark"]) :is(.home-page .number,.therapy-page .reflection-grid .number){background:#fffaf4}
-:root:not([data-theme="dark"]) .home-page .topics li{background:#fdefe9;border-color:#f1d4cc}
-:root:not([data-theme="dark"]) :is(.home-page .topics li:nth-child(3n+2),.home-page .first-free,.home-page .about>div:last-child){background:var(--card-sky);border-color:#f0dba6}
-:root:not([data-theme="dark"]) .home-page .topics li:nth-child(3n){background:var(--card-peach);border-color:#efcdb5}
+/* Card families: pink, lilac and orchid. */
+:root:not([data-theme="dark"]) .home-page .pillars article{border-color:#f0cde0;border-top-color:var(--card-accent);box-shadow:0 7px 20px #6a2f7a0d}
+:root:not([data-theme="dark"]) .home-page .pillars article:nth-child(2){border-color:#dccdf1;border-top-color:var(--card-accent)}
+:root:not([data-theme="dark"]) .home-page .pillars article:nth-child(3){border-color:#eacbe8;border-top-color:var(--card-accent)}
+:root:not([data-theme="dark"]) :is(.home-page .number,.therapy-page .reflection-grid .number){background:#fdf8fd}
+:root:not([data-theme="dark"]) .home-page .topics li{background:#fbeef6;border-color:#f0d3e4}
+:root:not([data-theme="dark"]) :is(.home-page .topics li:nth-child(3n+2),.home-page .first-free,.home-page .about>div:last-child){background:var(--card-sky);border-color:#dccdf1}
+:root:not([data-theme="dark"]) .home-page .topics li:nth-child(3n){background:var(--card-peach);border-color:#eacbe8}
 
 /* Rates. */
-:root:not([data-theme="dark"]) .rates-page :is(.section-heading,.rates-booking){background:#fde8e0eb;border-color:#f0d0c4;border-left-color:#b44a5c;box-shadow:0 6px 22px #8a3f2a0a}
-:root:not([data-theme="dark"]) .rates-page .price-card{background:#fffaf4;border-color:#f0d6c8;border-top-color:#c0533f;box-shadow:0 5px 16px #8a3f2a0a}
-:root:not([data-theme="dark"]) .rates-page .price-card.student{background:#fdeee6;border-top-color:#d77d4d}
-:root:not([data-theme="dark"]) .rates-page .relationship-prices{background:#fff0e0eb;border-color:#f0d2b8}
-:root:not([data-theme="dark"]) .rates-page .relationship-prices .price-card{background:#fffaf4;border-color:#f0d2b8;border-top-color:#bb5a33}
-:root:not([data-theme="dark"]) .rates-page .extra-prices details{background:var(--card-sky);border-color:#f0dba6;border-top-color:#c98a1e}
-:root:not([data-theme="dark"]) details{border-color:#efd3c6}
+:root:not([data-theme="dark"]) .rates-page :is(.section-heading,.rates-booking){background:#f7e6f5eb;border-color:#ead0e8;border-left-color:#b0457f;box-shadow:0 6px 22px #6a2f7a0a}
+:root:not([data-theme="dark"]) .rates-page .price-card{background:#fdf8fd;border-color:#ecd6ec;border-top-color:#b0457f;box-shadow:0 5px 16px #6a2f7a0a}
+:root:not([data-theme="dark"]) .rates-page .price-card.student{background:#f7ecfb;border-top-color:#9a6fd0}
+:root:not([data-theme="dark"]) .rates-page .relationship-prices{background:#fbecf5eb;border-color:#eacbe8}
+:root:not([data-theme="dark"]) .rates-page .relationship-prices .price-card{background:#fdf8fd;border-color:#eacbe8;border-top-color:#9a3f8f}
+:root:not([data-theme="dark"]) .rates-page .extra-prices details{background:var(--card-sky);border-color:#dccdf1;border-top-color:#7d4fb0}
+:root:not([data-theme="dark"]) details{border-color:#ead3e8}
 
 /* Therapy page. */
-:root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article,.purpose-grid article,.evidence-grid article){--card-accent:var(--accent-lilac);--card-bg:var(--card-lilac);border-color:#f1cfcb;border-top-color:var(--card-accent);box-shadow:0 7px 20px #8a3f2a0d}
-:root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article:nth-child(2),.purpose-grid article:nth-child(2n),.evidence-grid article:nth-child(2)){--card-accent:var(--accent-sky);--card-bg:var(--card-sky);border-color:#f0dba6;border-top-color:var(--card-accent)}
-:root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article:nth-child(3),.purpose-grid article:nth-child(3)){--card-accent:var(--accent-peach);--card-bg:var(--card-peach);border-color:#efcdb5;border-top-color:var(--card-accent)}
-:root:not([data-theme="dark"]) .therapy-page :is(.process-list li,.process-list li:last-child,.therapy-opening>p,.therapy-reading,.therapy-keywords span){background:#fdefe9;border-color:#f1d4cc}
-:root:not([data-theme="dark"]) .therapy-page :is(.process-list li:nth-child(even),.therapy-opening>p:last-child){background:var(--card-sky);border-color:#f0dba6}
-:root:not([data-theme="dark"]) .therapy-page .process-list li::before{background:#fffaf4;border-color:#f1d4cc}
-:root:not([data-theme="dark"]) .therapy-page .evidence-context{background:var(--card-peach);border-color:#efcdb5;border-left-color:var(--accent-peach)}
-:root:not([data-theme="dark"]) .therapy-keywords span::before{background:#dc9b86}
+:root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article,.purpose-grid article,.evidence-grid article){--card-accent:var(--accent-lilac);--card-bg:var(--card-lilac);border-color:#f0cde0;border-top-color:var(--card-accent);box-shadow:0 7px 20px #6a2f7a0d}
+:root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article:nth-child(2),.purpose-grid article:nth-child(2n),.evidence-grid article:nth-child(2)){--card-accent:var(--accent-sky);--card-bg:var(--card-sky);border-color:#dccdf1;border-top-color:var(--card-accent)}
+:root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article:nth-child(3),.purpose-grid article:nth-child(3)){--card-accent:var(--accent-peach);--card-bg:var(--card-peach);border-color:#eacbe8;border-top-color:var(--card-accent)}
+:root:not([data-theme="dark"]) .therapy-page :is(.process-list li,.process-list li:last-child,.therapy-opening>p,.therapy-reading,.therapy-keywords span){background:#fbeef6;border-color:#f0d3e4}
+:root:not([data-theme="dark"]) .therapy-page :is(.process-list li:nth-child(even),.therapy-opening>p:last-child){background:var(--card-sky);border-color:#dccdf1}
+:root:not([data-theme="dark"]) .therapy-page .process-list li::before{background:#fdf8fd;border-color:#f0d3e4}
+:root:not([data-theme="dark"]) .therapy-page .evidence-context{background:var(--card-peach);border-color:#eacbe8;border-left-color:var(--accent-peach)}
+:root:not([data-theme="dark"]) .therapy-keywords span::before{background:#d49ac0}
 
 @media (prefers-reduced-motion:no-preference){
-  :root:not([data-theme="dark"]) :is(.home-page .pillars article,.rates-page .price-card,.rates-page .extra-prices details,.therapy-page .reflection-grid article,.therapy-page .purpose-grid article,.therapy-page .evidence-grid article,.learn-card):hover{box-shadow:0 18px 38px #8a3f2a24}
+  :root:not([data-theme="dark"]) :is(.home-page .pillars article,.rates-page .price-card,.rates-page .extra-prices details,.therapy-page .reflection-grid article,.therapy-page .purpose-grid article,.therapy-page .evidence-grid article,.learn-card):hover{box-shadow:0 18px 38px #6a2f7a24}
 }
 
 /* ───────── Dark theme: nightfall ─────────

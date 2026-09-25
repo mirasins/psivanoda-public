@@ -135,8 +135,8 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
     halo.alpha += ((active ? 1 : 0) - halo.alpha) * .04;
 
     const dark = document.documentElement.dataset.theme === 'dark';
-    // Light: warm specks of morning light. Dark: pale starlight at nightfall.
-    const color = dark ? '230, 224, 255' : '205, 108, 48';
+    // Light: rose-lilac specks of morning light. Dark: pale starlight at nightfall.
+    const color = dark ? '230, 224, 255' : '176, 80, 150';
     const radius = 180;
     let moving = false;
 
