@@ -31,7 +31,7 @@ if (toggle && nav) {
     document.documentElement.dataset.theme = resolved;
     document.documentElement.dataset.themePreference = preference;
     document.documentElement.style.colorScheme = resolved;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', resolved === 'dark' ? '#18131c' : '#392d42');
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', resolved === 'dark' ? '#0a0a1b' : '#f1e6ee');
     if (persist) {
       try { localStorage.setItem(storageKey, preference); } catch (_) {}
     }
@@ -97,7 +97,7 @@ mailForm?.addEventListener('submit', event => {
 if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location.replace(new URL('valores/',location.href).href);
 
 
-// Faint background: a sparse dot mesh that gently parts around the cursor and
+// Faint background (stars at nightfall in dark mode): a sparse dot mesh that gently parts around the cursor and
 // eases back, plus a soft halo. Calm by design; disabled on touch and reduced motion.
 (() => {
   if (matchMedia('(prefers-reduced-motion: reduce), (hover: none)').matches) return;
@@ -123,7 +123,8 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
     for (let y = gap / 2; y < height; y += gap)
       for (let x = gap / 2; x < width; x += gap) {
         const ox = x + (Math.random() - .5) * gap * .5, oy = y + (Math.random() - .5) * gap * .5;
-        points.push({ x: ox, y: oy, ox, oy });
+        // Per-point size and brightness let the dark theme read as a starfield.
+        points.push({ x: ox, y: oy, ox, oy, s: Math.random(), b: Math.random() ** 2 });
       }
   };
 
@@ -134,7 +135,8 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
     halo.alpha += ((active ? 1 : 0) - halo.alpha) * .04;
 
     const dark = document.documentElement.dataset.theme === 'dark';
-    const color = dark ? '222, 186, 236' : '196, 88, 138';
+    // Light: warm specks of morning light. Dark: pale starlight at nightfall.
+    const color = dark ? '230, 224, 255' : '205, 108, 48';
     const radius = 180;
     let moving = false;
 
@@ -166,8 +168,11 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
 
     for (const p of points) {
       const near = Math.max(0, 1 - Math.hypot(p.x - halo.x, p.y - halo.y) / 240) * halo.alpha;
-      ctx.fillStyle = `rgba(${color}, ${(dark ? .22 : .26) + (dark ? .38 : .4) * near})`;
-      ctx.beginPath(); ctx.arc(p.x, p.y, 1.4 + near, 0, Math.PI * 2); ctx.fill();
+      // Stars vary in size and shine, and fade toward the glow on the horizon.
+      const base = dark ? (.14 + .5 * p.b) * (1 - .65 * p.oy / height) : .26;
+      const size = dark ? .7 + 1.3 * p.s : 1.4;
+      ctx.fillStyle = `rgba(${color}, ${base + (dark ? .38 : .4) * near})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, size + near, 0, Math.PI * 2); ctx.fill();
     }
 
     if (halo.alpha > .01) {

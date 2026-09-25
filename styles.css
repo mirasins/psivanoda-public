@@ -126,27 +126,6 @@ body > .mobile-booking{position:fixed;z-index:40}
 body > .skip{position:fixed;z-index:100}
 @media (prefers-reduced-motion:reduce), (hover:none){#gesture-trail{display:none}}
 
-/* Light theme: soft but colourful washes built from the site palette (rose, lilac, sky, peach). */
-:root:not([data-theme="dark"]) body{background:linear-gradient(180deg,#fcf1f7 0,#f4eefc 38%,#eef6fe 72%,#fdf3ec 100%)}
-:root:not([data-theme="dark"]) :is(.home-page,.therapy-page,.rates-page,.learning){background:transparent}
-:root:not([data-theme="dark"]) .header{background:#fffafdeb;border-bottom:0;box-shadow:0 1px 0 #ecd9e6}
-:root:not([data-theme="dark"]) .header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#e58fb8,#a77bd0,#27a3f5,#f2a57e)}
-:root:not([data-theme="dark"]) h1 em,:root:not([data-theme="dark"]) h2 em{background:linear-gradient(90deg,#c2417f,#8a44b0);-webkit-background-clip:text;background-clip:text;color:transparent}
-:root:not([data-theme="dark"]) .eyebrow{color:#8a3f8f}
-:root:not([data-theme="dark"]) .booking-cta,:root:not([data-theme="dark"]) .button:not(.light){background:linear-gradient(135deg,#623174,#a23d78);border-color:transparent}
-:root:not([data-theme="dark"]) .booking-cta:hover,:root:not([data-theme="dark"]) .button:not(.light):hover{background:linear-gradient(135deg,#4c235c,#862e62)}
-:root:not([data-theme="dark"]) .home-page .hero-copy{background:linear-gradient(135deg,#fde8f2 0,#efe4fb 100%);border-color:#efcfe2}
-:root:not([data-theme="dark"]) .home-page .welcome-strip{background:linear-gradient(90deg,#f9dcea,#e6dcf8 50%,#d8eefd);border-color:#e8cfe0}
-:root:not([data-theme="dark"]) .home-page .approach{background:#f3e7fa}
-:root:not([data-theme="dark"]) .home-page .first-session{background:#e5f3fe}
-:root:not([data-theme="dark"]) .therapy-purpose{background:#f3e7fa}
-:root:not([data-theme="dark"]) .therapy-evidence{background:#e8f4fe;border-color:#c9e6fb}
-:root:not([data-theme="dark"]) .rates-page .rates-booking{background:linear-gradient(135deg,#fde8f2,#ece2fa)}
-:root:not([data-theme="dark"]) body > footer{background:#f6ecf8;border-top:1px solid #ead6ee}
-:root:not([data-theme="dark"]) .contact :is(h1,h2) em{background:none;color:#d7a7c1}
-:root:not([data-theme="dark"]) .contact .eyebrow{color:#d5aacd}
-:root:not([data-theme="dark"]) .therapy-meta{background:#fcecf3;border-color:#f0d3e2}
-:root:not([data-theme="dark"]) .rates-page .prices{background:transparent}
 
 /* Signature panel beside the portrait. */
 .home-page .portrait-caption{
@@ -300,3 +279,167 @@ body > .skip{position:fixed;z-index:100}
   .home-page .nature img,.therapy-relationship img{transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
   .home-page .nature:hover img,.therapy-relationship figure:hover img{transform:scale(1.03)}
 }
+
+/* ───────── Light theme: sunrise ─────────
+   A dawn sky (mauve haze → blush → apricot → gold) behind the page, with a soft sun
+   that climbs as the reader scrolls. Warm hues only: rose, coral, apricot and gold. */
+:root:not([data-theme="dark"]){--ink:#3d2733;--purple:#9a3f4e;--muted:#6a5559;--rose:#c0533f;--line:#f0dacd;--paper:#fffaf4;--wash:#fdf1e7;--card-lilac:#fce9e6;--card-sky:#fdf1d8;--card-peach:#fde5d3;--accent-lilac:#b44a5c;--accent-sky:#9a5f10;--accent-peach:#bb5a33;background:#fdeee4}
+:root:not([data-theme="dark"]) body,:root:not([data-theme="dark"]) :is(.home-page,.therapy-page,.rates-page,.learning){background:transparent}
+:root:not([data-theme="dark"]) body::before,:root:not([data-theme="dark"]) body::after{content:'';position:fixed;z-index:-1;pointer-events:none}
+/* Sky: cool haze at the top warming into a golden horizon. */
+:root:not([data-theme="dark"]) body::before{inset:0;background:radial-gradient(130% 55% at 70% 108%,#ffd49acc 0,#ffc39466 38%,#ffc39400 72%),linear-gradient(180deg,#f1e6ee 0,#f8e3e6 26%,#fde5da 52%,#fee6cf 78%,#ffefd4 100%)}
+/* Sun: a soft disc with faint rays, centred on the horizon line. */
+:root:not([data-theme="dark"]) body::after{left:calc(72% - 48vmax);top:calc(100% - 48vmax);width:96vmax;height:96vmax;border-radius:50%;background:radial-gradient(circle,#fffaec 0,#fff1cf 4%,#ffdca0b3 7%,#ffc98e59 16%,#ffbf9422 32%,#ffbf9400 52%),repeating-conic-gradient(#fff1d600 0deg,#fff1d673 4deg,#fff1d600 8deg,#fff1d600 20deg);-webkit-mask-image:radial-gradient(circle,#000 0,#000 18%,transparent 62%);mask-image:radial-gradient(circle,#000 0,#000 18%,transparent 62%);transform:translateY(4vh);will-change:transform}
+/* Where supported, the sun rises (and its rays turn) with the scroll position. */
+@keyframes pv-sunrise{from{transform:translateY(30vh) rotate(0)}to{transform:translateY(-40vh) rotate(28deg)}}
+@supports (animation-timeline:scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    :root:not([data-theme="dark"]) body::after{animation:pv-sunrise linear both;animation-timeline:scroll(root)}
+  }
+}
+
+/* Chrome and type. */
+:root:not([data-theme="dark"]) .header{background:#fff8f1e0;border-bottom:0;box-shadow:0 1px 0 #f0d6c8}
+:root:not([data-theme="dark"]) .header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#9a3f4e,#d0603f 35%,#ec9150 65%,#f5c46a)}
+:root:not([data-theme="dark"]) h1 em,:root:not([data-theme="dark"]) h2 em{background:linear-gradient(90deg,#b8472f,#a13a5a);-webkit-background-clip:text;background-clip:text;color:transparent}
+:root:not([data-theme="dark"]) .eyebrow{color:#9a3f4e}
+:root:not([data-theme="dark"]) .text-link{text-decoration-color:#e3a28c}
+:root:not([data-theme="dark"]) :focus-visible{outline-color:#c0533f}
+:root:not([data-theme="dark"]) :is(.booking-cta,.button:not(.light),.mobile-booking-primary,.contact .booking-cta){background:linear-gradient(135deg,#8f3548,#b54a33);border-color:transparent}
+:root:not([data-theme="dark"]) :is(.booking-cta,.button:not(.light),.mobile-booking-primary,.contact .booking-cta):hover{background:linear-gradient(135deg,#732a3a,#963b28)}
+:root:not([data-theme="dark"]) .button.light:hover{background:#fde6d3}
+:root:not([data-theme="dark"]) :is(.menu,.mobile-booking,.skip){background:var(--paper)}
+:root:not([data-theme="dark"]) body > footer{background:#fdeee3d9;border-top:1px solid #f0d6c6}
+
+/* Sections: translucent so the sky shows through. */
+:root:not([data-theme="dark"]) :is(.home-page .approach,.therapy-meta,.therapy-purpose){background:#fff1ea8c;border-color:#f0d6c8}
+:root:not([data-theme="dark"]) :is(.home-page .first-session,.therapy-evidence){background:#fff4df8c;border-color:#f1dcb6}
+:root:not([data-theme="dark"]) .prices{background:transparent;border-color:var(--line)}
+:root:not([data-theme="dark"]) .home-page .hero-copy{background:linear-gradient(135deg,#fff5eceb,#fde6dceb);border-color:#f2d2c4}
+:root:not([data-theme="dark"]) .home-page .welcome-strip{background:linear-gradient(90deg,#f8d8d6,#fcdcc6 50%,#fdebc2);border-color:#f0d2c0}
+
+/* Contact: the last of the night giving way to first light. */
+:root:not([data-theme="dark"]) :is(.contact,.home-page .contact){background:linear-gradient(160deg,#3d2733 0,#5c2b3b 55%,#83393a 100%)}
+:root:not([data-theme="dark"]) .contact :is(h1,h2) em{background:none;color:#f6b98f}
+:root:not([data-theme="dark"]) :is(.contact .eyebrow,.contact-info span){color:#f3c3a5}
+:root:not([data-theme="dark"]) .contact p{color:#f1ddd6}
+:root:not([data-theme="dark"]) :is(.home-page .contact-info,.home-page .quick-contact form){border-color:#a0706c}
+:root:not([data-theme="dark"]) :is(.quick-contact,.contact-info){border-color:#8a5a5c}
+:root:not([data-theme="dark"]) .contact .booking-cta{border-color:#f0b894}
+:root:not([data-theme="dark"]) .contact .whatsapp{border-color:#c98f86}
+:root:not([data-theme="dark"]) :is(.quick-contact input,.quick-contact textarea){border-color:#d2a598}
+
+/* Portrait signature and labels. */
+:root:not([data-theme="dark"]) .home-page .portrait-caption{background:linear-gradient(145deg,#6d2c43 0,#a4452f 100%);border-color:#c57a64;box-shadow:0 16px 34px #7a2f2a38}
+:root:not([data-theme="dark"]) .home-page .portrait-caption::before,:root:not([data-theme="dark"]) .home-page .caption-rule{background:#f7c08f}
+:root:not([data-theme="dark"]) .home-page .portrait-caption i{color:#ffd3ae}
+:root:not([data-theme="dark"]) :is(.portrait-label,.nature>span){background:#fffaf4}
+
+/* Card families: rose, gold and apricot. */
+:root:not([data-theme="dark"]) .home-page .pillars article{border-color:#f1cfcb;border-top-color:var(--card-accent);box-shadow:0 7px 20px #8a3f2a0d}
+:root:not([data-theme="dark"]) .home-page .pillars article:nth-child(2){border-color:#f0dba6;border-top-color:var(--card-accent)}
+:root:not([data-theme="dark"]) .home-page .pillars article:nth-child(3){border-color:#efcdb5;border-top-color:var(--card-accent)}
+:root:not([data-theme="dark"]) :is(.home-page .number,.therapy-page .reflection-grid .number){background:#fffaf4}
+:root:not([data-theme="dark"]) .home-page .topics li{background:#fdefe9;border-color:#f1d4cc}
+:root:not([data-theme="dark"]) :is(.home-page .topics li:nth-child(3n+2),.home-page .first-free,.home-page .about>div:last-child){background:var(--card-sky);border-color:#f0dba6}
+:root:not([data-theme="dark"]) .home-page .topics li:nth-child(3n){background:var(--card-peach);border-color:#efcdb5}
+
+/* Rates. */
+:root:not([data-theme="dark"]) .rates-page :is(.section-heading,.rates-booking){background:#fde8e0eb;border-color:#f0d0c4;border-left-color:#b44a5c;box-shadow:0 6px 22px #8a3f2a0a}
+:root:not([data-theme="dark"]) .rates-page .price-card{background:#fffaf4;border-color:#f0d6c8;border-top-color:#c0533f;box-shadow:0 5px 16px #8a3f2a0a}
+:root:not([data-theme="dark"]) .rates-page .price-card.student{background:#fdeee6;border-top-color:#d77d4d}
+:root:not([data-theme="dark"]) .rates-page .relationship-prices{background:#fff0e0eb;border-color:#f0d2b8}
+:root:not([data-theme="dark"]) .rates-page .relationship-prices .price-card{background:#fffaf4;border-color:#f0d2b8;border-top-color:#bb5a33}
+:root:not([data-theme="dark"]) .rates-page .extra-prices details{background:var(--card-sky);border-color:#f0dba6;border-top-color:#c98a1e}
+:root:not([data-theme="dark"]) details{border-color:#efd3c6}
+
+/* Therapy page. */
+:root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article,.purpose-grid article,.evidence-grid article){--card-accent:var(--accent-lilac);--card-bg:var(--card-lilac);border-color:#f1cfcb;border-top-color:var(--card-accent);box-shadow:0 7px 20px #8a3f2a0d}
+:root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article:nth-child(2),.purpose-grid article:nth-child(2n),.evidence-grid article:nth-child(2)){--card-accent:var(--accent-sky);--card-bg:var(--card-sky);border-color:#f0dba6;border-top-color:var(--card-accent)}
+:root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article:nth-child(3),.purpose-grid article:nth-child(3)){--card-accent:var(--accent-peach);--card-bg:var(--card-peach);border-color:#efcdb5;border-top-color:var(--card-accent)}
+:root:not([data-theme="dark"]) .therapy-page :is(.process-list li,.process-list li:last-child,.therapy-opening>p,.therapy-reading,.therapy-keywords span){background:#fdefe9;border-color:#f1d4cc}
+:root:not([data-theme="dark"]) .therapy-page :is(.process-list li:nth-child(even),.therapy-opening>p:last-child){background:var(--card-sky);border-color:#f0dba6}
+:root:not([data-theme="dark"]) .therapy-page .process-list li::before{background:#fffaf4;border-color:#f1d4cc}
+:root:not([data-theme="dark"]) .therapy-page .evidence-context{background:var(--card-peach);border-color:#efcdb5;border-left-color:var(--accent-peach)}
+:root:not([data-theme="dark"]) .therapy-keywords span::before{background:#dc9b86}
+
+@media (prefers-reduced-motion:no-preference){
+  :root:not([data-theme="dark"]) :is(.home-page .pillars article,.rates-page .price-card,.rates-page .extra-prices details,.therapy-page .reflection-grid article,.therapy-page .purpose-grid article,.therapy-page .evidence-grid article,.learn-card):hover{box-shadow:0 18px 38px #8a3f2a24}
+}
+
+/* ───────── Dark theme: nightfall ─────────
+   Indigo night overhead, the last ember of the sun on the horizon (it sinks as the
+   reader scrolls), a moon, and the canvas grid drawn as stars (site.js). The html
+   prefix outranks the per-page dark rules in therapy.css. */
+html:root[data-theme="dark"]{--ink:#f1ecf7;--purple:#c7b3f0;--muted:#c2bbd3;--rose:#f2a7b8;--line:#3a3354;--paper:#141226;--wash:#1b1830;--card-lilac:#241f3c;--card-sky:#15213d;--card-peach:#34202e;--accent-lilac:#b9a2ee;--accent-sky:#8fb8f5;--accent-peach:#f0a08c;background:#0e0c1d}
+html:root[data-theme="dark"] body,html:root[data-theme="dark"] :is(.home-page,.therapy-page,.rates-page,.learning){background:transparent}
+html:root[data-theme="dark"] body::before,html:root[data-theme="dark"] body::after{content:'';position:fixed;z-index:-1;pointer-events:none}
+/* Sky with a moon high on the right. */
+html:root[data-theme="dark"] body::before{inset:0;background:radial-gradient(circle at 84% 13%,#f6efdc 0,#f6efdc 26px,#f6efdc40 29px,#c7b3f01f 70px,#c7b3f000 190px),linear-gradient(180deg,#0a0a1b 0,#121129 32%,#1f1838 60%,#34203f 84%,#4a2740 100%)}
+/* Afterglow: the sun just below the horizon. */
+html:root[data-theme="dark"] body::after{left:calc(30% - 60vmax);top:calc(100% - 22vmax);width:120vmax;height:60vmax;border-radius:50%;background:radial-gradient(closest-side,#f08a6a66 0,#d0607052 30%,#8a3f6a2e 58%,#8a3f6a00 100%);transform:translateY(0);opacity:.9;will-change:transform,opacity}
+@keyframes pv-nightfall{from{transform:translateY(-6vh);opacity:1}to{transform:translateY(22vh);opacity:.35}}
+@supports (animation-timeline:scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    html:root[data-theme="dark"] body::after{animation:pv-nightfall linear both;animation-timeline:scroll(root)}
+  }
+}
+
+/* Chrome and type. */
+html:root[data-theme="dark"] .header{background:#110f23e0;border-bottom:0;box-shadow:0 1px 0 #2c2746}
+html:root[data-theme="dark"] .header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#26336e,#5b4596 35%,#a2517e 70%,#e58a6a)}
+html:root[data-theme="dark"] :is(h1,h2) em{background:linear-gradient(90deg,#c7b3f0,#f2a7b8);-webkit-background-clip:text;background-clip:text;color:transparent}
+html:root[data-theme="dark"] .eyebrow{color:#c7b3f0}
+html:root[data-theme="dark"] .text-link{text-decoration-color:#7d6ab0}
+html:root[data-theme="dark"] :focus-visible{outline-color:#c7b3f0}
+html:root[data-theme="dark"] :is(.button:not(.light),.booking-cta,.contact .booking-cta,.mobile-booking-primary){background:linear-gradient(135deg,#54408f,#8c4574);border-color:transparent;color:#fff!important}
+html:root[data-theme="dark"] :is(.button:not(.light),.booking-cta,.contact .booking-cta,.mobile-booking-primary):hover{background:linear-gradient(135deg,#6550a8,#a2548a)}
+html:root[data-theme="dark"] .button.light{background:#efe9fa;color:#1b1830!important}
+html:root[data-theme="dark"] .button.light:hover{background:#ddd2f4}
+html:root[data-theme="dark"] :is(.menu,.mobile-booking,.skip){background:var(--paper)}
+html:root[data-theme="dark"] body > footer{background:#0f0d20d9;border-top:1px solid #2c2746}
+@media(max-width:720px){html:root[data-theme="dark"] #navegacion{background:var(--paper)}}
+
+/* Sections: translucent so the sky shows through. */
+html:root[data-theme="dark"] :is(.home-page .approach,.home-page .first-session,.first-session,.prices,.therapy-meta,.therapy-purpose,.therapy-evidence){background:#16142c99;border-color:#2c2746}
+html:root[data-theme="dark"] .rates-page .prices{background:transparent}
+html:root[data-theme="dark"] .home-page .hero-copy{background:linear-gradient(135deg,#1c1934e6,#241c3ae6);border-color:#3d3560}
+html:root[data-theme="dark"] .home-page .welcome-strip{background:linear-gradient(90deg,#1b1936,#2c2043 50%,#46283f);border-color:#3d3560}
+html:root[data-theme="dark"] :is(.contact,.home-page .contact){background:linear-gradient(160deg,#0c0b1c 0,#1c1736 60%,#35203d 100%)}
+html:root[data-theme="dark"] :is(.contact .eyebrow,.contact-info span){color:#c7b3f0}
+html:root[data-theme="dark"] .contact :is(h1,h2) em{background:none;color:#f2a7b8}
+html:root[data-theme="dark"] :is(.home-page .contact-info,.home-page .quick-contact form){border-color:#4a4070;background:#ffffff06}
+html:root[data-theme="dark"] :is(.quick-contact,.contact-info){border-color:#3d3560}
+html:root[data-theme="dark"] :is(.quick-contact input,.quick-contact textarea){background:#0e0c1d;border-color:#5a4f82}
+
+/* Portrait signature and labels. */
+html:root[data-theme="dark"] .home-page .portrait-caption{background:linear-gradient(145deg,#26204a 0,#55305a 100%);border-color:#6f5ca0;box-shadow:0 16px 34px #0000006b}
+html:root[data-theme="dark"] .home-page .portrait-caption::before,html:root[data-theme="dark"] .home-page .caption-rule{background:#f2a7b8}
+html:root[data-theme="dark"] .home-page .portrait-caption i{color:#f6c0cc}
+html:root[data-theme="dark"] :is(.portrait-label,.nature>span,.evidence-grid article){background:#1c1934}
+
+/* Card families: dusk violet, night blue and ember. */
+html:root[data-theme="dark"] :is(.home-page .pillars article,.home-page .topics li,.home-page .about>div:last-child,.student,.rates-page .price-card,.rates-page .price-card.student){background:var(--card-lilac);border-color:#3d3560}
+html:root[data-theme="dark"] .home-page .pillars article{border-top-color:var(--card-accent)}
+html:root[data-theme="dark"] :is(.home-page .pillars article:nth-child(2),.home-page .topics li:nth-child(3n+2),.home-page .first-free){background:var(--card-sky);border-color:#2b3f6e}
+html:root[data-theme="dark"] .home-page .pillars article:nth-child(2){border-top-color:var(--card-accent)}
+html:root[data-theme="dark"] :is(.home-page .pillars article:nth-child(3),.home-page .topics li:nth-child(3n)){background:var(--card-peach);border-color:#5a3444}
+html:root[data-theme="dark"] .home-page .pillars article:nth-child(3){border-top-color:var(--card-accent)}
+html:root[data-theme="dark"] :is(.home-page .number,.therapy-page .reflection-grid .number){background:#0e0c1d}
+
+/* Rates. */
+html:root[data-theme="dark"] .rates-page :is(.section-heading,.rates-booking){background:#1f1a38eb;border-color:#3d3560;border-left-color:#8f78d8}
+html:root[data-theme="dark"] .rates-page .price-card{border-top-color:#9a84e0}
+html:root[data-theme="dark"] .rates-page .price-card.student{border-top-color:#c77fa6}
+html:root[data-theme="dark"] .rates-page .relationship-prices{background:#2a1a2beb;border-color:#5a3444}
+html:root[data-theme="dark"] .rates-page .relationship-prices .price-card{background:var(--card-peach);border-color:#5a3444;border-top-color:var(--accent-peach)}
+html:root[data-theme="dark"] .rates-page .extra-prices details{background:var(--card-sky);border-color:#2b3f6e;border-top-color:var(--accent-sky)}
+
+/* Therapy page. */
+html:root[data-theme="dark"] .therapy-page :is(.reflection-grid article,.purpose-grid article,.evidence-grid article){border-color:#3d3560;border-top-color:var(--card-accent)}
+html:root[data-theme="dark"] .therapy-page :is(.reflection-grid article:nth-child(2),.purpose-grid article:nth-child(2n),.evidence-grid article:nth-child(2)){border-color:#2b3f6e;border-top-color:var(--card-accent)}
+html:root[data-theme="dark"] .therapy-page :is(.reflection-grid article:nth-child(3),.purpose-grid article:nth-child(3)){border-color:#5a3444;border-top-color:var(--card-accent)}
+html:root[data-theme="dark"] .therapy-page :is(.process-list li,.process-list li:last-child,.therapy-opening>p,.therapy-reading,.therapy-keywords span){background:var(--card-lilac);border-color:#3d3560}
+html:root[data-theme="dark"] .therapy-page :is(.process-list li:nth-child(even),.therapy-opening>p:last-child){background:var(--card-sky);border-color:#2b3f6e}
+html:root[data-theme="dark"] .therapy-page .process-list li::before{background:#0e0c1d;border-color:#3d3560}
+html:root[data-theme="dark"] .therapy-page .evidence-context{background:var(--card-peach);border-color:#5a3444;border-left-color:var(--accent-peach)}
