@@ -22,1358 +22,483 @@
   <meta name="twitter:card" content="summary">
 
   <!-- Color de tema móvil -->
-  <meta name="theme-color" content="#241135">
+  <meta name="theme-color" content="#f5f2f6">
 
-  <!-- Fuentes tipográficas (solo los pesos que se usan, self-hosted) -->
-  <link rel="preload" href="assets/fonts/plus-jakarta-sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="assets/fonts/playfair-display.woff2" as="font" type="font/woff2" crossorigin>
-
+  <!-- Atkinson Hyperlegible Next (OFL): letras fáciles de distinguir, pensada para baja visión y dislexia -->
+  <link rel="preload" href="assets/fonts/atkinson-hyperlegible-next.woff2" as="font" type="font/woff2" crossorigin>
   <style>
-    @font-face{font-family:'Cinzel';font-style:normal;font-weight:600 700;font-display:swap;src:url(assets/fonts/cinzel.woff2) format('woff2')}
-    @font-face{font-family:'Playfair Display';font-style:normal;font-weight:600 700;font-display:swap;src:url(assets/fonts/playfair-display.woff2) format('woff2')}
-    @font-face{font-family:'Plus Jakarta Sans';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/plus-jakarta-sans.woff2) format('woff2')}
+    @font-face{font-family:'Atkinson Hyperlegible Next';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/atkinson-hyperlegible-next.woff2) format('woff2')}
 
+    /* Página de crisis: pensada para leerse con prisa, angustia o sobrecarga sensorial.
+       Lo urgente va primero; el resto queda plegado. Colores de baja saturación, sin blanco
+       ni negro puros, sin sombras, degradados ni animaciones. Texto grande, interlineado
+       amplio, líneas cortas, sin cursivas ni mayúsculas sostenidas. */
     :root {
-      /* Paleta original del sitio */
-      --color-primary: #241135;
-      --color-purple: #702e86;
-      --color-purple-light: #8e3eab;
-      --color-coral: #ea4c5d;
-      --color-coral-hover: #d9384a;
-      --color-coral-soft: #fef1f2;
-      --color-cream: #fbf8f3;
-      --color-surface: #f9f5fb;
-      --color-white: #ffffff;
-      --color-text-main: #241135;
-      --color-text-muted: #5f526b;
-      --color-border: #ebdff0;
-
-      /* Coral con contraste AA para texto blanco (el coral original da 3,7:1) */
-      --color-coral-action: #c62f41;
-      --color-coral-action-hover: #a8232f;
-
-      /* Superficie siempre oscura (footer, header móvil, franja de ayuda): no cambia con el tema */
-      --surface-dark: #241135;
-
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 24px;
-      --shadow-sm: 0 4px 12px rgba(36, 17, 53, 0.05);
-      --shadow-md: 0 8px 24px rgba(36, 17, 53, 0.08);
-      --shadow-hover: 0 14px 34px rgba(112, 46, 134, 0.15);
-      --transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-
-      --header-h: 76px;
-      --dock-h: 78px;
+      --bg: #f5f2f6;
+      --surface: #fbfafb;
+      --surface-2: #ece7ee;
+      --text: #2b2630;
+      --muted: #544d5a;
+      --line: #d6ced9;
+      --accent: #5e4670;
+      --call-bg: #4a3659;
+      --call-hover: #3a2a46;
+      --call-text: #fbfafb;
+      --call-num-bg: #ffffff21;
+      --focus: #7a5a94;
+      --wrap: 46rem;
+      --dock-h: 84px;
+    }
+    :root[data-theme="dark"] {
+      --bg: #1d1b21;
+      --surface: #25232a;
+      --surface-2: #2e2b34;
+      --text: #e9e5ec;
+      --muted: #bdb6c3;
+      --line: #443e4a;
+      --accent: #cbb7dc;
+      --call-bg: #4b3d5c;
+      --call-hover: #574769;
+      --call-text: #f3eef7;
+      --call-num-bg: #ffffff1a;
+      --focus: #d6c7e3;
+      color-scheme: dark;
     }
 
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; }
     html {
-      scroll-behavior: smooth;
-      scroll-padding-top: calc(var(--header-h) + 16px);
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: var(--color-text-main);
-      background-color: var(--color-white);
-      line-height: 1.65;
-      -webkit-font-smoothing: antialiased;
+      font-family: 'Atkinson Hyperlegible Next', Verdana, Tahoma, sans-serif;
+      font-size: 100%;
+      color: var(--text);
+      background: var(--bg);
       -webkit-text-size-adjust: 100%;
     }
-
     body {
-      padding-top: var(--header-h);
-      min-height: 100vh;
-      min-height: 100dvh;
-      display: flex;
-      flex-direction: column;
+      margin: 0;
+      font-size: 1.125rem;
+      line-height: 1.75;
+      letter-spacing: .012em;
+      word-spacing: .06em;
+      background: var(--bg);
     }
+    @media (min-width: 720px) { body { font-size: 1.1875rem; } }
 
-    main { flex: 1 0 auto; }
+    h1, h2, h3, p, ul, ol { margin: 0; }
+    h1, h2, h3 { font-weight: 700; line-height: 1.3; letter-spacing: 0; text-wrap: balance; }
+    h1 { font-size: clamp(1.7rem, 5vw, 2.2rem); }
+    h2 { font-size: 1.4rem; }
+    h3 { font-size: 1.2rem; }
+    p + p { margin-top: 1em; }
+    strong { font-weight: 700; }
+    /* Sin cursivas: cuestan más de leer con dislexia. */
+    em, i { font-style: normal; }
 
-    :focus-visible {
-      outline: 3px solid var(--color-purple-light);
-      outline-offset: 3px;
-      border-radius: 4px;
-    }
+    a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
 
-    .visually-hidden {
-      position: absolute !important;
-      width: 1px;
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-      border: 0;
-    }
+    .wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: 20px; }
 
-    .skip-link {
-      position: fixed;
-      top: -80px;
-      left: 12px;
-      z-index: 2000;
-      background: var(--surface-dark);
-      color: #fff;
-      padding: 10px 18px;
-      border-radius: var(--radius-sm);
-      font-weight: 600;
-      text-decoration: none;
-    }
-    .skip-link:focus { top: 12px; outline-color: #fff; }
+    .skip-link { position: absolute; left: 12px; top: -80px; z-index: 100; padding: 10px 18px; border-radius: 8px; background: var(--call-bg); color: var(--call-text); font-weight: 700; }
+    .skip-link:focus { top: 12px; }
 
-    .container {
-      width: 100%;
-      max-width: 1160px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    /* ───────── Header ───────── */
-    .site-header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: var(--header-h);
-      background: rgba(251, 248, 243, 0.97);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 2px solid var(--color-border);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-    }
-
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .brand-logo {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-
-    .brand-icon {
-      flex-shrink: 0;
-      width: 44px;
-      height: 44px;
-      object-fit: cover;
-      border-radius: 50%;
-    }
+    /* ───────── Cabecera: solo marca, inicio y tema ───────── */
+    .site-header { border-bottom: 1px solid var(--line); background: var(--surface); }
+    .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 68px; padding-block: 10px; }
+    .brand { display: flex; align-items: center; gap: 10px; min-height: 44px; color: var(--text); text-decoration: none; font-weight: 700; font-size: 1.05rem; line-height: 1.2; }
+    .brand img { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; }
     .brand-icon--light + .brand-icon--dark { display: none; }
     :root[data-theme="dark"] .brand-icon--light { display: none; }
     :root[data-theme="dark"] .brand-icon--light + .brand-icon--dark { display: block; }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-    }
-
-    .logo-title {
-      font-family: 'Cinzel', serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: var(--color-primary);
-      line-height: 1.15;
-    }
-
-    .logo-subtitle {
-      font-size: 0.64rem;
-      color: var(--color-purple);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 600;
-    }
-
-    .menu-toggle {
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 5px;
-      width: 44px;
-      height: 44px;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-
-    .menu-toggle span {
-      width: 25px;
-      height: 2.5px;
-      background: var(--color-primary);
-      border-radius: 2px;
-    }
-
-    /* Menú móvil (por defecto) */
-    .nav-links {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      width: 100%;
-      max-height: calc(100vh - var(--header-h));
-      max-height: calc(100dvh - var(--header-h));
-      overflow-y: auto;
-      background: var(--color-white);
-      flex-direction: column;
-      gap: 6px;
-      padding: 20px 20px 24px;
-      border-bottom: 2px solid var(--color-border);
-      box-shadow: 0 15px 30px rgba(36, 17, 53, 0.12);
-    }
-    .nav-links.open { display: flex; }
-
-    .nav-item {
-      display: flex;
-      align-items: center;
-      min-height: 44px;
-      text-decoration: none;
-      color: var(--color-primary);
-      font-weight: 500;
-      font-size: 1rem;
-      padding: 8px 12px;
-      border-radius: var(--radius-sm);
-      transition: var(--transition);
-    }
-
-    .nav-item:hover,
-    .nav-item[aria-current="page"] {
-      color: var(--color-purple);
-      background: var(--color-surface);
-      font-weight: 600;
-    }
-
-    .btn-nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      margin-top: 8px;
-      background: var(--surface-dark);
-      color: #fff;
-      padding: 9px 20px;
-      font-size: 0.95rem;
-      border-radius: 50px;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid var(--color-purple);
-      transition: var(--transition);
-    }
-    .btn-nav:hover { background: var(--color-purple); }
-
-    /* ───────── Encabezado de página ───────── */
-    .page-header {
-      background: radial-gradient(circle at 50% 0%, #fcf3f6 0%, #f9f5fb 60%, #ffffff 100%);
-      padding: 40px 0 32px;
-      border-bottom: 2px solid var(--color-border);
-    }
-    .page-header .container { max-width: 960px; } /* alinea título y migas con el artículo */
-
-    .breadcrumb {
-      font-size: 0.86rem;
-      color: var(--color-text-muted);
-      margin-bottom: 12px;
-    }
-    .breadcrumb ol {
-      list-style: none;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px 8px;
-    }
-    .breadcrumb li + li::before {
-      content: "›" / "";
-      margin-right: 8px;
-    }
-    .breadcrumb a {
-      color: var(--color-purple);
-      text-decoration: none;
-      font-weight: 600;
-    }
-    .breadcrumb a:hover { text-decoration: underline; }
-
-    .page-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.85rem, 5.2vw, 2.7rem);
-      line-height: 1.2;
-      color: var(--color-primary);
-      margin-bottom: 12px;
-      overflow-wrap: break-word;
-    }
-
-    .page-subtitle {
-      font-size: 1.05rem;
-      color: var(--color-text-muted);
-      max-width: 62ch;
-    }
-
-    /* ───────── Artículo ───────── */
-    .article-container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 40px 24px 64px; /* conserva los 24px laterales de .container */
-    }
-
-    /* Bloque de ayuda inmediata */
-    .alert-banner-emergency {
-      background: #fff5f5;
-      border: 3px solid var(--color-coral-action);
-      border-radius: var(--radius-lg);
-      padding: 28px 22px 26px;
-      margin-bottom: 48px;
-      box-shadow: 0 12px 32px rgba(198, 47, 65, 0.16);
-    }
-
-    .alert-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 22px;
-    }
-
-    .alert-icon {
-      width: 46px;
-      height: 46px;
-      flex-shrink: 0;
-      color: var(--color-coral-action);
-    }
-
-    .alert-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 3.4vw, 1.85rem);
-      font-weight: 700;
-      line-height: 1.2;
-      color: #991b1b;
-    }
-
-    .alert-options {
-      display: grid;
-      gap: 16px;
-    }
-
-    .alert-option {
-      background: var(--color-coral-action);
-      border: 2px solid transparent;
-      border-radius: var(--radius-md);
-      padding: 24px 22px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      box-shadow: 0 8px 22px rgba(153, 27, 27, 0.25);
-      transition: var(--transition);
-    }
-    .alert-option:hover { transform: translateY(-2px); box-shadow: 0 14px 30px rgba(153, 27, 27, 0.32); }
-
-    .alert-option h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      line-height: 1.35;
-      color: #ffffff;
-      margin-bottom: 10px;
-    }
-
-    .alert-option p {
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #ffffff;
-      margin-bottom: 22px;
-    }
-
-    .btn-call {
-      margin-top: auto;
-      width: 100%;
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
-      min-height: 68px;
-      padding: 8px 26px 8px 8px;
-      background: var(--surface-dark);
-      color: #ffffff;
-      text-decoration: none;
-      border-radius: 50px;
-      box-shadow: 0 6px 18px rgba(36, 17, 53, 0.35);
-      transition: var(--transition);
-    }
-    .btn-call:hover { background: #392558; transform: translateY(-2px); box-shadow: 0 10px 24px rgba(36, 17, 53, 0.45); }
-
-    .btn-call__num {
-      min-width: 76px;
-      padding: 8px 16px;
-      border-radius: 50px;
-      background: rgba(255, 255, 255, 0.16);
-      font-size: 1.75rem;
-      font-weight: 700;
-      line-height: 1.2;
-      text-align: center;
-    }
-
-    .btn-call__label {
-      font-size: 0.94rem;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-
-    .content-block { margin-bottom: 48px; }
-
-    .content-block h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.5rem, 3.6vw, 2rem);
-      line-height: 1.25;
-      color: var(--color-primary);
-      margin-bottom: 16px;
-      border-bottom: 2px solid var(--color-border);
-      padding-bottom: 10px;
-    }
-
-    .content-block > p {
-      font-size: 1.05rem;
-      color: var(--color-text-main);
-      margin-bottom: 20px;
-      max-width: 70ch;
-    }
-
-    /* Tabla de contactos: tarjetas en móvil, tabla desde 860px */
-    .table-responsive-wrapper {
-      width: 100%;
-      background: var(--color-white);
-      border: 1px solid var(--color-border);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
-      margin: 24px 0 16px;
-      overflow: hidden;
-    }
-
-    .emergency-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.95rem;
-    }
-
-    .emergency-table thead {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      clip: rect(0 0 0 0);
-      white-space: nowrap;
-    }
-
-    .emergency-table,
-    .emergency-table tbody,
-    .emergency-table tr,
-    .emergency-table th,
-    .emergency-table td { display: block; }
-
-    .emergency-table tr {
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      column-gap: 18px;
-      padding: 18px 18px 6px;
-      border-bottom: 1px solid var(--color-border);
-    }
-    .emergency-table tbody tr:last-child { border-bottom: 0; }
-
-    .emergency-table tbody th {
-      grid-column: 1 / -1;
-      padding: 0 0 10px;
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--color-primary);
-      text-align: left;
-    }
-    .emergency-table td:last-child { grid-column: 1 / -1; }
-
-    .emergency-table td {
-      padding: 0 0 14px;
-      color: var(--color-text-main);
-    }
-
-    .emergency-table td::before {
-      content: attr(data-label);
-      display: block;
-      margin-bottom: 2px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: var(--color-purple);
-    }
-
-    .phone-tag {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 44px;
-      min-width: 64px;
-      padding: 6px 18px;
-      background: var(--color-coral-action);
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1rem;
-      border-radius: 50px;
-      box-shadow: 0 2px 8px rgba(198, 47, 65, 0.3);
-      transition: var(--transition);
-      white-space: nowrap;
-    }
-    .phone-tag:hover { background: var(--color-coral-action-hover); }
-
-    .phone-note {
-      display: block;
-      margin-top: 6px;
-      font-size: 0.82rem;
-      color: var(--color-text-muted);
-    }
-    .phone-note a { color: var(--color-purple); font-weight: 600; white-space: nowrap; }
-
-    .table-note {
-      font-size: 0.88rem;
-      color: var(--color-text-muted);
-      max-width: 70ch;
-    }
-    .table-note a { color: var(--color-purple); }
-
-    /* Tarjetas de protocolo */
-    .protocol-card {
-      background: var(--color-white);
-      border: 1px solid var(--color-border);
-      border-left: 5px solid var(--color-purple);
-      border-radius: var(--radius-md);
-      padding: 26px 20px;
-      margin-bottom: 24px;
-      box-shadow: var(--shadow-sm);
-      transition: var(--transition);
-    }
-    .protocol-card:hover {
-      box-shadow: var(--shadow-hover);
-      border-left-color: var(--color-coral);
-    }
-
-    .protocol-badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      background: var(--color-surface);
-      color: var(--color-purple);
-      border: 1px solid var(--color-border);
-      padding: 4px 12px;
-      border-radius: 50px;
-      margin-bottom: 12px;
-    }
-
-    .protocol-card h3 {
-      font-size: 1.28rem;
-      line-height: 1.3;
-      color: var(--color-primary);
-      margin-bottom: 12px;
-    }
-
-    .protocol-card > p {
-      color: var(--color-text-muted);
-      font-size: 0.98rem;
-      margin-bottom: 16px;
-      max-width: 70ch;
-    }
-
-    .step-list { list-style: none; }
-
-    .step-list li {
-      position: relative;
-      padding-left: 28px;
-      margin-bottom: 12px;
-      font-size: 0.98rem;
-      color: var(--color-text-main);
-      max-width: 70ch;
-    }
-
-    .step-list li::before {
-      content: "✦" / "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: var(--color-coral);
-      font-size: 1.1rem;
-    }
-
-    .step-list li strong { color: var(--color-primary); }
-
-    /* Caja legal */
-    .legal-box {
-      background: var(--color-surface);
-      border: 1px solid var(--color-border);
-      border-top: 4px solid var(--color-primary);
-      border-radius: var(--radius-md);
-      padding: 26px 20px;
-      margin-top: 8px;
-    }
-
-    .legal-box h2 {
-      font-size: 1.25rem;
-      line-height: 1.35;
-      color: var(--color-primary);
-      margin-bottom: 14px;
-    }
-
-    .legal-box p {
-      color: var(--color-text-muted);
-      font-size: 0.96rem;
-      margin-bottom: 12px;
-      max-width: 70ch;
-    }
-
-    .legal-list {
-      padding-left: 20px;
-      font-size: 0.95rem;
-      color: var(--color-text-muted);
-      max-width: 70ch;
-    }
-    .legal-list li { margin-bottom: 10px; }
-    .legal-list ul { margin: 8px 0 8px; padding-left: 20px; }
-    .legal-list ul li { margin-bottom: 4px; }
-    .legal-list strong { color: var(--color-primary); }
-
-    .legal-box .legal-link {
-      display: inline-block;
-      margin-top: 6px;
-      color: var(--color-purple);
-      font-weight: 600;
-      font-size: 0.92rem;
-    }
-
-    .disclaimer {
-      margin-top: 40px;
-      padding: 2px 0 2px 16px;
-      border-left: 3px solid var(--color-border);
-      font-size: 0.9rem;
-      color: var(--color-text-muted);
-      max-width: 70ch;
-    }
-    .disclaimer p + p { margin-top: 6px; }
-
-    /* CTA final */
-    .article-cta {
-      text-align: center;
-      margin-top: 40px;
-      padding: 32px 20px;
-      background: var(--color-surface);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--color-border);
-    }
-    .article-cta p {
-      color: var(--color-text-muted);
-      margin: 0 auto 16px;
-      max-width: 52ch;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      min-height: 48px;
-      background: var(--color-purple);
-      color: #ffffff;
-      padding: 12px 34px;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 50px;
-      text-decoration: none;
-      transition: var(--transition);
-      box-shadow: 0 4px 14px rgba(112, 46, 134, 0.3);
-    }
-    .btn-primary:hover { background: var(--surface-dark); }
-
-    /* ───────── Footer ───────── */
-    .site-footer {
-      background: var(--surface-dark);
-      color: #d1c6d8;
-      padding: 48px 0 calc(32px + var(--dock-h) + env(safe-area-inset-bottom, 0px));
-      border-top: 3px solid var(--color-purple);
-    }
-    .site-footer :focus-visible { outline-color: #ffffff; }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 32px;
-    }
-
-    .footer-brand strong {
-      color: #ffffff;
-      font-size: 1.3rem;
-      font-family: 'Cinzel', serif;
-    }
-
-    .badge-sis {
-      display: inline-block;
-      margin-left: 8px;
-      background: rgba(234, 76, 93, 0.2);
-      color: #ff9ea7;
-      border: 1px solid var(--color-coral);
-      padding: 3px 8px;
-      border-radius: var(--radius-sm);
-      font-size: 0.75rem;
-      font-weight: 700;
-    }
-
-    .footer-tagline {
-      color: #e5dbe9;
-      font-size: 0.94rem;
-      margin-bottom: 12px;
-    }
-
-    .footer-line {
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      margin-top: 6px;
-      font-size: 0.9rem;
-    }
-    .footer-line .icon {
-      flex-shrink: 0;
-      width: 18px;
-      height: 18px;
-      margin-top: 3px;
-      color: #ff9ea7;
-    }
-
-    .footer-link { color: #ffffff; text-decoration: underline; }
-
-    .footer-actions {
-      display: flex;
-      gap: 14px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .btn-sm {
-      display: inline-flex;
-      align-items: center;
-      min-height: 44px;
-      padding: 8px 18px;
-      font-size: 0.86rem;
-      border-radius: var(--radius-sm);
-      text-decoration: none;
-      font-weight: 600;
-      transition: var(--transition);
-    }
-
-    .btn-outline-light {
-      background: transparent;
-      color: #fff;
-      border: 1px solid rgba(255, 255, 255, 0.4);
-    }
-    .btn-outline-light:hover { background: rgba(255, 255, 255, 0.15); }
-
-    .btn-accent-coral {
-      background: var(--color-coral-action);
-      color: #ffffff;
-    }
-    .btn-accent-coral:hover { background: var(--color-coral-action-hover); }
-
-    .footer-legal {
-      font-size: 0.84rem;
-      color: #b3a3bc;
-    }
-
-    /* ───────── Acceso rápido a ayuda (reemplaza el botón flotante de WhatsApp en esta página) ───────── */
-    .emergency-dock {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 999;
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
-      background: rgba(36, 17, 53, 0.97);
-      border-top: 2px solid var(--color-purple);
-      box-shadow: 0 -8px 24px rgba(36, 17, 53, 0.18);
-    }
-    .emergency-dock :focus-visible { outline-color: #ffffff; }
-
-    .dock-btn {
-      flex: 1;
-      max-width: 260px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 54px;
-      padding: 6px 10px;
-      background: var(--color-coral-action);
-      color: #ffffff;
-      text-decoration: none;
-      border-radius: 12px;
-      line-height: 1.15;
-      transition: var(--transition);
-    }
-    .dock-btn:hover { background: var(--color-coral-action-hover); }
-    .dock-btn strong { font-size: 1.25rem; }
-    .dock-btn span { font-size: 0.74rem; font-weight: 600; }
-
-    /* ───────── Tabla real desde 860px ───────── */
-    @media (min-width: 860px) {
-      .emergency-table { display: table; }
-      .emergency-table thead {
-        display: table-header-group;
-        position: static;
-        width: auto;
-        height: auto;
-        overflow: visible;
-        clip: auto;
-        white-space: normal;
-        background: var(--surface-dark);
-        color: #ffffff;
-      }
-      .emergency-table tbody { display: table-row-group; }
-      .emergency-table tr { display: table-row; padding: 0; }
-      .emergency-table th,
-      .emergency-table td { display: table-cell; }
-
-      .emergency-table thead th {
-        padding: 16px 20px;
-        font-weight: 600;
-        font-size: 0.9rem;
-        letter-spacing: 0.03em;
-        text-transform: uppercase;
-        border-bottom: 2px solid var(--color-purple);
-      }
-
-      .emergency-table tbody th,
-      .emergency-table td {
-        padding: 18px 20px;
-        border-bottom: 1px solid var(--color-border);
-        vertical-align: top;
-      }
-      .emergency-table tbody tr:last-child th,
-      .emergency-table tbody tr:last-child td { border-bottom: 0; }
-      .emergency-table td::before { display: none; }
-      .emergency-table tbody tr:hover { background-color: var(--color-surface); }
-    }
-
-    /* ───────── Tablet ───────── */
-    @media (min-width: 600px) {
-      .logo-title { font-size: 1.25rem; }
-      .logo-subtitle { font-size: 0.72rem; }
-      .page-header { padding: 52px 0 40px; }
-      .article-container { padding-top: 52px; }
-      .alert-banner-emergency { padding: 26px 26px 24px; }
-      .alert-options { grid-template-columns: 1fr 1fr; }
-      .protocol-card { padding: 30px 30px; }
-      .legal-box { padding: 30px 32px; }
-      .article-cta { padding: 40px; }
-    }
-
-    /* Panel de ayuda flotante en pantallas anchas */
-    @media (min-width: 760px) {
-      .emergency-dock {
-        left: auto;
-        right: 24px;
-        bottom: 24px;
-        padding: 10px;
-        border: 1px solid var(--color-purple);
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(36, 17, 53, 0.3);
-      }
-      .dock-btn { flex: none; min-width: 132px; }
-    }
-
-    /* ───────── Escritorio: navegación completa ─────────
-       Los 9 enlaces + botón no caben en el contenedor de 1160px del resto del sitio,
-       por eso el header se ensancha y el menú hamburguesa se mantiene bajo 1400px. */
-    @media (min-width: 1400px) {
-      :root { --header-h: 84px; }
-
-      .header-container { max-width: 1480px; }
-      .menu-toggle { display: none; }
-
-      .nav-links {
-        display: flex;
-        position: static;
-        width: auto;
-        max-height: none;
-        overflow: visible;
-        flex-direction: row;
-        align-items: center;
-        gap: 2px;
-        padding: 0;
-        background: none;
-        border: 0;
-        box-shadow: none;
-      }
-
-      .nav-item {
-        min-height: 0;
-        white-space: nowrap;
-        font-size: 0.84rem;
-        padding: 8px 9px;
-      }
-
-      .btn-nav {
-        margin: 0 0 0 8px;
-        min-height: 0;
-        white-space: nowrap;
-        font-size: 0.84rem;
-      }
-      .btn-nav:hover { transform: translateY(-2px); }
-
-      .brand-logo { flex-shrink: 0; }
-      .logo-title { font-size: 1.2rem; }
-      .page-header { padding: 58px 0 42px; }
-    }
-
-    /* ───────── Preferencias del usuario ───────── */
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after {
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-      }
-    }
-
-    /* Impresión: útil para dejar los teléfonos a mano */
-    @media print {
-      .site-header, .emergency-dock, .menu-toggle, .skip-link, .article-cta { display: none !important; }
-      body { padding-top: 0; }
-      .page-header { background: none; padding: 0 0 16px; }
-      .protocol-card, .alert-banner-emergency, .table-responsive-wrapper { box-shadow: none; break-inside: avoid; }
-      .site-footer { background: none; color: #000; border: 0; padding: 16px 0 0; }
-      .footer-actions { display: none; }
-      .footer-brand strong, .footer-tagline, .footer-legal, .footer-link { color: #000; }
-    }
-
-    /* ───────── Selector de tema (mismo widget que el resto del sitio) ───────── */
-    .theme-picker { position: relative; order: 5; width: 100%; padding-top: 5px; }
-    .theme-toggle {
-      display: flex; align-items: center; gap: 7px; width: 100%; min-height: 44px;
-      padding: 12px; border: 1px solid var(--color-border); border-radius: var(--radius-sm);
-      background: var(--color-white); color: var(--color-primary); cursor: pointer;
-      font-size: .86rem; line-height: 1; justify-content: flex-start; transition: var(--transition);
-    }
-    .theme-toggle:hover { border-color: var(--color-purple); }
-    .theme-toggle-icon { font-size: 1rem; color: var(--color-purple); }
-    .theme-toggle-current { font-weight: 600; }
-    .theme-toggle-chevron { margin-left: auto; transition: transform .18s ease; }
+    .header-nav { display: flex; align-items: center; gap: 8px; }
+    .header-nav > a { display: inline-flex; align-items: center; min-height: 44px; padding: 6px 10px; font-size: 1rem; }
+
+    /* Selector de tema (lo inserta site.js dentro de .header-nav) */
+    .theme-picker { position: relative; }
+    .theme-toggle { display: flex; align-items: center; gap: 7px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); color: var(--text); font: inherit; font-size: .95rem; line-height: 1; cursor: pointer; }
+    .theme-toggle:hover { border-color: var(--accent); }
+    .theme-toggle-icon { color: var(--accent); }
+    .theme-toggle-current { font-weight: 700; }
     .theme-picker.open .theme-toggle-chevron { transform: rotate(180deg); }
-    .theme-menu {
-      position: static; width: 100%; margin-top: 7px; padding: 7px;
-      background: var(--color-white); border: 1px solid var(--color-border);
-      border-radius: 10px; box-shadow: none;
-    }
+    .theme-menu { position: absolute; right: 0; top: calc(100% + 8px); z-index: 30; width: 180px; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
     .theme-menu[hidden] { display: none; }
-    .theme-menu button {
-      display: grid; grid-template-columns: 22px 1fr 18px; align-items: center; gap: 7px;
-      width: 100%; padding: 12px; border: 0; border-radius: 6px; background: transparent;
-      color: var(--color-primary); text-align: left; cursor: pointer; font-size: .86rem;
-    }
-    .theme-menu button:hover, .theme-menu button:focus-visible { background: var(--color-surface); }
-    .theme-check { opacity: 0; color: var(--color-purple); font-weight: 700; }
+    .theme-menu button { display: grid; grid-template-columns: 22px 1fr 18px; align-items: center; gap: 7px; width: 100%; padding: 11px 10px; border: 0; border-radius: 6px; background: transparent; color: var(--text); font: inherit; font-size: .95rem; text-align: left; cursor: pointer; }
+    .theme-menu button:hover, .theme-menu button:focus-visible { background: var(--surface-2); }
+    .theme-check { opacity: 0; color: var(--accent); font-weight: 700; }
     .theme-menu button.selected .theme-check { opacity: 1; }
-
-    @media (min-width: 1400px) {
-      .theme-picker { order: 0; width: auto; padding-top: 0; margin: 0 4px; }
-      .theme-toggle { width: auto; min-height: 0; padding: 8px 11px; font-size: .78rem; }
+    @media (max-width: 480px) {
       .theme-toggle-label { display: none; }
-      .theme-menu { position: absolute; top: calc(100% + 9px); right: 0; width: 170px; box-shadow: 0 16px 40px rgba(36, 17, 53, .2); }
+      .header-nav > a { padding-inline: 6px; }
     }
 
-    /* Fondo interactivo de site.js: detras del contenido, sin bloquear clics */
-    #gesture-trail {
-      position: fixed;
-      inset: 0;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
+    /* ───────── Ayuda inmediata: lo primero que se ve ───────── */
+    .help-now { padding-block: 28px 32px; }
+    .help-now h1 { margin-bottom: 10px; }
+    .lead { max-width: 38ch; font-size: 1.15em; }
+    .calls { display: grid; gap: 14px; margin-block: 22px 20px; }
+    @media (min-width: 720px) { .calls { grid-template-columns: 1fr 1fr; } }
+    .call {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 16px 18px 18px; border-radius: 14px;
+      background: var(--call-bg); color: var(--call-text); text-decoration: none;
     }
-    body > main, body > .site-footer { position: relative; z-index: 2; }
-    
-    @media (prefers-reduced-motion: reduce), (hover: none) { #gesture-trail { display: none; } }
-    @media print { #gesture-trail { display: none; } }
+    .call-head { display: flex; align-items: center; gap: 14px; }
+    .call:hover { background: var(--call-hover); }
+    .call-num { flex-shrink: 0; min-width: 5.2ch; padding: 6px 12px; border-radius: 10px; background: var(--call-num-bg); font-size: 1.7rem; font-weight: 700; line-height: 1.2; text-align: center; letter-spacing: .02em; }
+    .call-head strong { font-size: 1.08em; line-height: 1.35; }
+    .call-desc { font-size: .95em; line-height: 1.55; }
+    .help-notes { display: grid; gap: 10px; max-width: 62ch; color: var(--text); }
+    .help-notes p + p { margin-top: 0; }
 
-    /* ───────── Modo oscuro ───────── */
-    :root[data-theme="dark"] {
-      --color-primary: #f4edf7;
-      --color-purple: #d3aedf;
-      --color-purple-light: #c59bd3;
-      --color-coral: #ff90a0;
-      --color-coral-hover: #ff7288;
-      --color-coral-soft: #3a1f27;
-      --color-cream: #18131c;
-      --color-surface: #241c29;
-      --color-white: #241c29;
-      --color-text-main: #f4edf7;
-      --color-text-muted: #cbbfd4;
-      --color-border: #4b3c52;
-      --color-coral-action: #d63a4f;
-      --color-coral-action-hover: #c02f43;
-      color-scheme: dark;
+    /* ───────── Secciones plegables ───────── */
+    .more { padding-block: 8px 40px; }
+    .more-intro { margin-bottom: 18px; color: var(--muted); max-width: 62ch; }
+    .group-title { margin-block: 36px 8px; }
+    .group-note { margin-bottom: 16px; max-width: 62ch; }
+
+    details { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+    details + details { margin-top: 12px; }
+    summary {
+      display: flex; align-items: center; gap: 14px;
+      min-height: 60px; padding: 14px 18px;
+      cursor: pointer; list-style: none; border-radius: 12px;
     }
-    :root[data-theme="dark"] .site-header { background: rgba(24, 19, 28, .94); }
-    :root[data-theme="dark"] .page-header { background: radial-gradient(circle at 50% 0%, #2c2032 0%, #221a28 60%, #18131c 100%); }
-    :root[data-theme="dark"] .alert-banner-emergency { background: #2a171d; }
-    :root[data-theme="dark"] .alert-header h2 { color: #ff9b9b; }
-    :root[data-theme="dark"] .btn-nav,
-    :root[data-theme="dark"] .btn-primary { background: #865b95; border-color: #a17bad; }
-    :root[data-theme="dark"] .btn-nav:hover,
-    :root[data-theme="dark"] .btn-primary:hover { background: #9b6caa; }
-    :root[data-theme="dark"] .btn-call,
-    :root[data-theme="dark"] .phone-tag,
-    :root[data-theme="dark"] .dock-btn { background: var(--color-coral-action); }
-    :root[data-theme="dark"] .btn-call:hover,
-    :root[data-theme="dark"] .phone-tag:hover,
-    :root[data-theme="dark"] .dock-btn:hover { background: var(--color-coral-action-hover); }
-    :root[data-theme="dark"] .theme-menu { box-shadow: 0 16px 40px rgba(0, 0, 0, .45); }
+    summary::-webkit-details-marker { display: none; }
+    summary:hover { background: var(--surface-2); }
+    details[open] > summary { border-bottom: 1px solid var(--line); border-radius: 12px 12px 0 0; }
+    .summary-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .summary-text :is(h2, h3) { font-size: 1.15rem; }
+    .summary-hint { color: var(--muted); font-size: .92em; line-height: 1.5; }
+    /* Indicador +/− en un círculo: dice si el panel está abierto sin depender del color. */
+    summary::after {
+      content: "+" / "";
+      flex-shrink: 0; display: grid; place-items: center;
+      width: 32px; height: 32px; border: 1.5px solid var(--accent); border-radius: 50%;
+      color: var(--accent); font-size: 1.3rem; font-weight: 700; line-height: 1;
+    }
+    details[open] > summary::after { content: "−" / ""; }
+    .panel { padding: 18px 18px 22px; }
+    .panel > p, .panel li { max-width: 62ch; }
+    .panel > * + * { margin-top: 16px; }
+
+    /* Pasos numerados: el orden importa. */
+    .steps { padding-left: 1.6em; }
+    .steps li { padding-left: .3em; }
+    .steps li + li { margin-top: 12px; }
+    .steps li::marker { font-weight: 700; color: var(--accent); }
+
+    /* Otras líneas de ayuda */
+    .lines { list-style: none; padding: 0; display: grid; gap: 14px; }
+    .line { padding: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); }
+    .line h3 { font-size: 1.08rem; }
+    .line-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-block: 8px; }
+    .line-meta + p { margin-top: 0; }
+    .phone { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 64px; padding: 6px 16px; border-radius: 8px; background: var(--call-bg); color: var(--call-text); font-weight: 700; text-decoration: none; letter-spacing: .02em; }
+    .phone:hover { background: var(--call-hover); }
+    .line-extra { display: block; color: var(--muted); font-size: .92em; }
+    .sources { color: var(--muted); font-size: .92em; }
+
+    .legal-list { padding-left: 1.3em; }
+    .legal-list > li + li { margin-top: 12px; }
+    .legal-list ul { margin-block: 8px; padding-left: 1.3em; }
+    .legal-list ul li + li { margin-top: 4px; }
+
+    .after-crisis { margin-top: 36px; padding: 20px; border-left: 4px solid var(--line); background: var(--surface-2); border-radius: 0 12px 12px 0; }
+    .after-crisis h2 { font-size: 1.15rem; margin-bottom: 8px; }
+    .small { color: var(--muted); font-size: .92em; }
+
+    /* ───────── Pie de página: sobrio, sin llamados comerciales ───────── */
+    .site-footer { border-top: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: .95rem; padding-block: 28px calc(28px + var(--dock-h) + env(safe-area-inset-bottom, 0px)); }
+    .site-footer p + p { margin-top: 6px; }
+    .site-footer strong { color: var(--text); }
+
+    /* ───────── Acceso rápido a los números al bajar por la página ─────────
+       Solo aparece cuando los botones principales ya no se ven (script al final). */
+    .emergency-dock {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+      display: flex; justify-content: center; gap: 10px;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+      background: var(--surface); border-top: 1px solid var(--line);
+    }
+    .dock-btn { flex: 1; max-width: 240px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 56px; padding: 6px 10px; border-radius: 10px; background: var(--call-bg); color: var(--call-text); text-decoration: none; line-height: 1.25; }
+    .dock-btn:hover { background: var(--call-hover); }
+    .dock-btn strong { font-size: 1.2rem; letter-spacing: .02em; }
+    .dock-btn span { font-size: .85rem; }
+    .dock-auto .emergency-dock:not(.is-visible) { visibility: hidden; }
+    @media (min-width: 760px) {
+      .emergency-dock { left: auto; right: 20px; bottom: 20px; padding: 10px; border: 1px solid var(--line); border-radius: 14px; }
+      .dock-btn { flex: none; min-width: 150px; }
+      .site-footer { padding-bottom: 28px; }
+    }
+
+    @media print {
+      .site-header .header-nav, .emergency-dock, .skip-link { display: none !important; }
+      details { border: 0; }
+      summary::after { display: none; }
+      .call, .phone, .dock-btn { background: none; color: #000; border: 1px solid #000; }
+    }
   </style>
 </head>
-<body>
+<body data-calm>
 
   <a href="#contenido" class="skip-link">Saltar al contenido</a>
 
-  <!-- Navegación superior -->
-  <header class="site-header" id="siteHeader">
-    <div class="container header-container">
-      <a href="./" class="brand-logo">
-        <img class="brand-icon brand-icon--light" src="assets/logo-light.svg" width="44" height="44" alt="">
-        <img class="brand-icon brand-icon--dark" src="assets/logo-dark.svg" width="44" height="44" alt="">
-        <div class="brand-text">
-          <span class="logo-title">Ps. Iván Oda</span>
-          <span class="logo-subtitle">Terapia cognitivo-constructivista</span>
-        </div>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a href="./" class="brand">
+        <img class="brand-icon brand-icon--light" src="assets/logo-light.svg" width="40" height="40" alt="">
+        <img class="brand-icon brand-icon--dark" src="assets/logo-dark.svg" width="40" height="40" alt="">
+        <span class="brand-name">Ps. Iván Oda</span>
       </a>
-      <button type="button" class="menu-toggle menu" id="menuToggle" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="navegacion">
-        <span></span><span></span><span></span>
-      </button>
-      <nav class="nav-links" id="navegacion" aria-label="Navegación principal">
-        <a href="./" class="nav-item">Inicio</a>
-        <a href="./terapia/" class="nav-item">Terapia Metacognitiva</a>
-        <a href="./saber-mas/identidad/" class="nav-item">Identidad</a>
-        <a href="./saber-mas/neurodiversidad/" class="nav-item">Neurodiversidad</a>
-        <a href="./saber-mas/animo/" class="nav-item">Ánimo</a>
-        <a href="./saber-mas/sexualidad/" class="nav-item">Sexualidad</a>
-        <a href="./saber-mas/pensamiento/" class="nav-item">Pensamiento</a>
-        <a href="prevencion-del-suicidio-y-urgencias.html" class="nav-item" aria-current="page">Urgencias &amp; Crisis</a>
-        <a href="./#contacto" class="nav-item">Contacto</a>
-        <a href="./#contacto" class="btn-nav nav-contact">Agendar Hora</a>
+      <nav class="header-nav" id="navegacion" aria-label="Navegación">
+        <a href="./">Inicio</a>
       </nav>
     </div>
   </header>
 
   <main id="contenido">
 
-    <!-- Encabezado de página -->
-    <section class="page-header" aria-labelledby="page-title">
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Ruta de navegación">
-          <ol>
-            <li><a href="./">Inicio</a></li>
-            <li aria-current="page">Urgencias y prevención del suicidio</li>
-          </ol>
-        </nav>
-        <h1 class="page-title" id="page-title">Prevención del Suicidio y Urgencias Psiquiátricas</h1>
-        <p class="page-subtitle">Líneas de ayuda en Chile, cómo actuar según el tipo de crisis y qué establece la ley sobre la hospitalización psiquiátrica.</p>
+    <!-- 1. Ayuda inmediata: lo primero, sin tener que buscar -->
+    <section class="help-now wrap" aria-labelledby="page-title">
+      <h1 id="page-title">Urgencias y prevención del suicidio</h1>
+      <p class="lead">Si hay peligro ahora, llama. Es gratis, atienden a cualquier hora y no necesitas saber qué decir.</p>
+
+      <div class="calls">
+        <a class="call" href="tel:131">
+          <span class="call-head"><span class="call-num">131</span> <strong>SAMU: urgencia médica</strong></span>
+          <span class="call-desc">Hay riesgo de muerte ahora: un intento en curso, una sobredosis, una lesión grave o alguien fuera de control.</span>
+        </a>
+        <a class="call" href="tel:*4141">
+          <span class="call-head"><span class="call-num">*4141</span> <strong>Línea de Prevención del Suicidio</strong></span>
+          <span class="call-desc">Piensas en quitarte la vida o te preocupa alguien. Te escucha un psicólogo. Es confidencial.</span>
+        </a>
+      </div>
+
+      <div class="help-notes">
+        <p>Si acompañas a alguien en riesgo, <strong>no le dejes sola o solo</strong> mientras llega la ayuda.</p>
+        <p>Si no sabes a cuál llamar, llama al <strong>*4141</strong>: te orientan y pueden coordinar una derivación a urgencia.</p>
+        <p class="small">Esta consulta psicológica no atiende urgencias ni puede responder de inmediato. Ante una crisis, usa estos números.</p>
       </div>
     </section>
 
-    <article class="container article-container">
+    <!-- 2. Lo demás, plegado para no abrumar al abrir la página -->
+    <div class="more wrap">
+      <p class="more-intro">Más abajo hay otras líneas de ayuda y qué hacer en cada situación. Toca un tema para abrirlo.</p>
 
-      <!-- Ayuda inmediata -->
-      <section class="alert-banner-emergency" aria-labelledby="ayuda-inmediata">
-        <div class="alert-header">
-          <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
-            <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/>
-            <line x1="12" y1="9" x2="12" y2="13"/>
-            <line x1="12" y1="17" x2="12.01" y2="17"/>
-          </svg>
-          <h2 id="ayuda-inmediata">Si necesitas ayuda ahora</h2>
+      <details id="lineas-de-ayuda">
+        <summary>
+          <span class="summary-text">
+            <h2>Otras líneas de ayuda gratuitas</h2>
+            <span class="summary-hint">Orientación en salud, alcohol y drogas, niñez y adolescencia, violencia contra las mujeres, Carabineros</span>
+          </span>
+        </summary>
+        <div class="panel">
+          <ul class="lines">
+            <li class="line">
+              <h3>Salud Responde (Minsal)</h3>
+              <p class="line-meta"><a class="phone" href="tel:6003607777">600 360 7777</a> <span>24 horas, todos los días</span></p>
+              <p>Orientación de salud con apoyo en salud mental. Te dice a qué urgencia o centro de la red pública acudir (SAPU, SAR, hospitales).</p>
+            </li>
+            <li class="line">
+              <h3>Fono Drogas y Alcohol (SENDA)</h3>
+              <p class="line-meta"><a class="phone" href="tel:1412">1412</a> <span>24 horas, todos los días</span></p>
+              <p>Consejería anónima y confidencial, orientación a familiares y derivación a tratamiento por consumo de alcohol y otras drogas.</p>
+            </li>
+            <li class="line">
+              <h3>Línea Libre (Fundación Para la Confianza)</h3>
+              <p class="line-meta"><a class="phone" href="tel:1515">1515</a> <span>Lunes a viernes, de 10:00 a 16:30</span></p>
+              <p>Apoyo psicológico para niños, niñas y adolescentes ante malestar emocional grave o vulneración de derechos.
+                <span class="line-extra">También por la app Línea Libre. Confirma el horario en <a href="https://www.linealibre.cl/">linealibre.cl</a>. Fuera de horario, llama al *4141.</span></p>
+            </li>
+            <li class="line">
+              <h3>Fono Violencia contra las Mujeres (SernamEG)</h3>
+              <p class="line-meta"><a class="phone" href="tel:1455">1455</a> <span>Todos los días, de 8:00 a 00:00</span></p>
+              <p>Orientación y apoyo a mujeres que viven violencia de género y a quienes la presencian.
+                <span class="line-extra">También por WhatsApp: <a href="https://wa.me/56997007000" rel="noopener">+56 9 9700 7000</a>.</span></p>
+            </li>
+            <li class="line">
+              <h3>Carabineros de Chile</h3>
+              <p class="line-meta"><a class="phone" href="tel:133">133</a> <span>24 horas, todos los días</span></p>
+              <p>Cuando hay riesgo para otras personas o se necesita apoyo de la fuerza pública para un traslado.</p>
+            </li>
+          </ul>
+          <p class="sources">
+            Datos revisados el <time datetime="2026-09-21">21 de septiembre de 2026</time> en fuentes oficiales:
+            <a href="https://www.minsal.cl/linea-de-atencion-4141-no-estas-solo-no-estas-sola/">Minsal (*4141)</a>,
+            <a href="https://www.chileatiende.gob.cl/fichas/2467">Salud Responde</a>,
+            <a href="https://www.ventanillaunicasocial.gob.cl/ficha/242/fono-drogas-alcohol">SENDA (1412)</a>,
+            <a href="https://www.chileatiende.gob.cl/fichas/11937">SernamEG (1455)</a> y
+            <a href="https://www.linealibre.cl/">Línea Libre</a>.
+            Los horarios pueden cambiar: si una línea no responde, llama al *4141 o al 131.
+          </p>
         </div>
+      </details>
 
-        <div class="alert-options">
-          <div class="alert-option">
-            <h3>Hay riesgo de muerte inmediato</h3>
-            <p>Un intento en curso, una sobredosis, una lesión grave, o una persona fuera de control que puede dañarse o dañar a otros. No dejes sola a la persona.</p>
-            <a class="btn-call" href="tel:131">
-              <span class="btn-call__num">131</span>
-              <span class="btn-call__label">Llamar al SAMU<br>Urgencia médica</span>
-            </a>
-          </div>
+      <h2 class="group-title" id="como-actuar">Qué hacer según la situación</h2>
+      <p class="group-note">Si dudas sobre la gravedad, trátala como una urgencia y llama al <strong>131</strong>.</p>
 
-          <div class="alert-option">
-            <h3>Piensas en quitarte la vida, o te preocupa alguien</h3>
-            <p>Un psicólogo puede escucharte ahora. Es gratis y confidencial, atiende todos los días a cualquier hora y se llama desde celulares.</p>
-            <a class="btn-call" href="tel:*4141">
-              <span class="btn-call__num">*4141</span>
-              <span class="btn-call__label">Línea de Prevención<br>del Suicidio (Minsal)</span>
-            </a>
-          </div>
+      <details id="caso-1">
+        <summary>
+          <span class="summary-text">
+            <h3>Alguien piensa en quitarse la vida o lo intentó</h3>
+            <span class="summary-hint">Crisis suicida</span>
+          </span>
+        </summary>
+        <div class="panel">
+          <p>La persona expresa desesperanza extrema, dice que quiere terminar con su vida, tiene un plan o hace preparativos o se autolesiona.</p>
+          <ol class="steps">
+            <li><strong>Quédate y escucha.</strong> Mantén la calma y escucha sin juzgar, sin discutir y sin minimizar (evita frases como «tienes todo para ser feliz»). No dejes sola a la persona.</li>
+            <li><strong>Pregunta directamente.</strong> Pregúntale con claridad si está pensando en suicidarse. Preguntar no induce la idea ni aumenta el riesgo: abre la conversación.</li>
+            <li><strong>Aleja los medios letales.</strong> Retira objetos cortantes, medicamentos, armas u otros elementos que faciliten un acto impulsivo.</li>
+            <li><strong>Pide ayuda.</strong> Llama al <strong>*4141</strong> para recibir contención profesional. Si hay un intento en curso, una ingesta de fármacos o una lesión, no esperes: llama al <strong>131</strong>.</li>
+            <li><strong>Llévala a urgencia.</strong> Todo intento de suicidio o autolesión, y toda idea con plan o intención, necesita evaluación médica inmediata. Acude a la urgencia más cercana; si no puedes trasladarla con seguridad, llama al 131.</li>
+          </ol>
         </div>
-      </section>
+      </details>
 
-      <!-- Líneas de ayuda -->
-      <section class="content-block" aria-labelledby="lineas-de-ayuda">
-        <h2 id="lineas-de-ayuda">Líneas de ayuda gratuitas en Chile</h2>
-        <p>
-          Servicios estatales y comunitarios de atención gratuita. Si no sabes cuál elegir, llama al <strong>*4141</strong>: atiende las 24 horas y puede coordinar tu derivación a un servicio de urgencia.
-        </p>
-
-        <div class="table-responsive-wrapper">
-          <!-- Los roles ARIA repetidos evitan que algunos lectores de pantalla pierdan la semántica de tabla al apilarla en móvil -->
-          <table class="emergency-table" role="table">
-            <caption class="visually-hidden">Líneas de ayuda y emergencia en Chile: número de contacto, disponibilidad y tipo de apoyo</caption>
-            <thead role="rowgroup">
-              <tr role="row">
-                <th scope="col" role="columnheader">Servicio / Institución</th>
-                <th scope="col" role="columnheader">Contacto directo</th>
-                <th scope="col" role="columnheader">Disponibilidad</th>
-                <th scope="col" role="columnheader">Tipo de apoyo y alcance</th>
-              </tr>
-            </thead>
-            <tbody role="rowgroup">
-              <tr role="row">
-                <th scope="row" role="rowheader">Línea de Prevención del Suicidio (Minsal)</th>
-                <td role="cell" data-label="Contacto directo"><a href="tel:*4141" class="phone-tag" aria-label="Llamar al asterisco 4141">*4141</a></td>
-                <td role="cell" data-label="Disponibilidad">24 horas, todos los días</td>
-                <td role="cell" data-label="Tipo de apoyo">Psicólogos capacitados en intervención en crisis e ideación suicida. Gratuita desde celulares de todo Chile.</td>
-              </tr>
-              <tr role="row">
-                <th scope="row" role="rowheader">Salud Responde (Minsal)</th>
-                <td role="cell" data-label="Contacto directo"><a href="tel:6003607777" class="phone-tag">600 360 7777</a></td>
-                <td role="cell" data-label="Disponibilidad">24 horas, todos los días</td>
-                <td role="cell" data-label="Tipo de apoyo">Orientación de salud por profesionales del Minsal, con apoyo en salud mental. Informa a qué urgencia o centro de la red pública acudir (SAPU, SAR, hospitales).</td>
-              </tr>
-              <tr role="row">
-                <th scope="row" role="rowheader">Fono Drogas y Alcohol (SENDA)</th>
-                <td role="cell" data-label="Contacto directo"><a href="tel:1412" class="phone-tag">1412</a></td>
-                <td role="cell" data-label="Disponibilidad">24 horas, todos los días</td>
-                <td role="cell" data-label="Tipo de apoyo">Consejería profesional anónima y confidencial, orientación a familiares y derivación a centros de tratamiento y rehabilitación por consumo de alcohol y otras drogas.</td>
-              </tr>
-              <tr role="row">
-                <th scope="row" role="rowheader">SAMU (ambulancias y urgencia médica)</th>
-                <td role="cell" data-label="Contacto directo"><a href="tel:131" class="phone-tag">131</a></td>
-                <td role="cell" data-label="Disponibilidad">24 horas, todos los días</td>
-                <td role="cell" data-label="Tipo de apoyo">Despacho de ambulancias medicalizadas ante intentos de suicidio en curso, intoxicaciones agudas o agitación psicomotora grave.</td>
-              </tr>
-              <tr role="row">
-                <th scope="row" role="rowheader">Línea Libre (Fundación Para la Confianza)</th>
-                <td role="cell" data-label="Contacto directo">
-                  <a href="tel:1515" class="phone-tag">1515</a>
-                  <span class="phone-note">o app Línea Libre</span>
-                </td>
-                <td role="cell" data-label="Disponibilidad">
-                  Lunes a viernes<br>10:00 a 16:30 h
-                  <span class="phone-note">Confirma el horario en <a href="https://www.linealibre.cl/">linealibre.cl</a>. Fuera de horario, llama al *4141.</span>
-                </td>
-                <td role="cell" data-label="Tipo de apoyo">Apoyo y contención psicológica para niños, niñas y adolescentes ante malestar emocional grave o vulneración de derechos.</td>
-              </tr>
-              <tr role="row">
-                <th scope="row" role="rowheader">Fono Orientación en Violencia contra las Mujeres (SernamEG)</th>
-                <td role="cell" data-label="Contacto directo">
-                  <a href="tel:1455" class="phone-tag">1455</a>
-                  <span class="phone-note">o WhatsApp <a href="https://wa.me/56997007000" rel="noopener">+56 9 9700 7000</a></span>
-                </td>
-                <td role="cell" data-label="Disponibilidad">Todos los días<br>8:00 a 00:00 h</td>
-                <td role="cell" data-label="Tipo de apoyo">Orientación y apoyo a mujeres que viven violencia de género, y a quienes son testigos de ella, en momentos de desestabilización aguda.</td>
-              </tr>
-              <tr role="row">
-                <th scope="row" role="rowheader">Carabineros de Chile</th>
-                <td role="cell" data-label="Contacto directo"><a href="tel:133" class="phone-tag">133</a></td>
-                <td role="cell" data-label="Disponibilidad">24 horas, todos los días</td>
-                <td role="cell" data-label="Tipo de apoyo">Asistencia ante flagrancia, riesgo para terceros o cuando se requiere auxilio de la fuerza pública para un traslado asistido.</td>
-              </tr>
-            </tbody>
-          </table>
+      <details id="caso-2">
+        <summary>
+          <span class="summary-text">
+            <h3>Alguien pierde el contacto con la realidad</h3>
+            <span class="summary-hint">Crisis psicótica: delirios, alucinaciones o descompensación</span>
+          </span>
+        </summary>
+        <div class="panel">
+          <p>Se nota como agitación, voces o visiones que dan órdenes, desconfianza extrema o ideas de persecución o de daño.</p>
+          <ol class="steps">
+            <li><strong>Entorno seguro y sin confrontar.</strong> Habla en tono bajo y pausado. No discutas su delirio ni lo confirmes. Por ejemplo: «Entiendo que sientas mucho miedo ahora; estoy aquí para ayudarte a estar seguro».</li>
+            <li><strong>Distancia prudente.</strong> No invadas su espacio ni hagas movimientos bruscos.</li>
+            <li><strong>Menos estímulos.</strong> Reduce la cantidad de personas en la habitación y apaga ruidos molestos o luces intermitentes.</li>
+            <li><strong>Pide atención médica.</strong> Llama al <strong>131</strong> y di que es una crisis psiquiátrica. Si hay riesgo para otras personas, o la persona rechaza la ayuda y se pone en peligro, pide apoyo a Carabineros (<strong>133</strong>).</li>
+          </ol>
         </div>
+      </details>
 
-        <p class="table-note">
-          Datos revisados el <time datetime="2026-09-21">21 de septiembre de 2026</time> en fuentes oficiales:
-          <a href="https://www.minsal.cl/linea-de-atencion-4141-no-estas-solo-no-estas-sola/">Minsal (*4141)</a>,
-          <a href="https://www.chileatiende.gob.cl/fichas/2467">Salud Responde</a>,
-          <a href="https://www.ventanillaunicasocial.gob.cl/ficha/242/fono-drogas-alcohol">SENDA (1412)</a>,
-          <a href="https://www.chileatiende.gob.cl/fichas/11937">SernamEG (1455)</a> y
-          <a href="https://www.linealibre.cl/">Línea Libre</a>.
-          Los horarios pueden cambiar: si una línea no responde, llama al *4141 o al 131.
-        </p>
-      </section>
+      <details id="caso-3">
+        <summary>
+          <span class="summary-text">
+            <h3>Intoxicación o abstinencia por alcohol o drogas</h3>
+            <span class="summary-hint">Crisis por consumo de sustancias</span>
+          </span>
+        </summary>
+        <div class="panel">
+          <p>Intoxicación grave con alcohol, cocaína, pasta base, fármacos depresores u opioides, o abstinencia con riesgo de convulsiones o de delirium tremens.</p>
+          <ol class="steps">
+            <li><strong>Llama al 131 si ves señales de gravedad.</strong> No responde cuando le hablas, respira lento o con dificultad, tiene labios o uñas azulados, convulsiona o está muy confundida o con alucinaciones intensas.</li>
+            <li><strong>Posición lateral de seguridad.</strong> Si está inconsciente o vomitando pero respira, ponla de lado para mantener libres las vías respiratorias. No le induzcas el vómito.</li>
+            <li><strong>Reúne información.</strong> Guarda envases o restos de la sustancia y anota qué consumió, cuánto y cuándo, si lo sabes, para el equipo médico.</li>
+            <li><strong>Después.</strong> Primero la atención médica. Luego, el <strong>1412 de SENDA</strong> orienta sobre tratamiento y a qué centro acudir según tu comuna.</li>
+          </ol>
+        </div>
+      </details>
 
-      <!-- Protocolos por tipo de crisis -->
-      <section class="content-block" aria-labelledby="como-actuar">
-        <h2 id="como-actuar">Cómo actuar según el tipo de crisis</h2>
-        <p>
-          Las crisis de salud mental pueden verse muy distintas y tener niveles de riesgo distintos. Estos son los pasos recomendados en cada situación. Si dudas sobre la gravedad, trátala como una urgencia y llama al 131.
-        </p>
+      <details id="caso-4">
+        <summary>
+          <span class="summary-text">
+            <h3>Crisis de pánico o desborde emocional</h3>
+            <span class="summary-hint">Respiración acelerada, taquicardia, sensación de ahogo o de perder el control</span>
+          </span>
+        </summary>
+        <div class="panel">
+          <p>Episodios repentinos de respiración acelerada, taquicardia, sensación de infarto, ahogo o miedo a perder el control, sin perder el contacto con la realidad.</p>
+          <ol class="steps">
+            <li><strong>Descarta primero una urgencia médica.</strong> El pánico puede parecerse a un infarto. Llama al <strong>131</strong> si es el primer episodio, si hay dolor de pecho intenso o que se extiende al brazo o la mandíbula, si hay antecedentes cardíacos o desmayo, o si los síntomas no ceden o empeoran.</li>
+            <li><strong>Tranquiliza con calma.</strong> Si la persona ya conoce estos episodios y no hay señales de alerta, recuérdale con suavidad que los síntomas, aunque muy desagradables, pasan en unos minutos.</li>
+            <li><strong>Anclaje a los sentidos.</strong> Guía su atención al entorno: 5 cosas que pueda ver, 4 que pueda tocar, 3 que pueda oír, 2 que pueda oler y 1 que pueda saborear.</li>
+            <li><strong>Respiración lenta.</strong> Inhalar en 4 tiempos, retener 2 y exhalar suave por la boca en 6.</li>
+            <li><strong>Después.</strong> Cuando haya pasado, sugiere consultar a un profesional de salud para una evaluación y un tratamiento.</li>
+          </ol>
+        </div>
+      </details>
 
-        <!-- 1. Crisis suicida -->
-        <article class="protocol-card" aria-labelledby="caso-1">
-          <span class="protocol-badge">Caso 1</span>
-          <h3 id="caso-1">Crisis suicida (ideación activa o intento de suicidio)</h3>
-          <p>
-            La persona expresa desesperanza extrema, dice que quiere terminar con su vida, tiene un plan concreto o realiza conductas preparatorias o autolesivas.
-          </p>
-          <ul class="step-list">
-            <li><strong>Quédate y escucha:</strong> Mantén la calma y escucha sin juzgar, sin discutir y sin minimizar (evita frases como «tienes todo para ser feliz»). No dejes sola a la persona.</li>
-            <li><strong>Pregunta directamente:</strong> Pregúntale con claridad si está pensando en suicidarse. Preguntar no induce la idea ni aumenta el riesgo; abre la conversación.</li>
-            <li><strong>Aleja los medios letales:</strong> Retira del entorno inmediato objetos cortantes, medicamentos, armas u otros elementos que faciliten un acto impulsivo.</li>
-            <li><strong>Pide ayuda:</strong> Llama al <strong>*4141</strong> para recibir contención profesional. Si hay un intento en curso, una ingesta de fármacos o una lesión, no esperes: llama de inmediato al <strong>SAMU (131)</strong>.</li>
-            <li><strong>Llévala a urgencia:</strong> Todo intento autolesivo o de suicidio, y toda ideación estructurada (con plan o intención), requiere evaluación médica inmediata para decidir entre observación o ingreso hospitalario. Acude al servicio de urgencia más cercano; si no puedes trasladarla con seguridad, llama al 131.</li>
+      <h2 class="group-title">Información útil</h2>
+
+      <details id="marco-legal">
+        <summary>
+          <span class="summary-text">
+            <h3>Hospitalización psiquiátrica y tus derechos</h3>
+            <span class="summary-hint">Ley N° 21.331 y garantías GES en salud mental</span>
+          </span>
+        </summary>
+        <div class="panel">
+          <p>La <strong>Ley N° 21.331 de Reconocimiento y Protección de los Derechos de las Personas en la Atención de Salud Mental</strong> establece, entre otras cosas, que:</p>
+          <ul class="legal-list">
+            <li>El <strong>tratamiento ambulatorio</strong> y la <strong>hospitalización voluntaria</strong> son la primera opción.</li>
+            <li>
+              La <strong>hospitalización involuntaria</strong> es excepcional. Solo procede cuando no es posible un tratamiento ambulatorio y existe un riesgo cierto e inminente para la vida o la integridad de la persona o de terceros. Además, entre otras condiciones:
+              <ul>
+                <li>dos profesionales de distintas disciplinas deben prescribirla (uno de ellos médico cirujano, de preferencia psiquiatra);</li>
+                <li>no debe existir una alternativa menos restrictiva y eficaz;</li>
+                <li>se debe indicar por escrito su plazo y el tratamiento a seguir.</li>
+              </ul>
+              Nunca puede fundarse en la sola condición de discapacidad de la persona.
+            </li>
+            <li>
+              En Fonasa e Isapre, las <strong>Garantías Explícitas en Salud (GES)</strong> aseguran acceso, oportunidad y protección financiera para:
+              <ul>
+                <li>depresión en personas de 15 años y más;</li>
+                <li>trastorno bipolar en personas de 15 años y más;</li>
+                <li>esquizofrenia;</li>
+                <li>consumo perjudicial o dependencia de riesgo bajo a moderado de alcohol y drogas en menores de 20 años;</li>
+                <li>hospitalización de menores de 15 años con depresión grave refractaria o psicótica con riesgo suicida (incorporada en el decreto GES vigente desde el 1 de diciembre de 2025).</li>
+              </ul>
+              Para activarlas, un médico debe confirmar el diagnóstico y dejar constancia en el formulario GES.
+            </li>
           </ul>
-        </article>
+          <p><a href="https://diprece.minsal.cl/wp-content/uploads/2022/09/Guia-legal-Ley-21.331.pdf">Guía legal de la Ley 21.331 (Minsal, PDF)</a></p>
+        </div>
+      </details>
 
-        <!-- 2. Crisis psicótica -->
-        <article class="protocol-card" aria-labelledby="caso-2">
-          <span class="protocol-badge">Caso 2</span>
-          <h3 id="caso-2">Crisis psicótica aguda (delirios, alucinaciones o descompensación)</h3>
-          <p>
-            Se manifiesta como pérdida del contacto con la realidad, agitación, alucinaciones auditivas o visuales que dan órdenes, desconfianza extrema o ideas delirantes de persecución o de daño.
-          </p>
-          <ul class="step-list">
-            <li><strong>Entorno seguro y sin confrontación:</strong> Habla en un tono bajo y pausado. No discutas frontalmente su delirio ni lo confirmes. Por ejemplo: <em>«Entiendo que estés sintiendo mucho miedo en este momento; estoy aquí para ayudarte a estar seguro»</em>.</li>
-            <li><strong>Distancia prudente:</strong> No invadas su espacio corporal ni hagas movimientos bruscos, para no gatillar una reacción defensiva.</li>
-            <li><strong>Menos estímulos:</strong> Reduce la cantidad de personas en la habitación y apaga ruidos molestos o luces intermitentes.</li>
-            <li><strong>Atención médica de urgencia:</strong> Llama al <strong>SAMU (131)</strong> e indica que se trata de una crisis psiquiátrica. La persona será evaluada y trasladada a la unidad de urgencia que corresponda según su red de salud. Si hay riesgo para otras personas, o la persona rechaza la ayuda y se pone en peligro, pide apoyo a Carabineros (<strong>133</strong>).</li>
-          </ul>
-        </article>
-
-        <!-- 3. Consumo de sustancias -->
-        <article class="protocol-card" aria-labelledby="caso-3">
-          <span class="protocol-badge">Caso 3</span>
-          <h3 id="caso-3">Crisis por consumo de sustancias (intoxicación aguda o síndrome de abstinencia)</h3>
-          <p>
-            Cuadros por intoxicación grave con alcohol, cocaína, pasta base, fármacos depresores u opioides, o por privación con riesgo de convulsiones o de <em>delirium tremens</em>.
-          </p>
-          <ul class="step-list">
-            <li><strong>Llama al 131 ante señales de gravedad:</strong> No responde cuando le hablas, respira lento o con dificultad, tiene labios o uñas azulados, convulsiona o está muy confundida o con alucinaciones intensas. Ante estas señales, sospecha una intoxicación grave.</li>
-            <li><strong>Posición lateral de seguridad:</strong> Si está inconsciente o vomitando pero respira, colócala de lado para mantener libres las vías respiratorias. No le induzcas el vómito.</li>
-            <li><strong>Información para el equipo médico:</strong> Reúne envases, pastilleros o restos de la sustancia, y anota qué consumió, cuánto y cuándo (si lo sabes) para entregárselo al SAMU o al médico de turno.</li>
-            <li><strong>Tratamiento posterior:</strong> La atención médica de urgencia es la prioridad para estabilizar a la persona. Después, el <strong>Fono 1412 de SENDA</strong> orienta sobre los programas de tratamiento y rehabilitación disponibles y a qué centro acudir según tu comuna.</li>
-          </ul>
-        </article>
-
-        <!-- 4. Pánico -->
-        <article class="protocol-card" aria-labelledby="caso-4">
-          <span class="protocol-badge">Caso 4</span>
-          <h3 id="caso-4">Crisis de pánico y desregulación emocional grave</h3>
-          <p>
-            Episodios repentinos de respiración acelerada, taquicardia, sensación de infarto inminente, ahogo o miedo a perder el control, sin pérdida del contacto con la realidad.
-          </p>
-          <ul class="step-list">
-            <li><strong>Descarta primero una urgencia médica:</strong> Los síntomas del pánico pueden parecerse a los de un infarto. Llama al <strong>131</strong> si es el primer episodio, si hay dolor de pecho intenso o que se extiende al brazo o la mandíbula, si hay antecedentes cardíacos o desmayo, o si los síntomas no ceden o empeoran.</li>
-            <li><strong>Tranquiliza con calma:</strong> Si la persona ya conoce estos episodios y no hay señales de alerta, recuérdale con firmeza y suavidad que los síntomas, aunque muy desagradables, pasan en unos minutos.</li>
-            <li><strong>Anclaje sensorial (<em>grounding</em>):</strong> Guía su atención al entorno: 5 cosas que pueda ver, 4 que pueda tocar, 3 que pueda oír, 2 que pueda oler y 1 que pueda saborear.</li>
-            <li><strong>Respiración lenta:</strong> Invítala a inhalar en 4 tiempos, retener 2 y exhalar suavemente por la boca en 6.</li>
-            <li><strong>Seguimiento:</strong> Cuando la crisis haya pasado, sugiere consultar a un profesional de salud para una evaluación y un tratamiento psicoterapéutico y, si corresponde, psiquiátrico.</li>
-          </ul>
-        </article>
-      </section>
-
-      <!-- Marco legal -->
-      <section class="legal-box" aria-labelledby="marco-legal">
-        <h2 id="marco-legal">Hospitalización psiquiátrica en Chile: qué dice la Ley N° 21.331</h2>
-        <p>
-          La <strong>Ley N° 21.331 de Reconocimiento y Protección de los Derechos de las Personas en la Atención de Salud Mental</strong> establece, entre otras cosas, que:
-        </p>
-        <ul class="legal-list">
-          <li>El <strong>tratamiento ambulatorio</strong> y la <strong>hospitalización voluntaria</strong> son la primera opción.</li>
-          <li>
-            La <strong>hospitalización involuntaria</strong> es excepcional. Solo procede cuando no es posible un tratamiento ambulatorio y existe un riesgo cierto e inminente para la vida o la integridad de la persona o de terceros. Además, entre otras condiciones:
-            <ul>
-              <li>dos profesionales de distintas disciplinas deben prescribirla (uno de ellos médico cirujano, de preferencia psiquiatra);</li>
-              <li>no debe existir una alternativa menos restrictiva y eficaz;</li>
-              <li>se debe indicar por escrito su plazo y el tratamiento a seguir.</li>
-            </ul>
-            Nunca puede fundarse en la sola condición de discapacidad de la persona.
-          </li>
-          <li>
-            En Fonasa e Isapre, las <strong>Garantías Explícitas en Salud (GES)</strong> aseguran acceso, oportunidad y protección financiera para:
-            <ul>
-              <li>depresión en personas de 15 años y más;</li>
-              <li>trastorno bipolar en personas de 15 años y más;</li>
-              <li>esquizofrenia;</li>
-              <li>consumo perjudicial o dependencia de riesgo bajo a moderado de alcohol y drogas en menores de 20 años;</li>
-              <li>hospitalización de menores de 15 años con depresión grave refractaria o psicótica con riesgo suicida (incorporada en el decreto GES vigente desde el 1 de diciembre de 2025).</li>
-            </ul>
-            Para activarlas, un médico debe confirmar el diagnóstico y dejar constancia en el formulario GES.
-          </li>
-        </ul>
-        <a class="legal-link" href="https://diprece.minsal.cl/wp-content/uploads/2022/09/Guia-legal-Ley-21.331.pdf">Guía legal de la Ley 21.331 (Minsal, PDF)</a>
-      </section>
-
-      <!-- Aviso -->
-      <div class="disclaimer">
-        <p>Esta página es informativa y no reemplaza la evaluación de un profesional de la salud.</p>
-        <p>Esta consulta psicológica no es un servicio de urgencia y no puede responder de inmediato: ante una crisis, usa los números de esta página.</p>
-      </div>
-
-      <!-- CTA de consulta ambulatoria -->
-      <aside class="article-cta" aria-label="Consulta psicoterapéutica">
-        <p>Si la crisis ya está estabilizada y quieres iniciar un proceso de acompañamiento psicoterapéutico:</p>
-        <a href="./#contacto" class="btn-primary">Contactar a la consulta</a>
+      <aside class="after-crisis" aria-labelledby="despues">
+        <h2 id="despues">Cuando la crisis haya pasado</h2>
+        <p>Si quieres iniciar un proceso de acompañamiento psicoterapéutico, puedes <a href="./#contacto">contactar a la consulta</a>.</p>
+        <p class="small">Esta página es informativa y no reemplaza la evaluación de un profesional de la salud.</p>
       </aside>
-
-    </article>
+    </div>
   </main>
 
-  <!-- Footer -->
   <footer class="site-footer">
-    <div class="container footer-content">
-      <div class="footer-left">
-        <div class="footer-brand">
-          <strong>Ps. Iván Oda</strong>
-          <span class="badge-sis">Registro SIS: 779858</span>
-        </div>
-        <p class="footer-tagline">Psicoterapia Clínica Cognitivo-Constructivista y Enfoque Metacognitivo</p>
-        <p class="footer-line">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span>Guardia Vieja #255, Providencia, Santiago de Chile (Metro Los Leones)</span>
-        </p>
-        <p class="footer-line">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-          <a href="mailto:mira.aurora.psi@gmail.com" class="footer-link">mira.aurora.psi@gmail.com</a>
-        </p>
-        <p class="footer-line">
-          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6A8.4 8.4 0 0 1 12.5 3H13a8.5 8.5 0 0 1 8 8v.5z"/></svg>
-          <span>WhatsApp: <a href="https://wa.me/56920127300" target="_blank" rel="noopener" class="footer-link">+56 9 2012 7300</a></span>
-        </p>
-      </div>
-      <div class="footer-right">
-        <div class="footer-actions">
-          <a href="./valores/" class="btn-sm btn-outline-light">Aranceles 2° Semestre 2026</a>
-          <a href="./#contacto" class="btn-sm btn-accent-coral">Primera Sesión Gratis</a>
-        </div>
-        <div class="footer-legal">
-          <p>&copy; 2026 Psicología y Bienestar. Todos los derechos reservados.</p>
-          <p><small>Guardia Vieja #255, Providencia</small></p>
-        </div>
-      </div>
+    <div class="wrap">
+      <p><strong>Ps. Iván Oda</strong> · Registro Superintendencia de Salud N.º 779858</p>
+      <p>Guardia Vieja #255, Providencia, Santiago (Metro Los Leones)</p>
+      <p><a href="mailto:mira.aurora.psi@gmail.com">mira.aurora.psi@gmail.com</a> · WhatsApp <a href="https://wa.me/56920127300" rel="noopener">+56 9 2012 7300</a></p>
+      <p><a href="./valores/">Aranceles y modalidades</a></p>
     </div>
   </footer>
 
-  <!-- Acceso rápido a ayuda: en esta página reemplaza al botón flotante de WhatsApp -->
-  <aside class="emergency-dock" aria-label="Acceso rápido a ayuda">
-    <a class="dock-btn" href="tel:*4141" aria-label="*4141 Prevención del suicidio, llamar ahora">
-      <strong>*4141</strong>
-      <span>Prevención del suicidio</span>
-    </a>
-    <a class="dock-btn" href="tel:131" aria-label="131 SAMU · Urgencia, llamar ahora">
-      <strong>131</strong>
-      <span>SAMU · Urgencia</span>
-    </a>
+  <!-- Acceso rápido: aparece al bajar, cuando los botones de arriba ya no se ven -->
+  <aside class="emergency-dock" aria-label="Llamar ahora">
+    <a class="dock-btn" href="tel:131"><strong>131</strong><span>SAMU · Urgencia</span></a>
+    <a class="dock-btn" href="tel:*4141"><strong>*4141</strong><span>Prevención del suicidio</span></a>
   </aside>
 
-  <!-- Navegación móvil y selector de tema (compartido con el resto del sitio) -->
-  <script src="site.js?v=emergency-49"></script>
+  <script>
+    (() => {
+      // Paneles plegados: se abren al llegar por un enlace con #ancla y al imprimir.
+      const panels = [...document.querySelectorAll('details')];
+      const openTarget = () => {
+        const id = decodeURIComponent(location.hash.slice(1));
+        const el = id && document.getElementById(id);
+        if (!el) return;
+        for (let d = el.closest('details'); d; d = d.parentElement.closest('details')) d.open = true;
+        el.scrollIntoView();
+      };
+      openTarget();
+      addEventListener('hashchange', openTarget);
+      let before = [];
+      addEventListener('beforeprint', () => { before = panels.map(d => d.open); panels.forEach(d => { d.open = true; }); });
+      addEventListener('afterprint', () => panels.forEach((d, i) => { d.open = before[i]; }));
+
+      // La barra de llamada rápida solo aparece cuando los botones principales salen de la pantalla.
+      const dock = document.querySelector('.emergency-dock');
+      const calls = document.querySelector('.calls');
+      if (dock && calls && 'IntersectionObserver' in window) {
+        document.documentElement.classList.add('dock-auto');
+        new IntersectionObserver(([entry]) => dock.classList.toggle('is-visible', !entry.isIntersecting)).observe(calls);
+      }
+    })();
+  </script>
+  <!-- Selector de tema compartido con el resto del sitio -->
+  <script src="site.js?v=emergency-51"></script>
 </body>
 </html>
