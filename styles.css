@@ -539,3 +539,8 @@ body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1
 #valores .svc-nav a:hover{border-color:var(--svc)}
 #valores .svc-nav .svc-icon{width:36px;height:36px;margin:0}
 #valores .svc-nav .svc-icon svg{width:20px;height:20px}
+
+/* Desktop header between the hamburger breakpoint and wide screens: keep every item on
+   one line ("Psicoeducación" is the longest label) by dropping the "Tema" word and tightening gaps. */
+@media(min-width:1101px){.header nav>a,.header .booking-cta{white-space:nowrap}}
+@media(min-width:1101px) and (max-width:1280px){.header .theme-toggle-label{display:none}.header nav{gap:18px}.header .nav-wrap{gap:20px}}

@@ -116,3 +116,10 @@
 :root[data-theme="dark"] .therapy-page .reflection-grid article,:root[data-theme="dark"] .therapy-page .purpose-grid article,:root[data-theme="dark"] .therapy-page .evidence-grid article{--card-accent:var(--accent-lilac);--card-bg:var(--card-lilac)}
 :root[data-theme="dark"] .therapy-page .reflection-grid article:nth-child(2),:root[data-theme="dark"] .therapy-page .purpose-grid article:nth-child(2n),:root[data-theme="dark"] .therapy-page .evidence-grid article:nth-child(2){--card-accent:var(--accent-sky);--card-bg:var(--card-sky)}
 :root[data-theme="dark"] .therapy-page .reflection-grid article:nth-child(3),:root[data-theme="dark"] .therapy-page .purpose-grid article:nth-child(3){--card-accent:var(--accent-peach);--card-bg:var(--card-peach)}
+
+/* Icons on the reading cards: the same round badge as Valores, in each card's accent colour. */
+.therapy-page .card-icon{display:inline-grid;place-items:center;flex-shrink:0;width:48px;height:48px;margin-bottom:16px;border-radius:50%;background:var(--card-accent);color:var(--paper)}
+.therapy-page .card-icon svg{width:26px;height:26px}
+.therapy-page .card-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.therapy-page .card-head .card-icon{margin:0}
+.therapy-page .card-num{font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;line-height:1;color:var(--card-accent)}
