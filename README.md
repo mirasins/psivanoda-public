@@ -1,8 +1,8 @@
-# Ps. Iván Oda — web beta
+# Ps. Iván Oda — sitio web
 
-Beta: https://mirasins.github.io/psivanoda/
+Sitio publicado: https://www.psivanoda.cl/
 
-Sitio estático HTML, CSS y JavaScript, a partir del ZIP proporcionado por su propietario. GitHub Pages publica la raíz de main. Los cambios incorporados a main se publican automáticamente.
+Sitio estático HTML, CSS y JavaScript. GitHub Pages publica la raíz de main en el dominio del archivo CNAME (www.psivanoda.cl). Los cambios incorporados a main se publican automáticamente.
 
 ## Colaborar
 
@@ -19,8 +19,11 @@ Usar Issues para errores y propuestas, indicando página, resultado esperado y c
 - terapia/, valores/, saber-mas/: secciones.
 - prevencion-del-suicidio-y-urgencias.html: recursos de urgencia.
 - styles.css, site.js, assets/: estilos, interacción e imágenes.
+- robots.txt, sitemap.xml: indexación en buscadores. Al agregar o quitar una página, actualizar sitemap.xml.
 
-Los enlaces internos son relativos para funcionar tanto en Pages como en un dominio propio. La beta incluye aviso visible y noindex; esto no restringe el acceso. Conserva los contactos y formularios reales del original. No se configuró el dominio psivanoda.cl.
+Los enlaces internos son relativos. Las URL absolutas (canonical, Open Graph, datos estructurados, sitemap) usan https://www.psivanoda.cl/, con www: https://psivanoda.cl sin www no tiene certificado HTTPS válido. Todas las páginas son indexables (index, follow).
+
+Tras cambiar styles.css o site.js, subir el parámetro ?v= en todas las páginas para que los navegadores no usen la versión en caché.
 
 ## Entrega a otro asistente
 
