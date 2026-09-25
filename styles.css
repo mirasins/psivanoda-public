@@ -380,8 +380,8 @@ body > .skip{position:fixed;z-index:100}
 html:root[data-theme="dark"]{--ink:#f1ecf7;--purple:#c7b3f0;--muted:#c2bbd3;--rose:#f2a7b8;--line:#3a3354;--paper:#141226;--wash:#1b1830;--card-lilac:#241f3c;--card-sky:#15213d;--card-peach:#34202e;--accent-lilac:#b9a2ee;--accent-sky:#8fb8f5;--accent-peach:#f0a08c;background:#0e0c1d}
 html:root[data-theme="dark"] body,html:root[data-theme="dark"] :is(.home-page,.therapy-page,.rates-page,.learning){background:transparent}
 html:root[data-theme="dark"] body::before,html:root[data-theme="dark"] body::after{content:'';position:fixed;z-index:-1;pointer-events:none}
-/* Sky with a moon high on the right. */
-html:root[data-theme="dark"] body::before{inset:0;background:radial-gradient(circle at 84% 13%,#f6efdc 0,#f6efdc 26px,#f6efdc40 29px,#c7b3f01f 70px,#c7b3f000 190px),linear-gradient(180deg,#0a0a1b 0,#121129 32%,#1f1838 60%,#34203f 84%,#4a2740 100%)}
+/* Sky with a large moon on the right, level with the portrait. */
+html:root[data-theme="dark"] body::before{inset:0;background:radial-gradient(circle at min(calc(100% - 60px),max(86%,calc(50% + 690px))) 42%,#f6efdc 0,#f6efdc 44px,#f6efdc40 48px,#c7b3f01f 115px,#c7b3f000 300px),linear-gradient(180deg,#0a0a1b 0,#121129 32%,#1f1838 60%,#34203f 84%,#4a2740 100%)}
 /* Phones: a smaller moon beside, not behind, the urgencias button. */
 @media(max-width:720px){html:root[data-theme="dark"] body::before{background:radial-gradient(circle at calc(100% - 30px) 118px,#f6efdc 0,#f6efdc 14px,#f6efdc40 16px,#c7b3f01f 40px,#c7b3f000 110px),linear-gradient(180deg,#0a0a1b 0,#121129 32%,#1f1838 60%,#34203f 84%,#4a2740 100%)}}}
 /* Afterglow: the sun just below the horizon. */
