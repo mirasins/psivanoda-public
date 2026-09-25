@@ -499,3 +499,43 @@ body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1
   body > footer::before{background-image:url(assets/nocturno-contemplacion-360.webp)}
 }
 
+
+/* ───────── Valores: one colour and icon per service ─────────
+   Each service keeps its own hue (card border, tint, icon and shortcut chip) so the
+   boxes read apart at a glance; icons are inline SVG so they follow the theme. */
+#valores .svc{--svc:#6f4bb0;--svc-bg:#f2ecfb;--svc-line:#ddd0f3;--svc-on:#fff}
+#valores .svc-estudiantes{--svc:#4f5db0;--svc-bg:#eceefb;--svc-line:#cfd4f2}
+#valores .svc-parejas{--svc:#b23a6c;--svc-bg:#fcebf2;--svc-line:#f2c9da}
+#valores .svc-familias{--svc:#8b3f9c;--svc-bg:#f7eaf9;--svc-line:#e7cbee}
+#valores .svc-convenios{--svc:#4d6588;--svc-bg:#ebf0f6;--svc-line:#cdd8e6}
+#valores .svc-talleres{--svc:#9a3a78;--svc-bg:#f9e9f3;--svc-line:#eccbe0}
+:root[data-theme="dark"] #valores .svc{--svc:#bfa8f2;--svc-bg:#261f40;--svc-line:#43386a;--svc-on:#17152a}
+:root[data-theme="dark"] #valores .svc-estudiantes{--svc:#a3b2f5;--svc-bg:#1d2346;--svc-line:#34406f}
+:root[data-theme="dark"] #valores .svc-parejas{--svc:#f2a2c2;--svc-bg:#3a1e30;--svc-line:#62344f}
+:root[data-theme="dark"] #valores .svc-familias{--svc:#dca4ec;--svc-bg:#321f3d;--svc-line:#573a66}
+:root[data-theme="dark"] #valores .svc-convenios{--svc:#a3bddc;--svc-bg:#1d2838;--svc-line:#36475f}
+:root[data-theme="dark"] #valores .svc-talleres{--svc:#eaa2d4;--svc-bg:#361f36;--svc-line:#5e365a}
+
+#valores :is(.price-card,details).svc{background:var(--svc-bg);border:1px solid var(--svc-line);border-top:5px solid var(--svc)}
+#valores .svc .eyebrow{color:var(--svc)}
+#valores .svc-icon{display:inline-grid;place-items:center;flex-shrink:0;width:48px;height:48px;margin:0 0 14px;border-radius:50%;background:var(--svc);color:var(--svc-on)}
+#valores .svc-icon svg{width:26px;height:26px}
+
+/* Collapsible extras: icon, title and a chevron that shows open/closed. */
+#valores details.svc>summary{display:flex;align-items:center;gap:14px;list-style:none}
+#valores details.svc>summary::-webkit-details-marker{display:none}
+#valores details.svc>summary .svc-icon{margin:0}
+#valores .svc-summary{display:block;margin:0;font-size:1.05rem;font-weight:600;color:var(--ink)}
+#valores .svc-summary span{display:block;margin-top:2px;font-size:.9rem;font-weight:400;color:var(--muted)}
+#valores details.svc>summary::after{content:'';flex-shrink:0;margin-left:auto;width:10px;height:10px;border-right:2px solid var(--svc);border-bottom:2px solid var(--svc);transform:translateY(-3px) rotate(45deg)}
+#valores details.svc[open]>summary::after{transform:translateY(3px) rotate(-135deg)}
+
+/* Shortcut chips at the top: the same icon and colour as the card they lead to.
+   A plain block: the generic nav rules (flex row, hidden on phones for the menu) must not apply. */
+#valores .svc-nav{display:block;position:static;margin:0 0 24px;padding:0;background:none;border:0;box-shadow:none}
+#valores .svc-nav-title{margin:0 0 10px;font-weight:600}
+#valores .svc-nav ul{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+#valores .svc-nav a{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:6px 18px 6px 6px;border:1px solid var(--svc-line);border-radius:999px;background:var(--svc-bg);color:var(--ink);font-weight:500;text-decoration:none}
+#valores .svc-nav a:hover{border-color:var(--svc)}
+#valores .svc-nav .svc-icon{width:36px;height:36px;margin:0}
+#valores .svc-nav .svc-icon svg{width:20px;height:20px}
