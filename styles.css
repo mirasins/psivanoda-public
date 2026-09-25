@@ -233,7 +233,8 @@ body > .skip{position:fixed;z-index:100}
 /* ───────── Motion: one-time entrances and hover feedback, never looping ───────── */
 @media (prefers-reduced-motion:no-preference){
   @keyframes pv-rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
-  @keyframes pv-reveal-img{from{opacity:0;transform:scale(1.04);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+  /* The portrait is the page's main content (LCP): it comes into focus but is never invisible. */
+  @keyframes pv-reveal-img{from{transform:scale(1.04);filter:blur(6px)}to{transform:none;filter:none}}
   @keyframes pv-slide-in{from{opacity:0;transform:translateX(-26px)}to{opacity:1;transform:none}}
   @keyframes pv-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
@@ -484,3 +485,17 @@ body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1
 /* Phones: the footer, not the page, reserves the room under the fixed booking bar,
    so no strip of sky shows between the two. */
 @media(max-width:720px){body{padding-bottom:0}body > footer{padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}}
+
+/* ───────── Phones: legible text and thumb-sized targets ─────────
+   Nothing under 12px (the header tagline was 8px) and body notes at 14px or more;
+   stand-alone links and buttons at least 44px tall (WCAG 2.5.5 / 2.5.8). */
+@media(max-width:720px){
+  .header .brand small{font-size:.75rem;letter-spacing:.04em;max-width:none}
+  .footer-inner p,.footer-inner>span{font-size:.875rem}
+  .free-note,dt small,.quick-contact .mail-note{font-size:.875rem}
+  .crisis-bar a{min-height:44px;font-size:.875rem}
+  .text-link,.back-link{display:inline-flex;align-items:center;min-height:44px}
+  .contact-info a{display:flex;align-items:center;min-height:44px}
+  body > footer::before{background-image:url(assets/nocturno-contemplacion-360.webp)}
+}
+

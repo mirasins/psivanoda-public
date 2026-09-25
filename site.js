@@ -98,9 +98,11 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
 
 
 // Faint background (stars at nightfall in dark mode): a sparse dot mesh that gently parts around the cursor and
-// eases back, plus a soft halo. Calm by design; disabled on touch and reduced motion.
+// eases back, plus a soft halo. Calm by design; disabled on touch, reduced motion and on
+// pages marked data-calm (the crisis page), where any extra movement is unwelcome.
 (() => {
-  if (matchMedia('(prefers-reduced-motion: reduce), (hover: none)').matches) return;
+  if (document.body.hasAttribute('data-calm') ||
+      matchMedia('(prefers-reduced-motion: reduce), (hover: none)').matches) return;
 
   const canvas = document.createElement('canvas');
   canvas.id = 'gesture-trail';
@@ -214,7 +216,9 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   ];
   const items = [];
   groups.forEach(selector => document.querySelectorAll(selector).forEach(el => {
-    if (el.closest('.hero') || items.includes(el)) return;
+    // Content already on screen at load is shown as is: hiding it only delays the first paint
+    // of the main content (LCP) and adds motion nobody asked for.
+    if (el.closest('.hero') || items.includes(el) || el.getBoundingClientRect().top < innerHeight) return;
     items.push(el);
   }));
   // Stagger siblings that share a parent so grids cascade instead of popping in together.
