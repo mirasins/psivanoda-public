@@ -281,17 +281,18 @@ body > .skip{position:fixed;z-index:100}
 }
 
 /* ───────── Light theme: sunrise ─────────
-   A dawn sky (mauve haze → blush → apricot → gold) behind the page, with a soft sun
+   A dawn sky (lavender → lilac → violet-rose) behind the page, with a soft sun
    that climbs as the reader scrolls. Warm hues only: rose, coral, apricot and gold. */
 :root:not([data-theme="dark"]){--ink:#3d2733;--purple:#9a3f4e;--muted:#6a5559;--rose:#c0533f;--line:#f0dacd;--paper:#fffaf4;--wash:#fdf1e7;--card-lilac:#fce9e6;--card-sky:#fdf1d8;--card-peach:#fde5d3;--accent-lilac:#b44a5c;--accent-sky:#9a5f10;--accent-peach:#bb5a33;background:#fdeee4}
 :root:not([data-theme="dark"]) body,:root:not([data-theme="dark"]) :is(.home-page,.therapy-page,.rates-page,.learning){background:transparent}
 :root:not([data-theme="dark"]) body::before,:root:not([data-theme="dark"]) body::after{content:'';position:fixed;z-index:-1;pointer-events:none}
-/* Sky: cool haze at the top warming into a golden horizon. */
-:root:not([data-theme="dark"]) body::before{inset:0;background:radial-gradient(130% 55% at 70% 108%,#ffd49acc 0,#ffc39466 38%,#ffc39400 72%),linear-gradient(180deg,#f1e6ee 0,#f8e3e6 26%,#fde5da 52%,#fee6cf 78%,#ffefd4 100%)}
-/* Sun: a soft disc with faint rays, centred on the horizon line. */
-:root:not([data-theme="dark"]) body::after{left:calc(72% - 48vmax);top:calc(100% - 48vmax);width:96vmax;height:96vmax;border-radius:50%;background:radial-gradient(circle,#fffaec 0,#fff1cf 4%,#ffdca0b3 7%,#ffc98e59 16%,#ffbf9422 32%,#ffbf9400 52%),repeating-conic-gradient(#fff1d600 0deg,#fff1d673 4deg,#fff1d600 8deg,#fff1d600 20deg);-webkit-mask-image:radial-gradient(circle,#000 0,#000 18%,transparent 62%);mask-image:radial-gradient(circle,#000 0,#000 18%,transparent 62%);transform:translateY(4vh);will-change:transform}
+/* Sky: pale lavender at the top deepening into a lilac-violet horizon. */
+:root:not([data-theme="dark"]) body::before{inset:0;background:radial-gradient(130% 55% at 20% 108%,#e9c8f0cc 0,#d9b9f266 38%,#d9b9f200 72%),linear-gradient(180deg,#e6e0f6 0,#ece1f7 28%,#f1e0f4 54%,#f4dbef 78%,#f1d2ec 100%)}
+/* Sun: a soft disc with faint rays, low on the left of the horizon. */
+:root:not([data-theme="dark"]) body::after{left:calc(18% - 48vmax);top:calc(100% - 48vmax);width:96vmax;height:96vmax;border-radius:50%;background:radial-gradient(circle,#fff8fc 0,#fbe9f6 4%,#efc8ecb3 7%,#dab4f059 16%,#c8a6ee22 32%,#c8a6ee00 52%),repeating-conic-gradient(#fbeefa00 0deg,#fbeefa73 4deg,#fbeefa00 8deg,#fbeefa00 20deg);-webkit-mask-image:radial-gradient(circle,#000 0,#000 18%,transparent 62%);mask-image:radial-gradient(circle,#000 0,#000 18%,transparent 62%);transform:translateY(4vh);will-change:transform}
 /* Where supported, the sun rises (and its rays turn) with the scroll position. */
-@keyframes pv-sunrise{from{transform:translateY(30vh) rotate(0)}to{transform:translateY(-40vh) rotate(28deg)}}
+/* It climbs on a diagonal and ends up where the figure in the footer is looking. */
+@keyframes pv-sunrise{from{transform:translate(0,30vh) rotate(0)}to{transform:translate(16vw,-460px) rotate(28deg)}}
 @supports (animation-timeline:scroll()){
   @media (prefers-reduced-motion:no-preference){
     :root:not([data-theme="dark"]) body::after{animation:pv-sunrise linear both;animation-timeline:scroll(root)}
@@ -300,7 +301,7 @@ body > .skip{position:fixed;z-index:100}
 
 /* Chrome and type. */
 :root:not([data-theme="dark"]) .header{background:#fff8f1e0;border-bottom:0;box-shadow:0 1px 0 #f0d6c8}
-:root:not([data-theme="dark"]) .header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#9a3f4e,#d0603f 35%,#ec9150 65%,#f5c46a)}
+:root:not([data-theme="dark"]) .header::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#9a3f4e,#b04f8a 35%,#9b6fd0 65%,#c9a8ee)}
 :root:not([data-theme="dark"]) h1 em,:root:not([data-theme="dark"]) h2 em{background:linear-gradient(90deg,#b8472f,#a13a5a);-webkit-background-clip:text;background-clip:text;color:transparent}
 :root:not([data-theme="dark"]) .eyebrow{color:#9a3f4e}
 :root:not([data-theme="dark"]) .text-link{text-decoration-color:#e3a28c}
@@ -309,14 +310,14 @@ body > .skip{position:fixed;z-index:100}
 :root:not([data-theme="dark"]) :is(.booking-cta,.button:not(.light),.mobile-booking-primary,.contact .booking-cta):hover{background:linear-gradient(135deg,#732a3a,#963b28)}
 :root:not([data-theme="dark"]) .button.light:hover{background:#fde6d3}
 :root:not([data-theme="dark"]) :is(.menu,.mobile-booking,.skip){background:var(--paper)}
-:root:not([data-theme="dark"]) body > footer{background:#fdeee3d9;border-top:1px solid #f0d6c6}
+:root:not([data-theme="dark"]) body > footer{background:linear-gradient(transparent 0,transparent var(--scene-h),#e8d3ea var(--scene-h),#e8d3ea calc(var(--scene-h) + 1px),#fbf1f7d9 calc(var(--scene-h) + 1px));border-top:0}
 
 /* Sections: translucent so the sky shows through. */
 :root:not([data-theme="dark"]) :is(.home-page .approach,.therapy-meta,.therapy-purpose){background:#fff1ea8c;border-color:#f0d6c8}
-:root:not([data-theme="dark"]) :is(.home-page .first-session,.therapy-evidence){background:#fff4df8c;border-color:#f1dcb6}
+:root:not([data-theme="dark"]) :is(.home-page .first-session,.therapy-evidence){background:#f6eefc8c;border-color:#e3d3f0}
 :root:not([data-theme="dark"]) .prices{background:transparent;border-color:var(--line)}
 :root:not([data-theme="dark"]) .home-page .hero-copy{background:linear-gradient(135deg,#fff5eceb,#fde6dceb);border-color:#f2d2c4}
-:root:not([data-theme="dark"]) .home-page .welcome-strip{background:linear-gradient(90deg,#f8d8d6,#fcdcc6 50%,#fdebc2);border-color:#f0d2c0}
+:root:not([data-theme="dark"]) .home-page .welcome-strip{background:linear-gradient(90deg,#f3d9ec,#eadcf7 50%,#e0d8f8);border-color:#e2cfe9}
 
 /* Contact: the last of the night giving way to first light. */
 :root:not([data-theme="dark"]) :is(.contact,.home-page .contact){background:linear-gradient(160deg,#3d2733 0,#5c2b3b 55%,#83393a 100%)}
@@ -397,7 +398,8 @@ html:root[data-theme="dark"] :is(.button:not(.light),.booking-cta,.contact .book
 html:root[data-theme="dark"] .button.light{background:#efe9fa;color:#1b1830!important}
 html:root[data-theme="dark"] .button.light:hover{background:#ddd2f4}
 html:root[data-theme="dark"] :is(.menu,.mobile-booking,.skip){background:var(--paper)}
-html:root[data-theme="dark"] body > footer{background:#0f0d20d9;border-top:1px solid #2c2746}
+/* Night footer: a clear band on top for the closing scene (see the end of this file). */
+html:root[data-theme="dark"] body > footer{background:linear-gradient(transparent 0,transparent var(--scene-h),#2c2746 var(--scene-h),#2c2746 calc(var(--scene-h) + 1px),#0f0d20d9 calc(var(--scene-h) + 1px));border-top:0}
 @media(max-width:720px){html:root[data-theme="dark"] #navegacion{background:var(--paper)}}
 
 /* Sections: translucent so the sky shows through. */
@@ -443,3 +445,19 @@ html:root[data-theme="dark"] .therapy-page :is(.process-list li,.process-list li
 html:root[data-theme="dark"] .therapy-page :is(.process-list li:nth-child(even),.therapy-opening>p:last-child){background:var(--card-sky);border-color:#2b3f6e}
 html:root[data-theme="dark"] .therapy-page .process-list li::before{background:#0e0c1d;border-color:#3d3560}
 html:root[data-theme="dark"] .therapy-page .evidence-context{background:var(--card-peach);border-color:#5a3444;border-left-color:var(--accent-peach)}
+
+/* ───────── Closing scene (both themes) ─────────
+   A small figure sits on the footer's edge, bottom left: watching the rising sun in the
+   light theme and the night sky in the dark one. It fades in over the last stretch of scroll. */
+body > footer{--figure-h:clamp(170px,19vw,270px);--scene-h:var(--figure-h)}
+/* Light theme: a taller band of sky so the sun can sit where the figure is looking. */
+:root:not([data-theme="dark"]) body > footer{--scene-h:clamp(280px,30vw,430px)}
+body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1160px;margin-inline:auto;padding-inline:30px;margin-bottom:-6px;background:url(assets/nocturno-contemplacion.webp) left bottom/auto var(--figure-h) no-repeat content-box;pointer-events:none}
+@media(max-width:720px){body > footer::before{padding-inline:24px}}
+@keyframes pv-arrive{from{opacity:0;transform:translateY(36px)}to{opacity:1;transform:none}}
+@supports (animation-timeline:scroll()){
+  @media (prefers-reduced-motion:no-preference){
+    body > footer::before{animation:pv-arrive linear both;animation-timeline:scroll(root);animation-range:calc(100% - 320px) 100%}
+  }
+}
+@media print{body > footer::before{display:none}}
