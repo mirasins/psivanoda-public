@@ -380,18 +380,21 @@ body > .skip{position:fixed;z-index:100}
 html:root[data-theme="dark"]{--ink:#f1ecf7;--purple:#c7b3f0;--muted:#c2bbd3;--rose:#f2a7b8;--line:#3a3354;--paper:#141226;--wash:#1b1830;--card-lilac:#241f3c;--card-sky:#15213d;--card-peach:#34202e;--accent-lilac:#b9a2ee;--accent-sky:#8fb8f5;--accent-peach:#f0a08c;background:#0e0c1d}
 html:root[data-theme="dark"] body,html:root[data-theme="dark"] :is(.home-page,.therapy-page,.rates-page,.learning){background:transparent}
 html:root[data-theme="dark"] body::before,html:root[data-theme="dark"] body::after{content:'';position:fixed;z-index:-1;pointer-events:none}
-/* The moon crosses the sky toward the left as the reader scrolls (registered so it can animate). */
-@property --moon-shift{syntax:'<length>';inherits:false;initial-value:0px}
-html:root[data-theme="dark"] body::before{--moon-shift:0px}
+/* The moon crosses the sky toward the left as the reader scrolls, dimming while it passes
+   behind the content, and comes to rest in the closing scene, where the figure is looking. */
+@property --moon-x{syntax:'<length-percentage>';inherits:false;initial-value:0px}
+@property --moon-y{syntax:'<length-percentage>';inherits:false;initial-value:0px}
+@property --moon-a{syntax:'<number>';inherits:false;initial-value:1}
 /* Sky with a large moon on the right, level with the portrait. */
-html:root[data-theme="dark"] body::before{inset:0;background:radial-gradient(circle at calc(min(calc(100% - 60px),max(86%,calc(50% + 690px))) - var(--moon-shift)) 42%,#f6efdc 0,#f6efdc 44px,#f6efdc40 48px,#c7b3f01f 115px,#c7b3f000 300px),linear-gradient(180deg,#0a0a1b 0,#121129 32%,#1f1838 60%,#34203f 84%,#4a2740 100%)}
+html:root[data-theme="dark"] body::before{--moon-x:min(calc(100% - 60px),max(86%,calc(50% + 690px)));--moon-y:42%;--moon-a:1;inset:0;background:radial-gradient(circle at var(--moon-x) var(--moon-y),rgb(246 239 220/var(--moon-a)) 0,rgb(246 239 220/var(--moon-a)) 44px,rgb(246 239 220/calc(var(--moon-a)*.25)) 48px,rgb(199 179 240/calc(var(--moon-a)*.12)) 115px,#c7b3f000 300px),linear-gradient(180deg,#0a0a1b 0,#121129 32%,#1f1838 60%,#34203f 84%,#4a2740 100%)}
 /* Phones: a smaller moon beside, not behind, the urgencias button. */
-@media(max-width:720px){html:root[data-theme="dark"] body::before{background:radial-gradient(circle at calc(100% - 30px - var(--moon-shift)) 118px,#f6efdc 0,#f6efdc 14px,#f6efdc40 16px,#c7b3f01f 40px,#c7b3f000 110px),linear-gradient(180deg,#0a0a1b 0,#121129 32%,#1f1838 60%,#34203f 84%,#4a2740 100%)}}
+@media(max-width:720px){html:root[data-theme="dark"] body::before{--moon-x:calc(100% - 30px);--moon-y:118px;background:radial-gradient(circle at var(--moon-x) var(--moon-y),rgb(246 239 220/var(--moon-a)) 0,rgb(246 239 220/var(--moon-a)) 14px,rgb(246 239 220/calc(var(--moon-a)*.25)) 16px,rgb(199 179 240/calc(var(--moon-a)*.12)) 40px,#c7b3f000 110px),linear-gradient(180deg,#0a0a1b 0,#121129 32%,#1f1838 60%,#34203f 84%,#4a2740 100%)}}
 /* Afterglow: the sun just below the horizon. */
 html:root[data-theme="dark"] body::after{left:calc(30% - 60vmax);top:calc(100% - 22vmax);width:120vmax;height:60vmax;border-radius:50%;background:radial-gradient(closest-side,#f08a6a66 0,#d0607052 30%,#8a3f6a2e 58%,#8a3f6a00 100%);transform:translateY(0);opacity:.9;will-change:transform,opacity}
-@keyframes pv-moonset{to{--moon-shift:42vw}}
-/* Phones: the moon starts at the edge, so it travels a little further. */
-@keyframes pv-moonset-narrow{to{--moon-shift:50vw}}
+/* It ends up and to the right of the figure's head, in the clear band above the footer. */
+@keyframes pv-moonset{8%,88%{--moon-a:.16}to{--moon-x:calc(50% - 130px);--moon-y:calc(100% - 290px);--moon-a:1}}
+/* Phones: the figure is smaller, so the moon lands lower and closer to it. */
+@keyframes pv-moonset-narrow{8%,88%{--moon-a:.16}to{--moon-x:225px;--moon-y:calc(100% - 395px);--moon-a:1}}
 @keyframes pv-nightfall{from{transform:translateY(-6vh);opacity:1}to{transform:translateY(22vh);opacity:.35}}
 @supports (animation-timeline:scroll()){
   @media (prefers-reduced-motion:no-preference){
