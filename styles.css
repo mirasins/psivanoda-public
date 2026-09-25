@@ -583,3 +583,4 @@ html:root[data-theme="dark"] :is(.home-page .approach,.home-page .first-session,
 html:root[data-theme="dark"] .home-page .quick-contact{border-color:#ffffff0f}
 /* Dark mode: home bands fade in and out so the sky changes color without a hard edge */
 html:root[data-theme="dark"] :is(.home-page .approach,.home-page .first-session){background:linear-gradient(180deg,#16142c00 0,#16142c99 160px,#16142c99 calc(100% - 160px),#16142c00 100%);border-color:transparent}
+html:root[data-theme="dark"] .therapy-page :is(.therapy-meta,.therapy-purpose,.therapy-evidence){background:linear-gradient(180deg,#16142c00 0,#16142c99 140px,#16142c99 calc(100% - 140px),#16142c00 100%);border-color:transparent}
