@@ -551,7 +551,7 @@ body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1
 .legal th{color:var(--ink);font-weight:600}
 .legal td{color:var(--muted)}
 .privacy-note{font-size:.875rem;line-height:1.6;margin-top:16px}
-.privacy-note a,.footer-legal{text-decoration:underline;text-underline-offset:3px}
+.privacy-note a,.price-description a,.footer-legal{text-decoration:underline;text-underline-offset:3px}
 .rates-booking .privacy-note{color:var(--muted);margin-bottom:0}
 .footer-inner .footer-legal{font-size:.8rem;color:var(--muted)}
 @media(max-width:720px){.legal h2{font-size:1.45rem;margin-top:40px}.legal-toc{padding:18px 20px}.legal-toc ol{columns:1}.legal th,.legal td{padding-right:12px}.footer-inner .footer-legal{display:inline-flex;align-items:center;min-height:44px;font-size:.875rem}}
