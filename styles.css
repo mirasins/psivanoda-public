@@ -554,8 +554,14 @@ body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1
 .privacy-note a,.price-description a,.footer-legal{text-decoration:underline;text-underline-offset:3px}
 .rates-booking .privacy-note{color:var(--muted);margin-bottom:0}
 .footer-inner .footer-legal{font-size:.8rem;color:var(--muted)}
-.footer-intranet{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:6px 14px;border:1px solid var(--line);border-radius:6px;font-size:.8rem;font-weight:500;color:var(--muted);white-space:nowrap}.footer-intranet:hover,.footer-intranet:focus-visible{border-color:var(--purple);color:var(--ink)}
-@media(max-width:720px){.footer-intranet{min-height:44px;font-size:.875rem}}
+/* Intranet: tres líneas lila que se desvanecen hacia afuera, como en la ficha de adultos. */
+.footer-intranet{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:40px;margin:10px;padding:8px 18px;border:2px solid var(--accent-lilac);border-radius:10px;background:var(--paper);font-size:.9rem;font-weight:600;color:var(--ink)!important;white-space:nowrap;transition:transform .2s}
+.footer-intranet::before,.footer-intranet::after{content:"";position:absolute;pointer-events:none;border:2px solid var(--accent-lilac);transition:opacity .2s}
+.footer-intranet::before{inset:-6px;border-radius:15px;opacity:.5}
+.footer-intranet::after{inset:-11px;border-radius:20px;opacity:.2}
+.footer-intranet:hover,.footer-intranet:focus-visible{transform:translateY(-1px)}.footer-intranet:hover::after,.footer-intranet:focus-visible::after{opacity:.35}
+@media(max-width:720px){.footer-intranet{min-height:44px}}
+@media(prefers-reduced-motion:reduce){.footer-intranet,.footer-intranet::before,.footer-intranet::after{transition:none}.footer-intranet:hover{transform:none}}
 @media(max-width:720px){.legal h2{font-size:1.45rem;margin-top:40px}.legal-toc{padding:18px 20px}.legal-toc ol{columns:1}.legal th,.legal td{padding-right:12px}.footer-inner .footer-legal{display:inline-flex;align-items:center;min-height:44px;font-size:.875rem}}
 
 /* Intake page: the two booking forms, what happens next and where to get help. */
