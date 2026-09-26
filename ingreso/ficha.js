@@ -9,7 +9,11 @@
   const authField = form.querySelector('[data-under16]');
 
   // RUT chileno: 7-8 dígitos, guion y dígito verificador calculado con módulo 11.
-  const normRut = v => v.replace(/[.\s]/g, '').toUpperCase();
+  // Deja el RUT como 12345678-5: solo dígitos y K final, con el guion antes del dígito verificador.
+  const normRut = v => {
+    const c = v.toUpperCase().replace(/[^\dK]/g, '');
+    return c.length < 2 ? c : c.slice(0, -1).replace(/K/g, '').slice(0, 8) + '-' + c.slice(-1);
+  };
   const validRut = value => {
     const m = /^(\d{7,8})-([\dK])$/.exec(normRut(value));
     if (!m) return false;
@@ -36,10 +40,11 @@
     nacimiento: v => inRange(age(v)),
   };
 
-  const fields = () => [...form.querySelectorAll('input[required],textarea[required]')].filter(el => !el.closest('[hidden]'));
+  // Se revisan los obligatorios y, si traen algo escrito, los opcionales con regla (como el teléfono del adolescente).
+  const fields = () => [...form.querySelectorAll('input,textarea')].filter(el => (el.required || rules[el.name]) && !el.closest('[hidden]'));
   const check = el => {
-    const value = el.type === 'checkbox' ? el.checked : el.value.trim();
-    const ok = el.type === 'checkbox' ? value : value !== '' && (!rules[el.name] || rules[el.name](value));
+    const value = el.value.trim();
+    const ok = el.type === 'checkbox' ? el.checked : value === '' ? !el.required : !rules[el.name] || rules[el.name](value);
     el.closest('.field').classList.toggle('invalid', !ok);
     el.setAttribute('aria-invalid', String(!ok));
     return ok;
@@ -51,8 +56,25 @@
     authField.hidden = !(a >= 14 && a < 16);
   };
 
-  form.addEventListener('focusout', e => { if (e.target.required && e.target.type !== 'checkbox' && e.target.value) check(e.target); });
-  form.addEventListener('input', e => { if (e.target.closest('.invalid')) check(e.target); if (e.target.name === 'nacimiento') syncUnder16(); });
+  const isRut = el => el.name === 'rut' || el.name === 'tutor-rut';
+  const formatRut = el => {
+    const atEnd = el.selectionStart === el.value.length;
+    const formatted = normRut(el.value);
+    if (formatted === el.value) return;
+    el.value = formatted;
+    if (atEnd) el.setSelectionRange(formatted.length, formatted.length);
+  };
+
+  form.addEventListener('focusout', e => {
+    if (isRut(e.target)) e.target.value = normRut(e.target.value);
+    if ((e.target.required || rules[e.target.name]) && e.target.type !== 'checkbox' && e.target.value) check(e.target);
+  });
+  form.addEventListener('input', e => {
+    // Mientras se escribe al final se corrige al tiro; si se edita al medio, al salir del campo, para no mover el cursor.
+    if (isRut(e.target) && e.target.selectionStart === e.target.value.length) formatRut(e.target);
+    if (e.target.closest('.invalid')) check(e.target);
+    if (e.target.name === 'nacimiento') syncUnder16();
+  });
   form.addEventListener('change', e => { if (e.target.type === 'checkbox' && e.target.required) check(e.target); if (e.target.name === 'nacimiento') syncUnder16(); });
   syncUnder16();
 
