@@ -1,0 +1,34 @@
+.intake-form{display:grid;gap:28px;margin-top:36px}
+.intake-form fieldset{margin:0;padding:28px;border:1px solid var(--line);border-radius:14px;background:var(--wash);min-width:0}
+.intake-form legend{font-family:'Playfair Display',Georgia,serif;font-size:1.45rem;padding:0 8px;margin-left:-8px}
+.intake-form .field{margin-top:18px}
+.intake-form legend+.field{margin-top:8px}
+.intake-form .field label,.intake-form .field .label{display:block;font-weight:500;margin-bottom:6px}
+.intake-form .hint{display:block;font-size:.88rem;color:var(--muted);margin:-2px 0 8px}
+.intake-form input:not([type=checkbox]),.intake-form textarea{display:block;width:100%;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);padding:12px 14px;font:inherit}
+.intake-form textarea{resize:vertical;min-height:120px}
+.intake-form input:focus,.intake-form textarea:focus{border-color:var(--purple)}
+.intake-form .error{display:none;color:#b3261e;font-size:.88rem;margin-top:6px}
+.intake-form .invalid input:not([type=checkbox]),.intake-form .invalid textarea{border-color:#b3261e}
+.intake-form .invalid .error{display:block}
+.intake .req{color:var(--rose)}
+.intake-form .choice{display:flex!important;gap:10px;align-items:flex-start;cursor:pointer;font-weight:400!important}
+.intake-form .choice input{flex:none;width:18px;height:18px;margin-top:5px;accent-color:var(--purple)}
+.intake-form details{margin-top:8px;border:1px solid var(--line);border-radius:10px;background:var(--paper)}
+.intake-form summary{cursor:pointer;padding:14px 18px;font-weight:500}
+.intake-form .conditions{padding:0 20px 18px;color:var(--muted);font-size:.93rem;line-height:1.7;max-height:360px;overflow:auto}
+.intake-form .conditions h3{font-family:inherit;font-size:.95rem;font-weight:600;color:var(--ink);margin:16px 0 6px}
+.intake-form .conditions ul,.intake-form .conditions ol{padding-left:1.2em;margin:0}
+.intake-form .trap{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.intake-form .captcha:empty{display:none}
+.intake-submit{display:flex;flex-wrap:wrap;gap:16px;align-items:center}
+.intake-submit button{border:0;cursor:pointer}
+.intake-submit button[disabled]{opacity:.6;cursor:progress}
+.intake-status{margin:0;color:var(--muted)}
+.intake-status.is-error{color:#b3261e}
+.intake-done{margin-top:36px;padding:28px;border:1px solid var(--line);border-top:5px solid var(--accent-lilac);border-radius:14px;background:var(--card-lilac)}
+.intake-done h2{font-size:1.8rem;margin-bottom:10px}
+.intake-done p{color:var(--muted)}
+:root[data-theme="dark"] .intake-form .error,:root[data-theme="dark"] .intake-status.is-error{color:#ffb4ab}
+:root[data-theme="dark"] .intake-form .invalid input:not([type=checkbox]),:root[data-theme="dark"] .intake-form .invalid textarea{border-color:#ffb4ab}
+@media(max-width:720px){.intake-form fieldset{padding:20px}.intake-submit .button{width:100%}}
