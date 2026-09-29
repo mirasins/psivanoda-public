@@ -604,3 +604,9 @@ html:root[data-theme="dark"] .therapy-page :is(.therapy-meta,.therapy-purpose,.t
 @keyframes pv-twinkle{0%,100%{opacity:.45;transform:scale(.8)}50%{opacity:1;transform:scale(1.12)}}
 @media(max-width:720px){.about-stars{margin-top:22px;max-width:320px}.about-stars i{font-size:1.5rem}.about-stars i:nth-child(even){font-size:.95rem}}
 @media(prefers-reduced-motion:reduce){.about-stars i{animation:none;opacity:.8}}
+/* "Primera sesión online y gratuita" lleva a las fichas de ingreso. */
+.home-page a.first-free{display:inline-flex;align-items:center;gap:8px;min-height:40px;font-weight:600;transition:transform .2s,border-color .2s}
+.home-page a.first-free span{margin:0;transition:transform .2s}
+.home-page a.first-free:hover{transform:translateY(-1px);border-color:var(--accent-lilac)}
+.home-page a.first-free:hover span{transform:translateX(3px)}
+@media(prefers-reduced-motion:reduce){.home-page a.first-free,.home-page a.first-free span{transition:none}.home-page a.first-free:hover,.home-page a.first-free:hover span{transform:none}}
