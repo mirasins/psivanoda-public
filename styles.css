@@ -622,3 +622,20 @@ html:root[data-theme="dark"] .home-page .welcome-strip{background:linear-gradien
 /* The contact block keeps its colour, but its top edge melts into the sky (inside its padding). */
 .home-page .contact{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 64px);mask-image:linear-gradient(180deg,transparent 0,#000 64px)}
 @media(max-width:720px){.home-page .contact{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 36px);mask-image:linear-gradient(180deg,transparent 0,#000 36px)}}
+/* ───────── Política de privacidad: Fira Sans (autoalojada, licencia OFL) en un cuadro blanco
+   con borde grueso en degradé de amanecer (rosa → violeta → durazno). El cuadro es blanco en
+   ambos temas, así que fija sus propios colores de texto. ───────── */
+@font-face{font-family:'Fira Sans';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/fira-sans-400-normal.woff2) format('woff2')}
+@font-face{font-family:'Fira Sans';font-style:italic;font-weight:400;font-display:swap;src:url(assets/fonts/fira-sans-400-italic.woff2) format('woff2')}
+@font-face{font-family:'Fira Sans';font-style:normal;font-weight:500;font-display:swap;src:url(assets/fonts/fira-sans-500-normal.woff2) format('woff2')}
+@font-face{font-family:'Fira Sans';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/fira-sans-600-normal.woff2) format('woff2')}
+@font-face{font-family:'Fira Sans';font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/fira-sans-700-normal.woff2) format('woff2')}
+html:root .legal-page .legal{--ink:#2f2338;--muted:#54485c;--purple:#7d3f8f;--line:#e9dcec;--wash:#faf5fb;max-width:880px;padding:52px 60px;border:7px solid transparent;border-radius:24px;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#b0457f 0%,#7d4fb0 50%,#f0a08c 100%) border-box;color:var(--ink);box-shadow:0 22px 50px -30px #6a2f7a66}
+.legal-page .legal,.legal-page .legal :is(h1,h2,h3,p,li,th,td,a,strong,.eyebrow){font-family:'Fira Sans',system-ui,sans-serif}
+.legal-page .legal :is(h1,h2,h3){font-weight:600;letter-spacing:-.01em;color:var(--ink)}
+.legal-page .legal h1{font-size:clamp(2.1rem,3.6vw,3rem)}
+.legal-page .legal h2{font-size:1.45rem}
+.legal-page .legal :is(p,li){font-size:1.02rem;line-height:1.75}
+.legal-page .legal a{color:#7d3f8f}
+html:root .legal-page .legal .eyebrow{color:#9a3f8f;font-weight:600}
+@media(max-width:720px){html:root .legal-page .legal{padding:30px 22px;border-width:5px;border-radius:18px}.legal-page .legal h2{font-size:1.28rem}}
