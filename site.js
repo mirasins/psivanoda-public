@@ -229,11 +229,12 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   addEventListener('beforeprint', () => items.forEach(done));
 })();
 
-// Light theme: fairy dust. Four-pointed sparkles, larger than dust, drift slowly up and
-// across the dawn sky with a gentle sway and twinkle. They sit behind the content (z-index -1,
-// above the sky) so text stays clean. Off in dark mode, on reduced motion and on data-calm pages.
+// Light theme: fairy dust. The cursor leaves a trail of small four-pointed sparkles.
+// Background drift (DRIFT) is off for now; set it to true to bring back the sparkles that float
+// behind the content. Off in dark mode, on reduced motion and on data-calm pages.
 (() => {
   if (document.body.hasAttribute('data-calm') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const DRIFT = false;
 
   const canvas = document.createElement('canvas');
   canvas.id = 'fairy-dust';
@@ -249,7 +250,7 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   const tctx = trailCanvas.getContext('2d');
   // Muted dawn tones (dusty mauve, lavender, pale pink, champagne), drawn semi-transparent.
   const colors = ['170, 128, 160', '150, 132, 182', '204, 164, 194', '202, 178, 146'];
-  let width = 0, height = 0, motes = [], trail = [], running = false, last = 0, fade = 0, lastDrop = 0;
+  let width = 0, height = 0, motes = [], trail = [], running = false, ready = false, last = 0, fade = 0, lastDrop = 0;
 
   const spawn = (anywhere) => {
     const size = 6 + Math.random() ** 1.5 * 13;
@@ -272,7 +273,7 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
       g.setTransform(scale, 0, 0, scale, 0, 0);
     }
     const count = Math.round(Math.min(46, Math.max(18, width * height / 30000)));
-    motes = Array.from({ length: count }, () => spawn(true));
+    motes = DRIFT ? Array.from({ length: count }, () => spawn(true)) : [];
   };
 
   // A sparkle: a soft glow plus a thin four-pointed star with a bright core.
@@ -326,18 +327,21 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
       d.vy += 14 * dt; d.x += d.vx * dt; d.y += d.vy * dt; d.angle += d.spin * dt;
       sparkle(d, d.life * .9, tctx);
     }
+    // Nothing left to draw: rest until the cursor moves again.
+    if (!motes.length && !trail.length) { running = false; return; }
     requestAnimationFrame(frame);
   };
   const start = () => { if (!running && isLight() && !document.hidden) { running = true; last = 0; requestAnimationFrame(frame); } };
 
   if (matchMedia('(hover: hover)').matches) addEventListener('pointermove', e => {
-    if (!running || e.timeStamp - lastDrop < 35) return;
+    if (!ready || e.timeStamp - lastDrop < 35) return;
     lastDrop = e.timeStamp;
     trail.push({ x: e.clientX + (Math.random() - .5) * 8, y: e.clientY + (Math.random() - .5) * 8,
       size: 3 + Math.random() * 5, color: colors[Math.floor(Math.random() * colors.length)],
       vx: (Math.random() - .5) * 18, vy: 4 + Math.random() * 10, spin: (Math.random() - .5) * 3,
       angle: Math.random() * 6.28, life: 1, span: .9 + Math.random() * .6 });
     if (trail.length > 45) trail.shift();
+    start();
   }, { passive: true });
 
   resize();
@@ -345,6 +349,6 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   document.addEventListener('visibilitychange', start);
   new MutationObserver(start).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   // Starts after the page's entrance animations, and fades in over two seconds.
-  const begin = () => setTimeout(start, 1500);
+  const begin = () => setTimeout(() => { ready = true; start(); }, 1500);
   if (document.readyState === 'complete') begin(); else addEventListener('load', begin, { once: true });
 })();
