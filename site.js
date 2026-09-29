@@ -175,7 +175,8 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   const wake = () => { if (!running) { running = true; requestAnimationFrame(draw); } };
 
   addEventListener('resize', () => { resize(); wake(); }, { passive: true });
-  addEventListener('pointermove', e => { target.x = e.clientX; target.y = e.clientY; active = true; wake(); }, { passive: true });
+  // Only in dark mode: in light mode the cursor leaves a fairy-dust trail instead (below).
+  addEventListener('pointermove', e => { target.x = e.clientX; target.y = e.clientY; active = document.documentElement.dataset.theme === 'dark'; wake(); }, { passive: true });
   const leave = () => { active = false; wake(); };
   addEventListener('blur', leave);
   document.documentElement.addEventListener('pointerleave', leave);
@@ -240,9 +241,15 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   canvas.style.cssText = 'position:fixed;inset:0;z-index:-1;pointer-events:none';
   document.body.prepend(canvas);
   const ctx = canvas.getContext('2d');
-  // Rose, violet, soft pink and a warm gold, taken from the dawn palette.
-  const colors = ['176, 69, 127', '125, 79, 176', '214, 120, 190', '214, 160, 90'];
-  let width = 0, height = 0, motes = [], running = false, last = 0, fade = 0;
+  // The cursor trail gets its own layer above the content, so it is not hidden behind the cards.
+  const trailCanvas = document.createElement('canvas');
+  trailCanvas.setAttribute('aria-hidden', 'true');
+  trailCanvas.style.cssText = 'position:fixed;inset:0;z-index:2;pointer-events:none';
+  document.body.prepend(trailCanvas);
+  const tctx = trailCanvas.getContext('2d');
+  // Muted dawn tones (dusty mauve, lavender, pale pink, champagne), drawn semi-transparent.
+  const colors = ['170, 128, 160', '150, 132, 182', '204, 164, 194', '202, 178, 146'];
+  let width = 0, height = 0, motes = [], trail = [], running = false, last = 0, fade = 0, lastDrop = 0;
 
   const spawn = (anywhere) => {
     const size = 6 + Math.random() ** 1.5 * 13;
@@ -259,25 +266,27 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   const resize = () => {
     const scale = Math.min(devicePixelRatio || 1, 2);
     width = innerWidth; height = innerHeight;
-    canvas.width = width * scale; canvas.height = height * scale;
-    canvas.style.width = width + 'px'; canvas.style.height = height + 'px';
-    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    for (const [c, g] of [[canvas, ctx], [trailCanvas, tctx]]) {
+      c.width = width * scale; c.height = height * scale;
+      c.style.width = width + 'px'; c.style.height = height + 'px';
+      g.setTransform(scale, 0, 0, scale, 0, 0);
+    }
     const count = Math.round(Math.min(46, Math.max(18, width * height / 30000)));
     motes = Array.from({ length: count }, () => spawn(true));
   };
 
   // A sparkle: a soft glow plus a thin four-pointed star with a bright core.
-  const sparkle = (m, alpha) => {
+  const sparkle = (m, alpha, ctx) => {
     const r = m.size;
     ctx.save();
     ctx.translate(m.x, m.y);
     ctx.rotate(m.angle);
     const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, r * 1.8);
-    glow.addColorStop(0, `rgba(${m.color}, ${.34 * alpha})`);
+    glow.addColorStop(0, `rgba(${m.color}, ${.16 * alpha})`);
     glow.addColorStop(1, `rgba(${m.color}, 0)`);
     ctx.fillStyle = glow;
     ctx.fillRect(-r * 1.8, -r * 1.8, r * 3.6, r * 3.6);
-    ctx.fillStyle = `rgba(${m.color}, ${.85 * alpha})`;
+    ctx.fillStyle = `rgba(${m.color}, ${.5 * alpha})`;
     ctx.beginPath();
     for (let i = 0; i < 4; i++) {
       const a = i * Math.PI / 2;
@@ -286,7 +295,7 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
     }
     ctx.closePath();
     ctx.fill();
-    ctx.fillStyle = `rgba(255, 250, 253, ${.9 * alpha})`;
+    ctx.fillStyle = `rgba(255, 252, 254, ${.55 * alpha})`;
     ctx.beginPath(); ctx.arc(0, 0, r * .16, 0, Math.PI * 2); ctx.fill();
     ctx.restore();
   };
@@ -294,7 +303,7 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   const isLight = () => document.documentElement.dataset.theme !== 'dark';
 
   const frame = (now) => {
-    if (!isLight() || document.hidden) { running = false; ctx.clearRect(0, 0, width, height); return; }
+    if (!isLight() || document.hidden) { running = false; ctx.clearRect(0, 0, width, height); tctx.clearRect(0, 0, width, height); trail = []; return; }
     const dt = Math.min(.05, (now - (last || now)) / 1000);
     last = now;
     const t = now / 1000;
@@ -308,11 +317,28 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
       const x = m.x + Math.sin(t * m.swayRate + m.phase) * m.sway;
       if (m.y < -30 || x < -40 || x > width + 40) { motes[i] = spawn(false); continue; }
       const alpha = .35 + .65 * (.5 + .5 * Math.sin(t * m.twinkle + m.phase));
-      sparkle({ ...m, x }, alpha * fade);
+      sparkle({ ...m, x }, alpha * fade, ctx);
+    }
+    // Cursor trail: small sparkles that fall slowly, spin and fade out in about a second.
+    tctx.clearRect(0, 0, width, height);
+    trail = trail.filter(d => (d.life -= dt / d.span) > 0);
+    for (const d of trail) {
+      d.vy += 14 * dt; d.x += d.vx * dt; d.y += d.vy * dt; d.angle += d.spin * dt;
+      sparkle(d, d.life * .9, tctx);
     }
     requestAnimationFrame(frame);
   };
   const start = () => { if (!running && isLight() && !document.hidden) { running = true; last = 0; requestAnimationFrame(frame); } };
+
+  if (matchMedia('(hover: hover)').matches) addEventListener('pointermove', e => {
+    if (!running || e.timeStamp - lastDrop < 35) return;
+    lastDrop = e.timeStamp;
+    trail.push({ x: e.clientX + (Math.random() - .5) * 8, y: e.clientY + (Math.random() - .5) * 8,
+      size: 3 + Math.random() * 5, color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - .5) * 18, vy: 4 + Math.random() * 10, spin: (Math.random() - .5) * 3,
+      angle: Math.random() * 6.28, life: 1, span: .9 + Math.random() * .6 });
+    if (trail.length > 45) trail.shift();
+  }, { passive: true });
 
   resize();
   addEventListener('resize', resize);

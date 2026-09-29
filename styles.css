@@ -596,8 +596,9 @@ html:root[data-theme="dark"] .therapy-page :is(.therapy-meta,.therapy-purpose,.t
 .home-page a.first-free:hover{transform:translateY(-1px);border-color:var(--accent-lilac)}
 .home-page a.first-free:hover span{transform:translateX(3px)}
 @media(prefers-reduced-motion:reduce){.home-page a.first-free,.home-page a.first-free span{transition:none}.home-page a.first-free:hover,.home-page a.first-free:hover span{transform:none}}
-/* Derechos reservados: Iván Oda Moreno y la marca Odamira Salud™ (aún sin registrar, por eso ™ y no ®). */
+/* Derechos reservados: Iván Oda Moreno, la marca de servicios psivanoda.cl℠ y la marca Odamira Salud™ (aún sin registrar, por eso ℠ y ™ y no ®). */
 .footer-rights-wrap{padding-bottom:26px}
 .footer-rights{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 10px;margin:0;padding-top:18px;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted);text-align:center}
 .rights-mark{display:inline-flex;align-items:center;gap:7px;color:var(--ink);font-weight:500}
 .rights-mark img{width:auto;height:26px;object-fit:contain}
+.rights-site{color:var(--ink);font-weight:500}
