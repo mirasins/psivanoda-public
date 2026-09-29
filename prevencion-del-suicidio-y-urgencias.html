@@ -31,7 +31,8 @@
 
     /* Página de crisis: pensada para leerse con prisa, angustia o sobrecarga sensorial.
        Lo urgente va primero; el resto queda plegado. Colores de baja saturación, sin blanco
-       ni negro puros, sin sombras, degradados ni animaciones. Texto grande, interlineado
+       ni negro puros, sin sombras ni degradados; la única animación es la estrella lenta entre bloques,
+       que se detiene con "reducir movimiento". Texto grande, interlineado
        amplio, líneas cortas, sin cursivas ni mayúsculas sostenidas. */
     :root {
       --bg: #f5f2f6;
@@ -230,6 +231,22 @@
       summary::after { display: none; }
       .call, .phone, .dock-btn { background: none; color: #000; border: 1px solid #000; }
     }
+
+    /* Separador entre bloques: una estrella que gira despacio, en colores suaves. Se detiene
+       si la persona pidió menos movimiento en su dispositivo. */
+    .star-sep { display: block; margin-block: 14px; text-align: center; font-family: Arial, sans-serif; font-size: 1.35rem; line-height: 1; color: #8a6fa3; }
+    .star-sep:nth-of-type(3n+2) { color: #5f8fb3; }
+    .star-sep:nth-of-type(3n) { color: #b38470; }
+    :root[data-theme="dark"] .star-sep { color: #b9a2d6; }
+    :root[data-theme="dark"] .star-sep:nth-of-type(3n+2) { color: #8fb3d4; }
+    :root[data-theme="dark"] .star-sep:nth-of-type(3n) { color: #d8a893; }
+    @media (prefers-reduced-motion: no-preference) {
+      .star-sep span { display: inline-block; animation: star-spin 12s linear infinite; }
+    }
+    @keyframes star-spin { to { rotate: 360deg; } }
+    .star-sep + .group-title { margin-top: 20px; }
+    .star-sep + .after-crisis { margin-top: 0; }
+    @media print { .star-sep { display: none; } }
   </style>
 </head>
 <body data-calm>
@@ -273,6 +290,7 @@
         <p class="small">Esta consulta psicológica no atiende urgencias ni puede responder de inmediato. Ante una crisis, usa estos números.</p>
       </div>
     </section>
+    <div class="star-sep wrap" aria-hidden="true"><span>✦</span></div>
 
     <!-- 2. Lo demás, plegado para no abrumar al abrir la página -->
     <div class="more wrap">
@@ -326,6 +344,7 @@
           </p>
         </div>
       </details>
+      <div class="star-sep" aria-hidden="true"><span>✦</span></div>
 
       <h2 class="group-title" id="como-actuar">Qué hacer según la situación</h2>
       <p class="group-note">Si dudas sobre la gravedad, trátala como una urgencia y llama al <strong>131</strong>.</p>
@@ -348,6 +367,7 @@
           </ol>
         </div>
       </details>
+      <div class="star-sep" aria-hidden="true"><span>✦</span></div>
 
       <details id="caso-2">
         <summary>
@@ -366,6 +386,7 @@
           </ol>
         </div>
       </details>
+      <div class="star-sep" aria-hidden="true"><span>✦</span></div>
 
       <details id="caso-3">
         <summary>
@@ -384,6 +405,7 @@
           </ol>
         </div>
       </details>
+      <div class="star-sep" aria-hidden="true"><span>✦</span></div>
 
       <details id="caso-4">
         <summary>
@@ -403,6 +425,7 @@
           </ol>
         </div>
       </details>
+      <div class="star-sep" aria-hidden="true"><span>✦</span></div>
 
       <h2 class="group-title">Información útil</h2>
 
@@ -441,6 +464,7 @@
           <p><a href="https://diprece.minsal.cl/wp-content/uploads/2022/09/Guia-legal-Ley-21.331.pdf">Guía legal de la Ley 21.331 (Minsal, PDF)</a></p>
         </div>
       </details>
+      <div class="star-sep" aria-hidden="true"><span>✦</span></div>
 
       <aside class="after-crisis" aria-labelledby="despues">
         <h2 id="despues">Cuando la crisis haya pasado</h2>
