@@ -205,7 +205,10 @@
 
     /* ───────── Pie de página: sobrio, sin llamados comerciales ───────── */
     .site-footer { border-top: 1px solid var(--line); background: var(--surface); color: var(--muted); font-size: .95rem; padding-block: 28px calc(28px + var(--dock-h) + env(safe-area-inset-bottom, 0px)); }
-    .site-footer p + p { margin-top: 6px; }
+    .site-footer { text-align: center; font-size: .82rem; line-height: 1.6; }
+    .site-footer p + p { margin-top: 4px; }
+    .site-footer .footer-rights { justify-content: center; margin-top: 10px; font-size: .78rem; }
+    .site-footer .rights-mark img { height: 18px; }
     .site-footer strong { color: var(--text); }
     .footer-rights { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; line-height: 1.4; }
     .rights-mark { display: inline-flex; align-items: center; gap: 6px; color: var(--text); }

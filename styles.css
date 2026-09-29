@@ -613,3 +613,12 @@ html:root[data-theme="dark"] .therapy-page :is(.therapy-meta,.therapy-purpose,.t
 .rights-mark{display:inline-flex;align-items:center;gap:7px;color:var(--ink);font-weight:500}
 .rights-mark img{width:auto;height:26px;object-fit:contain}
 .rights-site{color:var(--ink);font-weight:500}
+/* Section bands fade in and out at their top and bottom edges instead of cutting the sky, clouds
+   and sunrise light with a hard line (light theme; the dark theme already fades them above). */
+html:root:not([data-theme="dark"]) :is(.home-page .approach,.therapy-page .therapy-meta,.therapy-page .therapy-purpose){background:linear-gradient(180deg,#fbeefa00 0,#fbeefa8c 150px,#fbeefa8c calc(100% - 150px),#fbeefa00 100%);border-color:transparent}
+html:root:not([data-theme="dark"]) :is(.home-page .first-session,.therapy-page .therapy-evidence){background:linear-gradient(180deg,#f6eefc00 0,#f6eefc8c 150px,#f6eefc8c calc(100% - 150px),#f6eefc00 100%);border-color:transparent}
+html:root:not([data-theme="dark"]) .home-page .welcome-strip{background:linear-gradient(180deg,#f1dcf000 0,#f1dcf0bf 32%,#f1dcf0bf 68%,#f1dcf000 100%);border-color:transparent}
+html:root[data-theme="dark"] .home-page .welcome-strip{background:linear-gradient(180deg,#2c204300 0,#2c2043cc 32%,#2c2043cc 68%,#2c204300 100%);border-color:transparent}
+/* The contact block keeps its colour, but its top edge melts into the sky (inside its padding). */
+.home-page .contact{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 64px);mask-image:linear-gradient(180deg,transparent 0,#000 64px)}
+@media(max-width:720px){.home-page .contact{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 36px);mask-image:linear-gradient(180deg,transparent 0,#000 36px)}}
