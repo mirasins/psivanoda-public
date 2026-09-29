@@ -122,4 +122,4 @@
 .therapy-page .card-icon svg{width:26px;height:26px}
 .therapy-page .card-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
 .therapy-page .card-head .card-icon{margin:0}
-.therapy-page .card-num{font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;line-height:1;color:var(--card-accent)}
+.therapy-page .card-num{font-family:'Prata',Georgia,serif;font-size:1.3rem;line-height:1;color:var(--card-accent)}

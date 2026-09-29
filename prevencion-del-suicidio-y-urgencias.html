@@ -24,10 +24,11 @@
   <!-- Color de tema móvil -->
   <meta name="theme-color" content="#f5f2f6">
 
-  <!-- Atkinson Hyperlegible Next (OFL): letras fáciles de distinguir, pensada para baja visión y dislexia -->
-  <link rel="preload" href="assets/fonts/atkinson-hyperlegible-next.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Lexend (OFL): diseñada para leer con menos esfuerzo; letras amplias y fáciles de distinguir -->
+  <link rel="preload" href="assets/fonts/lexend.woff2" as="font" type="font/woff2" crossorigin>
   <style>
-    @font-face{font-family:'Atkinson Hyperlegible Next';font-style:normal;font-weight:400 700;font-display:swap;src:url(assets/fonts/atkinson-hyperlegible-next.woff2) format('woff2')}
+    @font-face{font-family:'Lexend';font-style:normal;font-weight:100 900;font-display:swap;src:url(assets/fonts/lexend.woff2) format('woff2')}
+    @font-face{font-family:'Cinzel';font-style:normal;font-weight:400 900;font-display:swap;src:url(assets/fonts/cinzel.woff2) format('woff2')}
 
     /* Página de crisis: pensada para leerse con prisa, angustia o sobrecarga sensorial.
        Lo urgente va primero; el resto queda plegado. Colores de baja saturación, sin blanco
@@ -68,7 +69,7 @@
 
     *, *::before, *::after { box-sizing: border-box; }
     html {
-      font-family: 'Atkinson Hyperlegible Next', Verdana, Tahoma, sans-serif;
+      font-family: 'Lexend', Verdana, Tahoma, sans-serif;
       font-size: 100%;
       color: var(--text);
       background: var(--bg);
@@ -213,6 +214,7 @@
     .footer-rights { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; line-height: 1.4; }
     .rights-mark { display: inline-flex; align-items: center; gap: 6px; color: var(--text); }
     .rights-mark img { width: auto; height: 22px; }
+    .odamira-text { font-family: 'Cinzel', Georgia, serif; font-weight: 600; letter-spacing: .05em; }
     .rights-site { color: var(--text); }
 
     /* ───────── Acceso rápido a los números al bajar por la página ─────────
@@ -475,7 +477,7 @@
       </details>
       <div class="star-sep" aria-hidden="true"><span>✦</span></div>
 
-      <h2 class="group-title odamira-title"><img class="brand-icon--light" src="assets/odamira-icono-claro.webp" width="44" height="40" alt=""><img class="brand-icon--dark" src="assets/odamira-icono-oscuro.webp" width="44" height="40" alt=""> Recomendaciones de Odamira Salud™</h2>
+      <h2 class="group-title odamira-title"><img class="brand-icon--light" src="assets/odamira-icono-claro.webp" width="44" height="40" alt=""><img class="brand-icon--dark" src="assets/odamira-icono-oscuro.webp" width="44" height="40" alt=""> <span>Recomendaciones de <span class="odamira-text">Odamira Salud™</span></span></h2>
 
       <details id="recomendaciones">
         <summary>
@@ -513,7 +515,7 @@
       <p>Guardia Vieja #255, Providencia, Santiago (Metro Los Leones)</p>
       <p><a href="mailto:agenda@psivanoda.cl">agenda@psivanoda.cl</a> · WhatsApp <a href="https://wa.me/56920127300" rel="noopener">+56 9 2012 7300</a></p>
       <p><a href="./valores/">Aranceles y modalidades</a> · <a href="./privacidad/">Política de privacidad</a></p>
-      <p class="footer-rights">© 2026 <span class="rights-mark"><img class="brand-icon--light" src="assets/logo-light.svg" width="26" height="26" alt=""><img class="brand-icon--dark" src="assets/logo-dark.svg" width="26" height="26" alt="">Iván Oda Moreno</span> · <span class="rights-site">psivanoda.cl℠</span> · <span class="rights-mark"><img class="brand-icon--light" src="assets/odamira-icono-claro.webp" width="28" height="26" alt=""><img class="brand-icon--dark" src="assets/odamira-icono-oscuro.webp" width="29" height="26" alt="">Odamira Salud™</span> · Todos los derechos reservados.</p>
+      <p class="footer-rights">© 2026 <span class="rights-mark"><img class="brand-icon--light" src="assets/logo-light.svg" width="26" height="26" alt=""><img class="brand-icon--dark" src="assets/logo-dark.svg" width="26" height="26" alt="">Iván Oda Moreno</span> · <span class="rights-site">psivanoda.cl℠</span> · <span class="rights-mark odamira-text"><img class="brand-icon--light" src="assets/odamira-icono-claro.webp" width="28" height="26" alt=""><img class="brand-icon--dark" src="assets/odamira-icono-oscuro.webp" width="29" height="26" alt="">Odamira Salud™</span> · Todos los derechos reservados.</p>
     </div>
   </footer>
 
