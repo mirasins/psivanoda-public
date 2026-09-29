@@ -268,15 +268,22 @@ body > .skip{position:fixed;z-index:100}
   .home-page .nature:hover img,.therapy-relationship figure:hover img{transform:scale(1.03)}
 }
 
-/* ───────── Light theme: dawn and fairy dust ─────────
-   A dawn sky (lavender → lilac → violet-rose) behind the page, with sparkles of
-   fairy dust drifting across it. Lilac and pink hues only, boxes included. */
+/* ───────── Light theme: dawn and clouds ─────────
+   A dawn sky (lavender → lilac → violet-rose) behind the page, with soft clouds
+   drifting across it. Lilac and pink hues only, boxes included. */
 :root:not([data-theme="dark"]){--ink:#3a2744;--purple:#7d3f8f;--muted:#66566d;--rose:#b0457f;--line:#e8d6ec;--paper:#fdf8fd;--wash:#f7eefa;--card-lilac:#fbe6f1;--card-sky:#efe6fb;--card-peach:#f6e2f5;--accent-lilac:#b0457f;--accent-sky:#7d4fb0;--accent-peach:#9a3f8f;background:#f3eaf8}
 :root:not([data-theme="dark"]) body,:root:not([data-theme="dark"]) :is(.home-page,.therapy-page,.rates-page,.learning){background:transparent}
 :root:not([data-theme="dark"]) body::before{content:'';position:fixed;z-index:-1;pointer-events:none}
 /* Sky: pale lavender at the top deepening into a lilac-violet horizon. */
 :root:not([data-theme="dark"]) body::before{inset:0;background:radial-gradient(130% 55% at 20% 108%,#e9c8f0cc 0,#d9b9f266 38%,#d9b9f200 72%),linear-gradient(180deg,#e6e0f6 0,#ece1f7 28%,#f1e0f4 54%,#f4dbef 78%,#f1d2ec 100%)}
-/* No sun: in its place, fairy dust drifts across the sky (site.js). */
+/* No sun: soft dawn clouds drift slowly across the sky instead. One 100vw tile of clouds,
+   repeated twice side by side and slid left by one tile, so the loop is seamless. */
+:root:not([data-theme="dark"]) body::after{content:'';position:fixed;z-index:-1;pointer-events:none;top:0;left:0;width:200vw;height:100vh;background:radial-gradient(ellipse 10.92% 2.99% at 17.57% 22.76%,rgb(234 196 226/0.52) 0,rgb(234 196 226/0.44) 55%,rgb(234 196 226/0) 100%),radial-gradient(ellipse 10.35% 3.22% at 17.00% 21.38%,rgb(255 251 254/0.95) 0,rgb(255 251 254/0.81) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 2.36% 3.68% at 11.71% 19.77%,rgb(255 251 254/0.95) 0,rgb(255 251 254/0.81) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 3.39% 5.29% at 15.39% 17.47%,rgb(255 251 254/0.95) 0,rgb(255 251 254/0.81) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 2.87% 4.48% at 19.76% 18.39%,rgb(255 251 254/0.95) 0,rgb(255 251 254/0.81) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 2.06% 3.22% at 23.21% 20.23%,rgb(255 251 254/0.95) 0,rgb(255 251 254/0.81) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 6.65% 1.82% at 66.35% 13.68%,rgb(234 196 226/0.47) 0,rgb(234 196 226/0.40) 55%,rgb(234 196 226/0) 100%),radial-gradient(ellipse 6.30% 1.96% at 66.00% 12.84%,rgb(255 251 254/0.85) 0,rgb(255 251 254/0.72) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 1.43% 2.24% at 62.78% 11.86%,rgb(255 251 254/0.85) 0,rgb(255 251 254/0.72) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 2.06% 3.22% at 65.02% 10.46%,rgb(255 251 254/0.85) 0,rgb(255 251 254/0.72) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 1.75% 2.73% at 67.68% 11.02%,rgb(255 251 254/0.85) 0,rgb(255 251 254/0.72) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 1.25% 1.96% at 69.78% 12.14%,rgb(255 251 254/0.85) 0,rgb(255 251 254/0.72) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 12.83% 3.51% at 84.67% 47.24%,rgb(234 196 226/0.50) 0,rgb(234 196 226/0.42) 55%,rgb(234 196 226/0) 100%),radial-gradient(ellipse 12.15% 3.78% at 84.00% 45.62%,rgb(255 251 254/0.90) 0,rgb(255 251 254/0.77) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 2.76% 4.32% at 77.79% 43.73%,rgb(255 251 254/0.90) 0,rgb(255 251 254/0.77) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 3.97% 6.21% at 82.11% 41.03%,rgb(255 251 254/0.90) 0,rgb(255 251 254/0.77) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 3.37% 5.27% at 87.24% 42.11%,rgb(255 251 254/0.90) 0,rgb(255 251 254/0.77) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 2.42% 3.78% at 91.29% 44.27%,rgb(255 251 254/0.90) 0,rgb(255 251 254/0.77) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 8.55% 2.34% at 37.45% 72.16%,rgb(234 196 226/0.39) 0,rgb(234 196 226/0.33) 55%,rgb(234 196 226/0) 100%),radial-gradient(ellipse 8.10% 2.52% at 37.00% 71.08%,rgb(255 251 254/0.70) 0,rgb(255 251 254/0.59) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 1.84% 2.88% at 32.86% 69.82%,rgb(255 251 254/0.70) 0,rgb(255 251 254/0.59) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 2.65% 4.14% at 35.74% 68.02%,rgb(255 251 254/0.70) 0,rgb(255 251 254/0.59) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 2.25% 3.51% at 39.16% 68.74%,rgb(255 251 254/0.70) 0,rgb(255 251 254/0.59) 55%,rgb(255 251 254/0) 100%),radial-gradient(ellipse 1.61% 2.52% at 41.86% 70.18%,rgb(255 251 254/0.70) 0,rgb(255 251 254/0.59) 55%,rgb(255 251 254/0) 100%);background-size:100vw 100vh;background-repeat:repeat-x;filter:blur(6px);will-change:transform}
+@keyframes pv-clouds{to{transform:translateX(-100vw)}}
+@media (prefers-reduced-motion:no-preference){:root:not([data-theme="dark"]) body::after{animation:pv-clouds 260s linear infinite}}
+/* Phones: the tile is narrow, so the clouds are stretched a little wider to stay cloud-shaped. */
+@media(max-width:720px){:root:not([data-theme="dark"]) body::after{width:400vw;background-size:200vw 100vh}@keyframes pv-clouds-narrow{to{transform:translateX(-200vw)}}}
+@media (prefers-reduced-motion:no-preference) and (max-width:720px){:root:not([data-theme="dark"]) body::after{animation-name:pv-clouds-narrow;animation-duration:300s}}
 
 /* Chrome and type. */
 :root:not([data-theme="dark"]) .header{background:#fdf7fce0;border-bottom:0;box-shadow:0 1px 0 #ecd6ec}
@@ -442,7 +449,7 @@ html:root[data-theme="dark"] .therapy-page .process-list li::before{background:#
 html:root[data-theme="dark"] .therapy-page .evidence-context{background:var(--card-peach);border-color:#5a3444;border-left-color:var(--accent-peach)}
 
 /* ───────── Closing scene (both themes) ─────────
-   A small figure sits on the footer's edge, bottom left: watching the fairy dust in the
+   A small figure sits on the footer's edge, bottom left: watching the clouds in the
    light theme and the night sky in the dark one. It fades in over the last stretch of scroll. */
 body > footer{--figure-h:clamp(170px,19vw,270px);--scene-h:var(--figure-h)}
 /* Light theme: a taller band of sky above the figure. */
