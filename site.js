@@ -227,3 +227,98 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   // Printing shows everything, even what was never scrolled into view.
   addEventListener('beforeprint', () => items.forEach(done));
 })();
+
+// Light theme: fairy dust. Four-pointed sparkles, larger than dust, drift slowly up and
+// across the dawn sky with a gentle sway and twinkle. They sit behind the content (z-index -1,
+// above the sky) so text stays clean. Off in dark mode, on reduced motion and on data-calm pages.
+(() => {
+  if (document.body.hasAttribute('data-calm') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const canvas = document.createElement('canvas');
+  canvas.id = 'fairy-dust';
+  canvas.setAttribute('aria-hidden', 'true');
+  canvas.style.cssText = 'position:fixed;inset:0;z-index:-1;pointer-events:none';
+  document.body.prepend(canvas);
+  const ctx = canvas.getContext('2d');
+  // Rose, violet, soft pink and a warm gold, taken from the dawn palette.
+  const colors = ['176, 69, 127', '125, 79, 176', '214, 120, 190', '214, 160, 90'];
+  let width = 0, height = 0, motes = [], running = false, last = 0, fade = 0;
+
+  const spawn = (anywhere) => {
+    const size = 6 + Math.random() ** 1.5 * 13;
+    return {
+      x: Math.random() * width,
+      y: anywhere ? Math.random() * height : height + 20,
+      size, color: colors[Math.floor(Math.random() * colors.length)],
+      vy: 8 + Math.random() * 16, vx: (Math.random() - .3) * 10,
+      sway: 10 + Math.random() * 22, swayRate: .25 + Math.random() * .5, phase: Math.random() * 6.28,
+      twinkle: .6 + Math.random() * 1.4, spin: (Math.random() - .5) * .6, angle: Math.random() * 6.28,
+    };
+  };
+
+  const resize = () => {
+    const scale = Math.min(devicePixelRatio || 1, 2);
+    width = innerWidth; height = innerHeight;
+    canvas.width = width * scale; canvas.height = height * scale;
+    canvas.style.width = width + 'px'; canvas.style.height = height + 'px';
+    ctx.setTransform(scale, 0, 0, scale, 0, 0);
+    const count = Math.round(Math.min(46, Math.max(18, width * height / 30000)));
+    motes = Array.from({ length: count }, () => spawn(true));
+  };
+
+  // A sparkle: a soft glow plus a thin four-pointed star with a bright core.
+  const sparkle = (m, alpha) => {
+    const r = m.size;
+    ctx.save();
+    ctx.translate(m.x, m.y);
+    ctx.rotate(m.angle);
+    const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, r * 1.8);
+    glow.addColorStop(0, `rgba(${m.color}, ${.34 * alpha})`);
+    glow.addColorStop(1, `rgba(${m.color}, 0)`);
+    ctx.fillStyle = glow;
+    ctx.fillRect(-r * 1.8, -r * 1.8, r * 3.6, r * 3.6);
+    ctx.fillStyle = `rgba(${m.color}, ${.85 * alpha})`;
+    ctx.beginPath();
+    for (let i = 0; i < 4; i++) {
+      const a = i * Math.PI / 2;
+      ctx.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+      ctx.lineTo(Math.cos(a + Math.PI / 4) * r * .3, Math.sin(a + Math.PI / 4) * r * .3);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = `rgba(255, 250, 253, ${.9 * alpha})`;
+    ctx.beginPath(); ctx.arc(0, 0, r * .16, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+  };
+
+  const isLight = () => document.documentElement.dataset.theme !== 'dark';
+
+  const frame = (now) => {
+    if (!isLight() || document.hidden) { running = false; ctx.clearRect(0, 0, width, height); return; }
+    const dt = Math.min(.05, (now - (last || now)) / 1000);
+    last = now;
+    const t = now / 1000;
+    fade = Math.min(1, fade + dt / 2);
+    ctx.clearRect(0, 0, width, height);
+    for (let i = 0; i < motes.length; i++) {
+      const m = motes[i];
+      m.y -= m.vy * dt;
+      m.x += m.vx * dt;
+      m.angle += m.spin * dt;
+      const x = m.x + Math.sin(t * m.swayRate + m.phase) * m.sway;
+      if (m.y < -30 || x < -40 || x > width + 40) { motes[i] = spawn(false); continue; }
+      const alpha = .35 + .65 * (.5 + .5 * Math.sin(t * m.twinkle + m.phase));
+      sparkle({ ...m, x }, alpha * fade);
+    }
+    requestAnimationFrame(frame);
+  };
+  const start = () => { if (!running && isLight() && !document.hidden) { running = true; last = 0; requestAnimationFrame(frame); } };
+
+  resize();
+  addEventListener('resize', resize);
+  document.addEventListener('visibilitychange', start);
+  new MutationObserver(start).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  // Starts after the page's entrance animations, and fades in over two seconds.
+  const begin = () => setTimeout(start, 1500);
+  if (document.readyState === 'complete') begin(); else addEventListener('load', begin, { once: true });
+})();

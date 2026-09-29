@@ -268,29 +268,15 @@ body > .skip{position:fixed;z-index:100}
   .home-page .nature:hover img,.therapy-relationship figure:hover img{transform:scale(1.03)}
 }
 
-/* ───────── Light theme: sunrise ─────────
-   A dawn sky (lavender → lilac → violet-rose) behind the page, with a soft sun
-   that climbs as the reader scrolls. Lilac and pink hues only, boxes included. */
+/* ───────── Light theme: dawn and fairy dust ─────────
+   A dawn sky (lavender → lilac → violet-rose) behind the page, with sparkles of
+   fairy dust drifting across it. Lilac and pink hues only, boxes included. */
 :root:not([data-theme="dark"]){--ink:#3a2744;--purple:#7d3f8f;--muted:#66566d;--rose:#b0457f;--line:#e8d6ec;--paper:#fdf8fd;--wash:#f7eefa;--card-lilac:#fbe6f1;--card-sky:#efe6fb;--card-peach:#f6e2f5;--accent-lilac:#b0457f;--accent-sky:#7d4fb0;--accent-peach:#9a3f8f;background:#f3eaf8}
 :root:not([data-theme="dark"]) body,:root:not([data-theme="dark"]) :is(.home-page,.therapy-page,.rates-page,.learning){background:transparent}
-:root:not([data-theme="dark"]) body::before,:root:not([data-theme="dark"]) body::after{content:'';position:fixed;z-index:-1;pointer-events:none}
+:root:not([data-theme="dark"]) body::before{content:'';position:fixed;z-index:-1;pointer-events:none}
 /* Sky: pale lavender at the top deepening into a lilac-violet horizon. */
 :root:not([data-theme="dark"]) body::before{inset:0;background:radial-gradient(130% 55% at 20% 108%,#e9c8f0cc 0,#d9b9f266 38%,#d9b9f200 72%),linear-gradient(180deg,#e6e0f6 0,#ece1f7 28%,#f1e0f4 54%,#f4dbef 78%,#f1d2ec 100%)}
-/* Sun: a soft disc with faint rays, low on the left of the horizon. */
-:root:not([data-theme="dark"]) body::after{left:calc(18% - 48vmax);top:calc(100% - 48vmax);width:96vmax;height:96vmax;border-radius:50%;background:radial-gradient(circle,#fff8fc 0,#fbe9f6 4%,#efc8ecb3 7%,#dab4f059 16%,#c8a6ee22 32%,#c8a6ee00 52%),repeating-conic-gradient(#fbeefa00 0deg,#fbeefa73 4deg,#fbeefa00 8deg,#fbeefa00 20deg);-webkit-mask-image:radial-gradient(circle,#000 0,#000 18%,transparent 62%);mask-image:radial-gradient(circle,#000 0,#000 18%,transparent 62%);transform:translateY(4vh);will-change:transform}
-/* Where supported, the sun rises (and its rays turn) with the scroll position. */
-/* It climbs on a diagonal and ends up where the figure in the footer is looking. */
-@keyframes pv-sunrise{from{transform:translate(0,30vh) rotate(0)}to{transform:translate(16vw,-460px) rotate(28deg)}}
-/* Phones: the figure is smaller and closer to the edge, so the sun travels further right. */
-@keyframes pv-sunrise-narrow{from{transform:translate(0,30vh) rotate(0)}to{transform:translate(34vw,-470px) rotate(28deg)}}
-@supports (animation-timeline:scroll()){
-  @media (prefers-reduced-motion:no-preference){
-    :root:not([data-theme="dark"]) body::after{animation:pv-sunrise linear both;animation-timeline:scroll(root)}
-  }
-  @media (prefers-reduced-motion:no-preference) and (max-width:720px){
-    :root:not([data-theme="dark"]) body::after{animation-name:pv-sunrise-narrow}
-  }
-}
+/* No sun: in its place, fairy dust drifts across the sky (site.js). */
 
 /* Chrome and type. */
 :root:not([data-theme="dark"]) .header{background:#fdf7fce0;border-bottom:0;box-shadow:0 1px 0 #ecd6ec}
@@ -456,10 +442,10 @@ html:root[data-theme="dark"] .therapy-page .process-list li::before{background:#
 html:root[data-theme="dark"] .therapy-page .evidence-context{background:var(--card-peach);border-color:#5a3444;border-left-color:var(--accent-peach)}
 
 /* ───────── Closing scene (both themes) ─────────
-   A small figure sits on the footer's edge, bottom left: watching the rising sun in the
+   A small figure sits on the footer's edge, bottom left: watching the fairy dust in the
    light theme and the night sky in the dark one. It fades in over the last stretch of scroll. */
 body > footer{--figure-h:clamp(170px,19vw,270px);--scene-h:var(--figure-h)}
-/* Light theme: a taller band of sky so the sun can sit where the figure is looking. */
+/* Light theme: a taller band of sky above the figure. */
 :root:not([data-theme="dark"]) body > footer{--scene-h:clamp(280px,30vw,430px)}
 body > footer::before{content:'';display:block;height:var(--scene-h);max-width:1160px;margin-inline:auto;padding-inline:30px;margin-bottom:-6px;background:url(assets/nocturno-contemplacion.webp) left bottom/auto var(--figure-h) no-repeat content-box;pointer-events:none}
 @media(max-width:720px){body > footer::before{padding-inline:24px}}
