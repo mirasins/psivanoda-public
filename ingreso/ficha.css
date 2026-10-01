@@ -41,3 +41,7 @@
 :root[data-theme="dark"] .intake-form .error,:root[data-theme="dark"] .intake-status.is-error{color:#ffb4ab}
 :root[data-theme="dark"] .intake-form .invalid input:not([type=checkbox]),:root[data-theme="dark"] .intake-form .invalid textarea{border-color:#ffb4ab}
 @media(max-width:720px){.intake-form fieldset{padding:20px}.intake-submit .button{width:100%}}
+/* Aviso de servidor en fase de pruebas. */
+.intake-beta{margin:24px 0 20px;padding:16px 20px;border:1px solid var(--accent-peach);border-left:6px solid var(--accent-peach);border-radius:12px;background:var(--card-peach);line-height:1.6}
+.intake-beta a{text-decoration:underline}
+.intake-beta strong{display:block;margin-bottom:4px}
