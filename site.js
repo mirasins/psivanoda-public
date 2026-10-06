@@ -142,10 +142,18 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
 
   addEventListener('resize', () => { resize(); wake(); }, { passive: true });
   // Only in dark mode: in light mode the cursor leaves a fairy-dust trail instead (below).
-  // Dark mode also gets a small glow that pulses gently right at the cursor, above the content (CSS: #night-glow).
+  // Dark mode also gets a small burst of short rays that pulses around the cursor, above the content (CSS: #night-glow).
+  // Two alternating sets of rays take turns, so the burst twinkles instead of blinking.
   const glowDot = document.createElement('div');
   glowDot.id = 'night-glow';
   glowDot.setAttribute('aria-hidden', 'true');
+  const ray = (deg, from, to) => {
+    const a = deg * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+    return `<line x1="${(c * from).toFixed(1)}" y1="${(s * from).toFixed(1)}" x2="${(c * to).toFixed(1)}" y2="${(s * to).toFixed(1)}"/>`;
+  };
+  glowDot.innerHTML = '<svg viewBox="-30 -30 60 60">' +
+    `<g>${ray(-80, 13, 19) + ray(10, 14, 22) + ray(100, 13, 20) + ray(190, 14, 21)}</g>` +
+    `<g>${ray(-35, 15, 20) + ray(55, 14, 19) + ray(145, 15, 22) + ray(235, 13, 18)}</g></svg>`;
   document.body.append(glowDot);
   addEventListener('pointermove', e => {
     target.x = e.clientX; target.y = e.clientY; active = document.documentElement.dataset.theme === 'dark'; wake();
