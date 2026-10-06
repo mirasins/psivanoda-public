@@ -1,4 +1,5 @@
 .intake-form{display:grid;gap:36px;margin-top:40px}
+.intake-form[hidden]{display:none}
 /* Adultos: tres líneas lila que se desvanecen desde adentro hacia afuera. */
 .intake-form fieldset{position:relative;margin:0;padding:28px;border:2px solid var(--accent-lilac);border-radius:18px;min-width:0;background:var(--wash)}
 .intake-form fieldset::before,.intake-form fieldset::after{content:"";position:absolute;pointer-events:none;border:2px solid var(--accent-lilac)}
@@ -45,3 +46,67 @@
 .intake-beta{margin:24px 0 20px;padding:16px 20px;border:1px solid var(--accent-peach);border-left:6px solid var(--accent-peach);border-radius:12px;background:var(--card-peach);line-height:1.6}
 .intake-beta a{text-decoration:underline}
 .intake-beta strong{display:block;margin-bottom:4px}
+/* Ficha enviada: agradecimiento animado. */
+.intake-thanks{position:relative;overflow:hidden;text-align:center;padding:32px 28px 30px}
+.intake-thanks .eyebrow{margin:4px 0 10px}
+.intake-thanks h2{font-size:clamp(1.65rem,3.6vw,2.3rem);line-height:1.28;max-width:24ch;margin:0 auto 18px}
+.intake-thanks h2 span{display:inline-block}
+.intake-thanks .thanks-note{max-width:52ch;margin:0 auto;font-size:.95rem}
+.thanks-scene{display:block;width:min(100%,320px);height:auto;margin:0 auto 6px;overflow:visible}
+.thanks-scene path,.thanks-scene circle{stroke-linecap:round;stroke-linejoin:round}
+/* Adultos: una luna de trazo fino entre los anillos lila de la ficha, estrellas y ondas que se dibujan. */
+.thanks-art{border:0;border-radius:18px;background:radial-gradient(120% 90% at 50% 0,var(--card-lilac),var(--wash) 72%);box-shadow:inset 0 0 0 2px var(--accent-lilac)}
+.thanks-rings circle{fill:none;stroke:var(--accent-lilac);stroke-width:1.5;transform-box:view-box;transform-origin:160px 88px;opacity:var(--o)}
+.thanks-rings circle:nth-child(1){--o:.55}.thanks-rings circle:nth-child(2){--o:.3}.thanks-rings circle:nth-child(3){--o:.14}
+.thanks-moon{fill:var(--accent-lilac);fill-opacity:.22;stroke:var(--accent-lilac);stroke-width:2;stroke-dasharray:1}
+.thanks-star{fill:var(--accent-peach);transform-box:fill-box;transform-origin:center}
+.thanks-wave{fill:none;stroke:var(--accent-sky);stroke-width:1.6;opacity:.6;stroke-dasharray:1}
+.thanks-wave-2{stroke:var(--accent-lilac);opacity:.4}
+.thanks-art h2 .em{font-style:italic;color:var(--purple)}
+/* Adolescentes: borde a franjas, un avión de papel que hace un loop, stickers y confeti. */
+.thanks-play{border:7px solid transparent;border-radius:18px;background:linear-gradient(var(--wash),var(--wash)) padding-box,repeating-linear-gradient(135deg,var(--accent-sky) 0 12px,var(--accent-peach) 12px 24px,var(--accent-sky) 24px 36px,var(--accent-lilac) 36px 48px) border-box}
+.thanks-trail{fill:none;stroke:var(--accent-sky);stroke-width:2;stroke-dasharray:2 7}
+.thanks-trail-reveal{fill:none;stroke:#fff;stroke-width:8;stroke-dasharray:1}
+.thanks-plane path{fill:var(--paper);stroke:var(--accent-sky);stroke-width:2}
+.thanks-plane .thanks-plane-fold{fill:none;stroke-width:1.4}
+.thanks-sticker{transform-box:fill-box;transform-origin:center}
+.thanks-sticker-star path{fill:var(--accent-peach)}
+.thanks-sticker-heart path{fill:var(--accent-lilac)}
+.thanks-sticker-dot circle{fill:var(--accent-sky);opacity:.7}
+.thanks-sticker-squiggle path{fill:none;stroke:var(--accent-peach);stroke-width:3}
+.thanks-play h2 .mark{position:relative;z-index:0}
+.thanks-play h2 .mark::after{content:"";position:absolute;z-index:-1;left:-.08em;right:-.08em;bottom:.08em;height:.38em;border-radius:.2em;background:var(--accent-sky);opacity:.28;transform-origin:left}
+.thanks-confetti{position:absolute;inset:0;pointer-events:none}
+.thanks-confetti span{position:absolute;left:50%;top:46%;width:8px;height:12px;border-radius:2px;background:var(--c);opacity:0}
+.thanks-confetti span:nth-child(3n){width:9px;height:9px;border-radius:50%}
+@media(prefers-reduced-motion:no-preference){
+  .thanks-rings circle{animation:th-ring 1.3s cubic-bezier(.2,.7,.2,1) both,th-breathe 7s 2.6s ease-in-out infinite}
+  .thanks-rings circle:nth-child(2){animation-delay:.15s,2.9s}.thanks-rings circle:nth-child(3){animation-delay:.3s,3.2s}
+  .thanks-moon{animation:th-draw 1.6s .35s ease-in-out both,th-fill .9s 1.6s ease both}
+  .thanks-star{animation:th-spark .7s var(--d) cubic-bezier(.3,1.5,.6,1) both,pv-twinkle 3.4s calc(var(--d) + .7s) ease-in-out infinite}
+  .thanks-wave{animation:th-draw 2.2s .9s ease-in-out both}.thanks-wave-2{animation-delay:1.2s}
+  .thanks-art h2 span{animation:th-word 1s calc(1.3s + var(--i) * .1s) cubic-bezier(.2,.7,.2,1) both}
+  .thanks-art .eyebrow{animation:pv-pop .8s 1s ease both}
+  .thanks-art .thanks-note{animation:pv-pop .9s 2.6s ease both}
+  .thanks-trail-reveal{animation:th-draw 2.2s linear both}
+  .thanks-plane{animation:th-plane-out .5s 2.2s ease-in both}
+  .thanks-sticker{animation:th-pop .6s var(--d) cubic-bezier(.3,1.7,.5,1) both,th-wobble 2.6s calc(var(--d) + .6s) ease-in-out infinite}
+  .thanks-play h2 span{animation:th-bounce .7s calc(1.6s + var(--i) * .09s) cubic-bezier(.3,1.6,.5,1) both}
+  .thanks-play h2 .mark::after{animation:pv-grow .5s 2.4s ease-out both}
+  .thanks-play .eyebrow{animation:pv-pop .6s 1.3s ease both}
+  .thanks-play .thanks-note{animation:pv-pop .7s 2.6s ease both}
+  .thanks-confetti span{animation:th-confetti 1.8s var(--d) cubic-bezier(.15,.6,.35,1) forwards}
+}
+@keyframes th-ring{from{opacity:0;transform:scale(.55)}}
+@keyframes th-breathe{50%{transform:scale(1.045)}}
+@keyframes th-draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes th-fill{from{fill-opacity:0}}
+@keyframes th-spark{from{opacity:0;transform:scale(0) rotate(-90deg)}}
+@keyframes th-word{from{opacity:0;filter:blur(8px);transform:translateY(.35em)}}
+@keyframes th-plane-out{to{opacity:0;transform:translate(24px,-14px)}}
+@keyframes th-pop{from{opacity:0;transform:scale(0)}}
+@keyframes th-wobble{0%,100%{transform:rotate(0)}25%{transform:rotate(-9deg) scale(1.06)}75%{transform:rotate(7deg)}}
+@keyframes th-bounce{from{opacity:0;transform:translateY(.7em) scale(.5) rotate(-6deg)}}
+@keyframes th-confetti{0%{opacity:1;transform:translate(-50%,-50%) rotate(0)}45%{opacity:1;transform:translate(calc(-50% + var(--x) * .75),calc(-50% + var(--y))) rotate(calc(var(--r) * .5))}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y) + 110px)) rotate(var(--r))}}
+@media(prefers-reduced-motion:reduce){.thanks-plane{opacity:0}}
+@media(max-width:720px){.intake-thanks{padding:26px 18px 24px}}

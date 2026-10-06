@@ -79,8 +79,8 @@ mailForm?.addEventListener('submit', event => {
 if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location.replace(new URL('valores/',location.href).href);
 
 
-// Faint background (stars at nightfall in dark mode): a sparse dot mesh that gently parts around the cursor and
-// eases back, plus a soft halo. Calm by design; disabled on touch, reduced motion and on
+// Faint background (stars at nightfall in dark mode): a sparse, still dot mesh. In dark mode the stars nearest
+// the cursor only brighten a touch, with no halo, links or movement. Calm by design; disabled on touch, reduced motion and on
 // pages marked data-calm (the crisis page), where any extra movement is unwelcome.
 (() => {
   if (document.body.hasAttribute('data-calm') ||
@@ -93,7 +93,7 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   document.body.prepend(canvas);
   const ctx = canvas.getContext('2d');
   const target = { x: -1000, y: -1000 };
-  const halo = { x: -1000, y: -1000, alpha: 0 };
+  const glow = { x: -1000, y: -1000, alpha: 0 };
   let width = 0, height = 0, running = false, active = false, points = [];
 
   const resize = () => {
@@ -108,67 +108,33 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
       for (let x = gap / 2; x < width; x += gap) {
         const ox = x + (Math.random() - .5) * gap * .5, oy = y + (Math.random() - .5) * gap * .5;
         // Per-point size and brightness let the dark theme read as a starfield.
-        points.push({ x: ox, y: oy, ox, oy, s: Math.random(), b: Math.random() ** 2 });
+        points.push({ x: ox, y: oy, s: Math.random(), b: Math.random() ** 2 });
       }
   };
 
   const draw = () => {
-    if (halo.x < -900) { halo.x = target.x; halo.y = target.y; }
-    halo.x += (target.x - halo.x) * .06;
-    halo.y += (target.y - halo.y) * .06;
-    halo.alpha += ((active ? 1 : 0) - halo.alpha) * .04;
+    if (glow.x < -900) { glow.x = target.x; glow.y = target.y; }
+    glow.x += (target.x - glow.x) * .1;
+    glow.y += (target.y - glow.y) * .1;
+    glow.alpha += ((active ? 1 : 0) - glow.alpha) * .05;
 
     const dark = document.documentElement.dataset.theme === 'dark';
     // Light: rose-lilac specks of morning light. Dark: pale starlight at nightfall.
     const color = dark ? '230, 224, 255' : '176, 80, 150';
-    const radius = 180;
-    let moving = false;
 
     ctx.clearRect(0, 0, width, height);
-
     for (const p of points) {
-      const dx = p.ox - halo.x, dy = p.oy - halo.y;
-      const d = Math.hypot(dx, dy) || 1;
-      const push = d < radius ? (1 - d / radius) ** 2 * 18 * halo.alpha : 0;
-      const tx = p.ox + dx / d * push, ty = p.oy + dy / d * push;
-      p.x += (tx - p.x) * .08; p.y += (ty - p.y) * .08;
-      if (Math.abs(tx - p.x) > .05 || Math.abs(ty - p.y) > .05) moving = true;
-    }
-
-    // Faint links only between close neighbours near the cursor.
-    ctx.lineWidth = 1;
-    for (let i = 0; i < points.length; i++) {
-      const a = points[i];
-      const na = Math.max(0, 1 - Math.hypot(a.x - halo.x, a.y - halo.y) / 240) * halo.alpha;
-      if (na <= 0) continue;
-      for (let j = i + 1; j < points.length; j++) {
-        const b = points[j];
-        const d = Math.hypot(a.x - b.x, a.y - b.y);
-        if (d > 140) continue;
-        ctx.strokeStyle = `rgba(${color}, ${(dark ? .32 : .34) * na * (1 - d / 140)})`;
-        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
-      }
-    }
-
-    for (const p of points) {
-      const near = Math.max(0, 1 - Math.hypot(p.x - halo.x, p.y - halo.y) / 240) * halo.alpha;
+      // Only the few stars within reach of the cursor wake up, and only slightly.
+      const near = Math.max(0, 1 - Math.hypot(p.x - glow.x, p.y - glow.y) / 130) ** 2 * glow.alpha;
       // Stars vary in size and shine, and fade toward the glow on the horizon.
-      const base = dark ? (.14 + .5 * p.b) * (1 - .65 * p.oy / height) : .26;
+      const base = dark ? (.14 + .5 * p.b) * (1 - .65 * p.y / height) : .26;
       const size = dark ? .7 + 1.3 * p.s : 1.4;
-      ctx.fillStyle = `rgba(${color}, ${base + (dark ? .38 : .4) * near})`;
-      ctx.beginPath(); ctx.arc(p.x, p.y, size + near, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = `rgba(${color}, ${base + .3 * near})`;
+      ctx.beginPath(); ctx.arc(p.x, p.y, size + .6 * near, 0, Math.PI * 2); ctx.fill();
     }
 
-    if (halo.alpha > .01) {
-      const g = ctx.createRadialGradient(halo.x, halo.y, 0, halo.x, halo.y, 240);
-      g.addColorStop(0, `rgba(${color}, ${(dark ? .16 : .15) * halo.alpha})`);
-      g.addColorStop(1, `rgba(${color}, 0)`);
-      ctx.fillStyle = g;
-      ctx.fillRect(halo.x - 240, halo.y - 240, 480, 480);
-    }
-
-    const settled = !moving && Math.abs(target.x - halo.x) < .5 && Math.abs(target.y - halo.y) < .5 &&
-      Math.abs((active ? 1 : 0) - halo.alpha) < .01;
+    const settled = Math.abs(target.x - glow.x) < .5 && Math.abs(target.y - glow.y) < .5 &&
+      Math.abs((active ? 1 : 0) - glow.alpha) < .01;
     if (settled) { running = false; return; }
     requestAnimationFrame(draw);
   };

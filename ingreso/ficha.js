@@ -93,6 +93,22 @@
   const val = name => (form.elements[name] ? form.elements[name].value.trim() : '');
   const on = name => !!(form.elements[name] && form.elements[name].checked && !form.elements[name].closest('[hidden]'));
 
+  // Ficha adolescente: el avión de papel hace su recorrido y, al llegar, revienta el confeti.
+  const celebrate = done => {
+    if (!done.classList.contains('thanks-play')) return;
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    done.querySelectorAll('animateMotion').forEach(a => { if (still) a.setAttribute('dur', '0.01s'); a.beginElement(); });
+    if (still) return;
+    const box = done.querySelector('.thanks-confetti');
+    const colors = ['var(--accent-sky)', 'var(--accent-peach)', 'var(--accent-lilac)'];
+    for (let i = 0; i < 28; i++) {
+      const s = document.createElement('span'), angle = Math.random() * Math.PI * 2, reach = 90 + Math.random() * 170;
+      s.style.cssText = `--x:${Math.cos(angle) * reach}px;--y:${Math.sin(angle) * reach * .6 - 40}px;--r:${(Math.random() - .5) * 720}deg;` +
+        `--c:${colors[i % 3]};--d:${(2 + Math.random() * .35).toFixed(2)}s`;
+      box.append(s);
+    }
+  };
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const bad = fields().filter(el => !check(el));
@@ -122,6 +138,7 @@
         form.hidden = true;
         done.hidden = false;
         done.focus();
+        celebrate(done);
         return;
       }
       const body = await res.json().catch(() => ({}));
