@@ -142,8 +142,17 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
 
   addEventListener('resize', () => { resize(); wake(); }, { passive: true });
   // Only in dark mode: in light mode the cursor leaves a fairy-dust trail instead (below).
-  addEventListener('pointermove', e => { target.x = e.clientX; target.y = e.clientY; active = document.documentElement.dataset.theme === 'dark'; wake(); }, { passive: true });
-  const leave = () => { active = false; wake(); };
+  // Dark mode also gets a small glow that pulses gently right at the cursor, above the content (CSS: #night-glow).
+  const glowDot = document.createElement('div');
+  glowDot.id = 'night-glow';
+  glowDot.setAttribute('aria-hidden', 'true');
+  document.body.append(glowDot);
+  addEventListener('pointermove', e => {
+    target.x = e.clientX; target.y = e.clientY; active = document.documentElement.dataset.theme === 'dark'; wake();
+    glowDot.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+    glowDot.classList.add('on');
+  }, { passive: true });
+  const leave = () => { active = false; wake(); glowDot.classList.remove('on'); };
   addEventListener('blur', leave);
   document.documentElement.addEventListener('pointerleave', leave);
   resize(); wake();
