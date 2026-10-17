@@ -65,17 +65,71 @@
     if (atEnd) el.setSelectionRange(formatted.length, formatted.length);
   };
 
+  // Destellos decorativos: no leen ni conservan el contenido de la ficha.
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const completed = new WeakSet();
+  let lastSpark = -Infinity;
+  const sparkle = (el, count = 2) => {
+    const field = el.closest('.field');
+    if (reducedMotion.matches || !field || el.closest('[hidden]') || form.hidden) return;
+    const layer = field.querySelector('.intake-sparkles') || (() => {
+      const box = document.createElement('span');
+      box.className = 'intake-sparkles';
+      box.setAttribute('aria-hidden', 'true');
+      field.append(box);
+      return box;
+    })();
+    if (form.querySelectorAll('.intake-spark').length >= 18) return;
+    const top = el.type === 'checkbox' ? 8 : el.offsetTop + 8;
+    for (let i = 0; i < count; i++) {
+      const spark = document.createElement('span');
+      spark.className = 'intake-spark';
+      spark.style.cssText = `top:${top}px;--spark-x:${-12 - Math.random() * 34}px;--spark-y:${-24 - Math.random() * 28}px;--spark-r:${Math.random() * 50 - 25}deg;--spark-delay:${i * 85}ms;--spark-size:${12 + Math.random() * 9}px`;
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      const path = document.createElementNS(svg.namespaceURI, 'path');
+      const moon = count > 2 ? i === 1 : Math.random() < .3;
+      spark.classList.toggle('intake-spark--moon', moon);
+      path.setAttribute('d', moon
+        ? 'M19.8 15.1A8.5 8.5 0 0 1 8.9 4.2 8.5 8.5 0 1 0 19.8 15.1Z'
+        : 'm12 2 2.8 6.2 6.7.8-5 4.6 1.4 6.6-5.9-3.4-5.9 3.4 1.4-6.6-5-4.6 6.7-.8Z');
+      svg.append(path);
+      spark.append(svg);
+      layer.append(spark);
+      const remove = () => { spark.remove(); if (!layer.childElementCount) layer.remove(); };
+      spark.addEventListener('animationend', remove, { once: true });
+      setTimeout(remove, 1600);
+    }
+  };
+  const completeField = el => {
+    if (!el.matches('input,textarea') || !el.closest('.field') || completed.has(el)) return;
+    const filled = el.type === 'checkbox' ? el.checked : !!el.value.trim();
+    if (!filled || !el.validity.valid || (rules[el.name] && !rules[el.name](el.value.trim()))) return;
+    completed.add(el);
+    sparkle(el, 3);
+  };
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches) form.querySelectorAll('.intake-sparkles').forEach(layer => layer.remove());
+  });
+
   form.addEventListener('focusout', e => {
     if (isRut(e.target)) e.target.value = normRut(e.target.value);
     if ((e.target.required || rules[e.target.name]) && e.target.type !== 'checkbox' && e.target.value) check(e.target);
+    completeField(e.target);
   });
   form.addEventListener('input', e => {
     // Mientras se escribe al final se corrige al tiro; si se edita al medio, al salir del campo, para no mover el cursor.
     if (isRut(e.target) && e.target.selectionStart === e.target.value.length) formatRut(e.target);
     if (e.target.closest('.invalid')) check(e.target);
     if (e.target.name === 'nacimiento') syncUnder16();
+    completed.delete(e.target);
+    if (e.target.matches('input:not([type=checkbox]),textarea') && e.target.value.trim() && !e.isComposing && performance.now() - lastSpark > 450) {
+      lastSpark = performance.now();
+      sparkle(e.target);
+    }
   });
   form.addEventListener('change', e => { if (e.target.type === 'checkbox' && e.target.required) check(e.target); if (e.target.name === 'nacimiento') syncUnder16(); });
+  form.addEventListener('change', e => completeField(e.target));
   syncUnder16();
 
   // Verificación anti-spam de Cloudflare (solo si la página trae la clave pública).
