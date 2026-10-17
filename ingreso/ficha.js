@@ -44,9 +44,11 @@
   const fields = () => [...form.querySelectorAll('input,textarea')].filter(el => (el.required || rules[el.name]) && !el.closest('[hidden]'));
   const check = el => {
     const value = el.value.trim();
-    const ok = el.type === 'checkbox' ? el.checked : value === '' ? !el.required : !rules[el.name] || rules[el.name](value);
+    const ok = el.hasAttribute('data-birth-part') ? rules.nacimiento(form.elements.nacimiento.value) :
+      el.type === 'checkbox' ? el.checked : value === '' ? !el.required : !rules[el.name] || rules[el.name](value);
     el.closest('.field').classList.toggle('invalid', !ok);
     el.setAttribute('aria-invalid', String(!ok));
+    if (el.hasAttribute('data-birth-part')) birthParts.forEach(part => part.setAttribute('aria-invalid', String(!ok)));
     return ok;
   };
 
@@ -65,70 +67,137 @@
     if (atEnd) el.setSelectionRange(formatted.length, formatted.length);
   };
 
+  // Adultos: tres casillas visibles, una sola fecha ISO para el servicio de ingreso.
+  const birthParts = [...form.querySelectorAll('[data-birth-part]')];
+  const syncBirthDate = () => {
+    if (!birthParts.length) return;
+    const [day, month, year] = birthParts.map(part => part.value.trim());
+    const iso = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    const date = new Date(`${iso}T12:00:00Z`);
+    const real = /^\d{1,2}$/.test(day) && /^\d{1,2}$/.test(month) && /^\d{4}$/.test(year) &&
+      !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === iso;
+    form.elements.nacimiento.value = real ? iso : '';
+    birthParts.forEach(part => part.setCustomValidity(real && rules.nacimiento(iso) ? '' : 'Revisa la fecha de nacimiento.'));
+  };
+  syncBirthDate();
+  form.addEventListener('reset', () => setTimeout(syncBirthDate, 0));
+
   // Destellos decorativos: no leen ni conservan el contenido de la ficha.
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  // Tres tamaños: «tecleo» (una chispa mínima mientras se escribe), «campo» (abanico al completar un campo)
+  // y «seccion» (constelación junto al título cuando se completa todo un recuadro).
   const completed = new WeakSet();
+  const doneSections = new WeakSet();
   let lastSpark = -Infinity;
-  const sparkle = (el, count = 2) => {
-    const field = el.closest('.field');
-    if (reducedMotion.matches || !field || el.closest('[hidden]') || form.hidden) return;
-    const layer = field.querySelector('.intake-sparkles') || (() => {
-      const box = document.createElement('span');
-      box.className = 'intake-sparkles';
-      box.setAttribute('aria-hidden', 'true');
-      field.append(box);
-      return box;
+  const STAR = 'M12 2.5c.5 4.6 2.4 6.8 7 7.5-4.6.7-6.5 2.9-7 9.5-.5-6.6-2.4-8.8-7-9.5 4.6-.7 6.5-2.9 7-7.5Z';
+  const MOON = 'M19.8 15.1A8.5 8.5 0 0 1 8.9 4.2 8.5 8.5 0 1 0 19.8 15.1Z';
+  const SIZES = {
+    tecleo: { count: 1, size: [8, 11], reach: [14, 22], spread: [-100, -80], dur: 700 },
+    campo: { count: 5, size: [13, 20], reach: [26, 46], spread: [-165, -15], dur: 1050 },
+    seccion: { count: 7, size: [12, 21], reach: [30, 62], spread: [-180, 0], dur: 1300 },
+  };
+  const rand = ([min, max]) => min + Math.random() * (max - min);
+  // Punto de origen dentro del recuadro que contiene al elemento: borde derecho del campo, junto a la
+  // casilla de verificación, o al final del título de la sección.
+  const origin = el => {
+    if (el.matches('legend')) {
+      const text = document.createRange();
+      text.selectNodeContents(el);
+      return { x: el.offsetLeft + text.getBoundingClientRect().width + 18, y: el.offsetTop + el.offsetHeight / 2 };
+    }
+    if (el.type === 'checkbox') return { x: el.offsetLeft + el.offsetWidth / 2, y: el.offsetTop + el.offsetHeight / 2 };
+    const y = el.matches('textarea') ? el.offsetTop + 22 : el.offsetTop + el.offsetHeight / 2;
+    return { x: el.offsetLeft + el.offsetWidth - 22, y };
+  };
+  const sparkle = (el, kind = 'tecleo') => {
+    const box = el.matches('legend') ? el.closest('fieldset') : el.closest('.field');
+    if (reducedMotion.matches || !box || el.closest('[hidden]') || form.hidden) return;
+    const cfg = SIZES[kind];
+    if (form.querySelectorAll('.intake-spark').length + cfg.count > 24) return;
+    const layer = box.querySelector(':scope > .intake-sparkles') || (() => {
+      const span = document.createElement('span');
+      span.className = 'intake-sparkles';
+      span.setAttribute('aria-hidden', 'true');
+      box.append(span);
+      return span;
     })();
-    if (form.querySelectorAll('.intake-spark').length >= 18) return;
-    const top = el.type === 'checkbox' ? 8 : el.offsetTop + 8;
-    for (let i = 0; i < count; i++) {
+    const { x, y } = origin(el);
+    const teen = tipo === 'adolescente';
+    for (let i = 0; i < cfg.count; i++) {
+      // Ángulos repartidos en abanico (con algo de azar) para que no salgan amontonados.
+      const [from, to] = cfg.spread;
+      const angle = (from + (to - from) * (cfg.count === 1 ? .5 : i / (cfg.count - 1)) + rand([-9, 9])) * Math.PI / 180;
+      const reach = rand(cfg.reach);
+      const moon = !teen && kind !== 'tecleo' && i === Math.floor(cfg.count / 2);
       const spark = document.createElement('span');
-      spark.className = 'intake-spark';
-      spark.style.cssText = `top:${top}px;--spark-x:${-12 - Math.random() * 34}px;--spark-y:${-24 - Math.random() * 28}px;--spark-r:${Math.random() * 50 - 25}deg;--spark-delay:${i * 85}ms;--spark-size:${12 + Math.random() * 9}px`;
+      spark.className = 'intake-spark' + (moon ? ' intake-spark--moon' : '') + (kind === 'tecleo' ? ' intake-spark--soft' : '');
+      spark.style.cssText = `left:${x}px;top:${y}px;--spark-x:${Math.cos(angle) * reach}px;--spark-y:${Math.sin(angle) * reach}px;` +
+        `--spark-r:${rand([-40, 40])}deg;--spark-delay:${kind === 'tecleo' ? 0 : i * 45}ms;--spark-size:${rand(cfg.size)}px;--spark-dur:${cfg.dur}ms`;
       const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       svg.setAttribute('viewBox', '0 0 24 24');
       const path = document.createElementNS(svg.namespaceURI, 'path');
-      const moon = count > 2 ? i === 1 : Math.random() < .3;
-      spark.classList.toggle('intake-spark--moon', moon);
-      path.setAttribute('d', moon
-        ? 'M19.8 15.1A8.5 8.5 0 0 1 8.9 4.2 8.5 8.5 0 1 0 19.8 15.1Z'
-        : 'm12 2 2.8 6.2 6.7.8-5 4.6 1.4 6.6-5.9-3.4-5.9 3.4 1.4-6.6-5-4.6 6.7-.8Z');
+      path.setAttribute('d', moon ? MOON : STAR);
       svg.append(path);
       spark.append(svg);
+      spark.dataset.tone = String(i % 3);
       layer.append(spark);
       const remove = () => { spark.remove(); if (!layer.childElementCount) layer.remove(); };
       spark.addEventListener('animationend', remove, { once: true });
-      setTimeout(remove, 1600);
+      setTimeout(remove, cfg.dur + 600);
     }
   };
-  const completeField = el => {
-    if (!el.matches('input,textarea') || !el.closest('.field') || completed.has(el)) return;
+  // Un brillo breve en el borde del campo recién completado.
+  const glow = el => {
+    if (reducedMotion.matches || el.type === 'checkbox') return;
+    el.classList.remove('intake-glow');
+    void el.offsetWidth;
+    el.classList.add('intake-glow');
+    el.addEventListener('animationend', () => el.classList.remove('intake-glow'), { once: true });
+  };
+  const isComplete = el => {
+    if (el.closest('[hidden]')) return true;
     const filled = el.type === 'checkbox' ? el.checked : !!el.value.trim();
-    if (!filled || !el.validity.valid || (rules[el.name] && !rules[el.name](el.value.trim()))) return;
+    return filled && el.validity.valid && (!rules[el.name] || rules[el.name](el.value.trim()));
+  };
+  const completeSection = fieldset => {
+    if (!fieldset || doneSections.has(fieldset)) return;
+    const required = [...fieldset.querySelectorAll('input,textarea')].filter(el => el.required && el.type !== 'hidden');
+    if (!required.length || !required.every(isComplete)) return;
+    doneSections.add(fieldset);
+    const legend = fieldset.querySelector('legend');
+    if (legend) setTimeout(() => sparkle(legend, 'seccion'), 350);
+  };
+  const completeField = el => {
+    if (!el.matches('input,textarea') || el.type === 'hidden' || !el.closest('.field') || completed.has(el) || !isComplete(el)) return;
     completed.add(el);
-    sparkle(el, 3);
+    glow(el);
+    sparkle(el, 'campo');
+    completeSection(el.closest('fieldset'));
   };
   reducedMotion.addEventListener('change', () => {
     if (reducedMotion.matches) form.querySelectorAll('.intake-sparkles').forEach(layer => layer.remove());
   });
 
   form.addEventListener('focusout', e => {
+    if (e.target.hasAttribute('data-birth-part') && e.relatedTarget?.hasAttribute('data-birth-part')) return;
     if (isRut(e.target)) e.target.value = normRut(e.target.value);
     if ((e.target.required || rules[e.target.name]) && e.target.type !== 'checkbox' && e.target.value) check(e.target);
     completeField(e.target);
   });
   form.addEventListener('input', e => {
+    if (e.target.hasAttribute('data-birth-part')) syncBirthDate();
     // Mientras se escribe al final se corrige al tiro; si se edita al medio, al salir del campo, para no mover el cursor.
     if (isRut(e.target) && e.target.selectionStart === e.target.value.length) formatRut(e.target);
     if (e.target.closest('.invalid')) check(e.target);
     if (e.target.name === 'nacimiento') syncUnder16();
     completed.delete(e.target);
-    if (e.target.matches('input:not([type=checkbox]),textarea') && e.target.value.trim() && !e.isComposing && performance.now() - lastSpark > 450) {
+    // Al escribir, una chispa tenue y espaciada; nunca en el motivo de consulta, para no distraer ahí.
+    if (e.target.matches('input:not([type=checkbox])') && e.target.value.trim() && !e.isComposing && performance.now() - lastSpark > 900) {
       lastSpark = performance.now();
-      sparkle(e.target);
+      sparkle(e.target, 'tecleo');
     }
   });
-  form.addEventListener('change', e => { if (e.target.type === 'checkbox' && e.target.required) check(e.target); if (e.target.name === 'nacimiento') syncUnder16(); });
+  form.addEventListener('change', e => { if (e.target.hasAttribute('data-birth-part')) syncBirthDate(); if (e.target.type === 'checkbox' && e.target.required) check(e.target); if (e.target.name === 'nacimiento') syncUnder16(); });
   form.addEventListener('change', e => completeField(e.target));
   syncUnder16();
 
@@ -165,6 +234,7 @@
 
   form.addEventListener('submit', async e => {
     e.preventDefault();
+    syncBirthDate();
     const bad = fields().filter(el => !check(el));
     if (bad.length) { bad[0].focus(); say('Revisa los campos marcados.', true); return; }
     const turnstile = widget !== null ? window.turnstile.getResponse(widget) : '';

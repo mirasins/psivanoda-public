@@ -12,18 +12,32 @@
 .intake-form legend{float:left;width:100%;padding:0;margin:0 0 6px;font-family:'Bodoni Moda',Georgia,serif;font-size:1.45rem}
 .intake-form legend+*{clear:both}
 .intake-form .field{position:relative;margin-top:18px}
+/* Destellos: nacen en el borde derecho del campo (o junto al título de la sección) y se abren en abanico. */
 .intake-sparkles{position:absolute;inset:0;pointer-events:none;z-index:2}
-.intake-spark{position:absolute;right:16px;width:var(--spark-size);height:var(--spark-size);color:var(--purple);opacity:0;pointer-events:none;animation:intake-spark 1.05s var(--spark-delay) ease-out both}
-.intake-spark svg{display:block;width:100%;height:100%;fill:var(--accent-peach);stroke:currentColor;stroke-width:1;stroke-linejoin:round}
-.intake-spark--moon svg{fill:var(--accent-lilac)}
-:root[data-theme="dark"] .intake-spark{color:var(--accent-lilac)}
-@keyframes intake-spark{0%{opacity:0;transform:translate(0,4px) scale(.25) rotate(-15deg)}25%{opacity:.9}65%{opacity:.75}100%{opacity:0;transform:translate(var(--spark-x),var(--spark-y)) scale(1.05) rotate(var(--spark-r))}}
-@media(prefers-reduced-motion:reduce){.intake-sparkles{display:none}}
+.intake-spark{position:absolute;width:var(--spark-size);height:var(--spark-size);margin:calc(var(--spark-size)/-2) 0 0 calc(var(--spark-size)/-2);opacity:0;pointer-events:none;animation:intake-spark var(--spark-dur,1s) var(--spark-delay) cubic-bezier(.2,.7,.3,1) both}
+.intake-spark svg{display:block;width:100%;height:100%;overflow:visible;fill:var(--spark-fill,var(--accent-peach));filter:drop-shadow(0 0 3px var(--spark-fill,var(--accent-peach)))}
+.intake-spark[data-tone="1"]{--spark-fill:var(--accent-lilac)}
+.intake-spark[data-tone="2"]{--spark-fill:var(--purple)}
+.intake-spark--moon{--spark-fill:var(--accent-lilac)}
+.intake-form[data-tipo=adolescente] .intake-spark{--spark-fill:var(--accent-sky)}
+.intake-form[data-tipo=adolescente] .intake-spark[data-tone="1"]{--spark-fill:var(--accent-peach)}
+.intake-form[data-tipo=adolescente] .intake-spark[data-tone="2"]{--spark-fill:var(--accent-lilac)}
+.intake-spark--soft{--spark-peak:.55}
+@keyframes intake-spark{0%{opacity:0;transform:translate(0,0) scale(.2) rotate(0)}20%{opacity:var(--spark-peak,1);transform:translate(calc(var(--spark-x)*.35),calc(var(--spark-y)*.35)) scale(1.1) rotate(calc(var(--spark-r)*.4))}70%{opacity:calc(var(--spark-peak,1)*.8)}100%{opacity:0;transform:translate(var(--spark-x),var(--spark-y)) scale(.6) rotate(var(--spark-r))}}
+/* Campo recién completado: un halo que se expande y se apaga. */
+.intake-form .intake-glow{animation:intake-glow .9s ease-out}
+.intake-form[data-tipo=adolescente] .intake-glow{--glow:var(--accent-sky)}
+@keyframes intake-glow{0%{box-shadow:0 0 0 0 var(--glow,var(--accent-lilac))}100%{box-shadow:0 0 0 8px transparent}}
+@media(prefers-reduced-motion:reduce){.intake-sparkles{display:none}.intake-form .intake-glow{animation:none}}
 .intake-form legend+.field{margin-top:8px}
 .intake-form .field label,.intake-form .field .label{display:block;font-weight:500;margin-bottom:6px}
 .intake-form .hint{display:block;font-size:.88rem;color:var(--muted);margin:-2px 0 8px}
 .intake-form input:not([type=checkbox]),.intake-form textarea{display:block;width:100%;border:1px solid var(--line);border-radius:6px;background:var(--paper);color:var(--ink);padding:12px 14px;font:inherit}
 .intake-form textarea{resize:vertical;min-height:120px}
+.birth-date{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.5fr);gap:12px;max-width:420px}
+.birth-date>div{min-width:0}
+.intake-form .birth-date label{font-size:.9rem}
+.intake-form input[hidden]{display:none}
 .intake-form input:focus,.intake-form textarea:focus{border-color:var(--purple)}
 .intake-form .error{display:none;color:#b3261e;font-size:.88rem;margin-top:6px}
 .intake-form .invalid input:not([type=checkbox]),.intake-form .invalid textarea{border-color:#b3261e}

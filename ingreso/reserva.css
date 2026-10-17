@@ -1,0 +1,14 @@
+/* Destacar la reserva de pacientes en tratamiento sin mover el texto. */
+.intake-returning .reserve-highlight{position:relative;isolation:isolate;overflow:visible;box-shadow:0 0 0 3px var(--card-peach),0 0 0 5px var(--accent-lilac)}
+.reserve-highlight::before,.reserve-highlight::after{content:"";position:absolute;inset:-6px;border:2px solid var(--accent-lilac);border-radius:11px;pointer-events:none;opacity:0}
+.reserve-highlight::after{border-color:var(--accent-peach)}
+.intake-returning .reserve-highlight:focus-visible{outline:3px solid var(--accent-sky);outline-offset:8px}
+@media(prefers-reduced-motion:no-preference){
+  .reserve-highlight::before,.reserve-highlight::after{animation:reserve-halo 3.2s ease-out infinite}
+  .reserve-highlight::after{animation-delay:1.6s}
+}
+@keyframes reserve-halo{
+  0%{opacity:0;transform:scale(1)}
+  18%{opacity:.85}
+  85%,100%{opacity:0;transform:scale(1.1,1.4)}
+}
