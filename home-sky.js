@@ -1,7 +1,7 @@
 // Cielo vivo de la portada, uno por tema.
 // Noche: cielo estrellado que gira muy lento alrededor de un polo fuera de pantalla, con estrellas que
 // titilan y, de vez en cuando, una estrella fugaz.
-// Día: nubes que derivan despacio, motas de luz que suben y, cada tanto, una bandada de aves que cruza.
+// Día: nubes que derivan despacio, motas de luz que suben, aves solitarias que cruzan a su aire y, cada tanto, una bandada.
 // Con movimiento reducido el cielo queda quieto: sin estrellas fugaces ni aves.
 (() => {
   const sky = document.querySelector('.home-sky');
@@ -16,7 +16,7 @@
   const TINTS = ['255,255,255', '238,231,255', '226,236,255', '255,240,228', '250,226,244'];
   let width = 0, height = 0, pole = { x: 0, y: 0 }, stars = [], meteors = [];
   let clouds = [], motes = [], flocks = [];
-  let running = false, last = 0, angle = 0, nextMeteor = 0, nextFlock = 0, frame = 0;
+  let running = false, last = 0, angle = 0, nextMeteor = 0, nextFlock = 0, nextSolo = 0, frame = 0;
 
   // Halo suave precalculado; se escala para cada estrella brillante y para las motas de luz.
   const glow = document.createElement('canvas');
@@ -129,7 +129,23 @@
     flocks.push({
       dir, members, x: dir > 0 ? -80 : width + 80,
       y: height * (.1 + Math.random() * .45),
-      speed: 70 + Math.random() * 40, drift: (Math.random() - .5) * 8, t: 0
+      speed: 70 + Math.random() * 40, drift: (Math.random() - .5) * 8, t: 0, wave: 0, waveRate: 0
+    });
+  };
+
+  // Ave solitaria: cada una con su rumbo, altura, velocidad y un vuelo ondulante propio.
+  const spawnSolo = () => {
+    if (flocks.filter(f => f.solo).length >= 4) return;
+    const dir = Math.random() < .5 ? 1 : -1;
+    flocks.push({
+      solo: true, dir, x: dir > 0 ? -40 : width + 40,
+      y: height * (.06 + Math.random() * .7),
+      speed: 60 + Math.random() * 70, drift: (Math.random() - .5) * 30, t: 0,
+      wave: 8 + Math.random() * 26, waveRate: .4 + Math.random() * .7,
+      members: [{
+        ox: 0, oy: 0, phase: Math.random() * Math.PI * 2,
+        rate: 6.5 + Math.random() * 3.5, size: 9 + Math.random() * 6
+      }]
     });
   };
 
@@ -208,11 +224,12 @@
       f.t += dt;
       f.x += f.dir * f.speed * dt;
       f.y += f.drift * dt;
+      const wave = Math.sin(f.t * f.waveRate) * f.wave;
       for (const b of f.members) {
         // Aleteo con pausas de planeo: la amplitud sube y baja lentamente.
         const glide = .35 + .65 * Math.max(0, Math.sin(f.t * .7 + b.phase));
         const flap = Math.sin(f.t * b.rate + b.phase) * glide;
-        drawBird(f.x + f.dir * b.ox, f.y + b.oy + Math.sin(f.t * 1.4 + b.phase) * 2, b.size, flap);
+        drawBird(f.x + f.dir * b.ox, f.y + wave + b.oy + Math.sin(f.t * 1.4 + b.phase) * 2, b.size, flap);
       }
     }
   };
@@ -231,8 +248,9 @@
     if (night()) {
       angle += TURN * dt;
       if (t > nextMeteor) { spawnMeteor(); nextMeteor = t + 6 + Math.random() * 10; }
-    } else if (t > nextFlock) {
-      spawnFlock(); nextFlock = t + 7 + Math.random() * 7;
+    } else {
+      if (t > nextFlock) { spawnFlock(); nextFlock = t + 9 + Math.random() * 9; }
+      if (t > nextSolo) { spawnSolo(); nextSolo = t + 2.5 + Math.random() * 3.5; }
     }
     draw(t, dt);
     frame = requestAnimationFrame(tick);
@@ -246,7 +264,8 @@
     running = true; last = 0;
     const now = performance.now() / 1000;
     nextMeteor = now + 2 + Math.random() * 4;
-    nextFlock = now + .8 + Math.random() * 1.5;
+    nextFlock = now + 3 + Math.random() * 3;
+    nextSolo = now + .5 + Math.random();
     frame = requestAnimationFrame(tick);
   };
 
