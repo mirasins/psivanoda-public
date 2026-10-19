@@ -115,7 +115,7 @@
   // Bandada suelta en forma de V abierta, que cruza la pantalla de lado a lado subiendo o bajando apenas.
   const spawnFlock = () => {
     const dir = Math.random() < .6 ? 1 : -1;
-    const size = 7 + Math.random() * 4;
+    const size = 11 + Math.random() * 5;
     const n = 3 + Math.floor(Math.random() * 5);
     const members = Array.from({ length: n }, (_, i) => {
       const rank = Math.ceil(i / 2), side = i % 2 ? 1 : -1;
@@ -129,7 +129,7 @@
     flocks.push({
       dir, members, x: dir > 0 ? -80 : width + 80,
       y: height * (.1 + Math.random() * .45),
-      speed: 55 + Math.random() * 35, drift: (Math.random() - .5) * 8, t: 0
+      speed: 70 + Math.random() * 40, drift: (Math.random() - .5) * 8, t: 0
     });
   };
 
@@ -202,7 +202,7 @@
     }
     ctx.globalAlpha = 1;
 
-    ctx.strokeStyle = 'rgba(78,58,96,.62)'; ctx.lineWidth = 1.7; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    ctx.strokeStyle = 'rgba(64,42,84,.9)'; ctx.lineWidth = 2.4; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
     flocks = flocks.filter(f => f.dir > 0 ? f.x < width + 160 : f.x > -160);
     for (const f of flocks) {
       f.t += dt;
@@ -232,7 +232,7 @@
       angle += TURN * dt;
       if (t > nextMeteor) { spawnMeteor(); nextMeteor = t + 6 + Math.random() * 10; }
     } else if (t > nextFlock) {
-      spawnFlock(); nextFlock = t + 12 + Math.random() * 14;
+      spawnFlock(); nextFlock = t + 7 + Math.random() * 7;
     }
     draw(t, dt);
     frame = requestAnimationFrame(tick);
@@ -246,7 +246,7 @@
     running = true; last = 0;
     const now = performance.now() / 1000;
     nextMeteor = now + 2 + Math.random() * 4;
-    nextFlock = now + 1.5 + Math.random() * 3;
+    nextFlock = now + .8 + Math.random() * 1.5;
     frame = requestAnimationFrame(tick);
   };
 
