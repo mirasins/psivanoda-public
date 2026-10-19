@@ -46,7 +46,7 @@ html:root .home-calm .home-page .contact-info { background: transparent; border:
   .home-calm .first-session .section-heading { gap: 12px; }
 }
 
-/* Cielo de la portada. Claro: degradado sereno, sin estrellas. Oscuro: cielo nocturno vivo (home-sky.js). */
+/* Cielo de la portada, animado por home-sky.js. Claro: cielo de día con nubes y aves. Oscuro: cielo nocturno con estrellas fugaces. */
 html:root body.home-calm::before {
   background: radial-gradient(ellipse at 80% 90%, #e6d8ed 0, transparent 65%), linear-gradient(180deg, #eae5f5, #f9f4fa);
 }
@@ -56,10 +56,10 @@ html:root[data-theme="dark"] body.home-calm::before {
     radial-gradient(ellipse 60% 40% at 10% -5%, #1b2350 0, transparent 70%),
     linear-gradient(180deg, #070a1c 0, #0d1027 45%, #1a1630 80%, #241d39);
 }
-.home-sky { display: none; position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
-html:root[data-theme="dark"] .home-sky { display: block; }
+.home-sky { position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
 /* Banda tenue de vía láctea, cruzando en diagonal detrás de las estrellas. */
-.home-sky::before {
+.home-sky::before { content: none; }
+html:root[data-theme="dark"] .home-sky::before {
   content: ''; position: absolute; inset: -20%;
   background:
     radial-gradient(ellipse 55% 9% at 50% 50%, #b9a6ff0d 0, transparent 70%),
