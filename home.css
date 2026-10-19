@@ -112,3 +112,10 @@ html:root[data-theme="dark"] .home-calm .contact::before {
   background: linear-gradient(90deg, transparent, #c9b0ff33 20%, #f4bfdc33 80%, transparent);
 }
 html:root[data-theme="dark"] .home-calm .booking-cta.button { box-shadow: 0 0 0 1px #ffffff1a, 0 8px 30px #9a6fd640; }
+
+/* Acceso a Certplum: solo el simbolo del archivo original, sin el logotipo escrito. */
+.certplum-access { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; margin: 10px; border-radius: 14px; flex-shrink: 0; }
+.certplum-icon { position: relative; display: block; width: 56px; height: 54px; overflow: hidden; border-radius: 12px; background: #fff; }
+.certplum-icon img { position: absolute; width: 274.286%; max-width: none; height: auto; left: -87.143%; top: -25.185%; }
+.certplum-access:hover { box-shadow: 0 0 0 2px var(--accent-lilac); }
+.certplum-access:focus-visible { outline: 3px solid var(--accent-lilac); outline-offset: 4px; }
