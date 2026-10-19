@@ -1,0 +1,114 @@
+/* Portada: menos capas visuales, lectura continua y detalle opcional. */
+html:root body.home-calm::before { background: var(--paper); animation: none; }
+html:root body.home-calm::after { display: none; }
+html:root .home-calm .home-page .hero-copy,
+html:root .home-calm .home-page .about > div:last-child {
+  padding: 0; background: transparent; border: 0; box-shadow: none;
+}
+.home-calm .hero { min-height: 610px; }
+.home-calm .hero-note { margin: 18px 0 0; font-size: .9rem; color: var(--muted); }
+.home-calm .location { margin-top: 10px; }
+.home-calm .portrait-wrap { padding: 0 0 20px; max-width: 370px; justify-self: end; }
+.home-calm .portrait-label { position: static; margin-top: 16px; padding: 0; border: 0; background: transparent; box-shadow: none; }
+.home-calm .section { padding-block: 72px; }
+.home-calm .about { border-top: 1px solid var(--line); }
+.home-calm .about-more { margin-top: 24px; }
+.home-details { border-block: 1px solid var(--line); margin-top: 24px; }
+.home-details summary { padding: 18px 0; cursor: pointer; font-weight: 500; }
+.home-details summary:focus-visible { outline: 2px solid var(--rose); outline-offset: 5px; }
+.home-details[open] > summary { margin-bottom: 12px; }
+.home-details .registration { margin-bottom: 24px; }
+html:root .home-calm .home-page .topics li {
+  background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; box-shadow: none;
+}
+.home-calm .topic-btn { padding-inline: 0; }
+.home-calm .nature > span { position: static; display: block; padding: 18px 0 0; background: transparent; font-size: 1.4rem; }
+.home-calm .first-session .section-heading { margin-bottom: 0; }
+.home-calm .session-details .pillars { margin: 0 0 24px; }
+html:root .home-calm .home-page .session-details article { background: transparent; border: 0; padding: 12px 0; box-shadow: none; }
+.home-calm .session-details .number { display: none; }
+.home-calm .approach-more { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.home-calm .mail-details { border-color: #ffffff40; margin-top: 38px; }
+.home-calm .quick-contact { margin-top: 0; padding-top: 12px; border: 0; }
+html:root .home-calm .home-page .contact-info { background: transparent; border: 0; padding: 0; }
+.home-calm .crisis-bar { background: var(--wash); border-color: var(--line); }
+.home-calm .crisis-bar a { font-size: .75rem; }
+.home-calm .hero-copy > *, .home-calm .portrait, .home-calm .portrait-label { animation: none; }
+.home-calm .home-page .reveal { opacity: 1; transform: none; filter: none; }
+.home-calm { padding-bottom: 0; }
+@media(max-width:720px) {
+  .home-calm .hero { min-height: auto; gap: 30px; padding-block: 38px 44px; }
+  .home-calm .portrait-wrap { width: 100%; max-width: 280px; justify-self: center; }
+  .home-calm .portrait { height: 300px; }
+  .home-calm .section { padding-block: 48px; }
+  .home-calm .hero-actions { gap: 18px; }
+  .home-calm .nature img { height: 240px; }
+  .home-calm .first-session .section-heading { gap: 12px; }
+}
+
+/* Cielo de la portada. Claro: degradado sereno, sin estrellas. Oscuro: cielo nocturno vivo (home-sky.js). */
+html:root body.home-calm::before {
+  background: radial-gradient(ellipse at 80% 90%, #e6d8ed 0, transparent 65%), linear-gradient(180deg, #eae5f5, #f9f4fa);
+}
+html:root[data-theme="dark"] body.home-calm::before {
+  background:
+    radial-gradient(ellipse 70% 45% at 85% 105%, #3a2550 0, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 10% -5%, #1b2350 0, transparent 70%),
+    linear-gradient(180deg, #070a1c 0, #0d1027 45%, #1a1630 80%, #241d39);
+}
+.home-sky { display: none; position: fixed; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+html:root[data-theme="dark"] .home-sky { display: block; }
+/* Banda tenue de vía láctea, cruzando en diagonal detrás de las estrellas. */
+.home-sky::before {
+  content: ''; position: absolute; inset: -20%;
+  background:
+    radial-gradient(ellipse 55% 9% at 50% 50%, #b9a6ff0d 0, transparent 70%),
+    radial-gradient(ellipse 30% 5% at 45% 49%, #e8c6ff0c 0, transparent 70%);
+  transform: rotate(-28deg);
+}
+.home-sky canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+@media print { .home-sky { display: none !important; } }
+
+/* Ajustes estéticos de la portada. */
+.home-calm .hero h1 em {
+  background: linear-gradient(100deg, var(--rose), var(--purple) 70%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  padding-right: .08em;
+}
+.home-calm .hero .eyebrow::before { content: '✦'; margin-right: .7em; color: var(--rose); }
+.home-calm .portrait { border-radius: 999px 999px 18px 18px; box-shadow: 0 24px 60px #392d4226; }
+html:root .home-calm .home-page .portrait-label { background: transparent; border: 0; box-shadow: none; padding: 0; text-align: center; }
+.home-calm .about, .home-calm .contact { border-top: 0; position: relative; }
+.home-calm .about::before, .home-calm .first-session::before, .home-calm .contact::before {
+  content: ''; position: absolute; top: 0; left: 50%; width: min(1100px, 90%); height: 1px; translate: -50% 0;
+  background: linear-gradient(90deg, transparent, var(--line) 20%, var(--line) 80%, transparent);
+}
+.home-calm .first-session { position: relative; }
+.home-calm .home-details summary { list-style: none; display: flex; align-items: center; gap: 12px; }
+.home-calm .home-details summary::-webkit-details-marker { display: none; }
+.home-calm .home-details summary::before {
+  content: '+'; display: inline-grid; place-items: center; width: 24px; height: 24px; flex: none;
+  border: 1px solid currentColor; border-radius: 50%; font-size: .9rem; line-height: 1; opacity: .7;
+  transition: transform .3s ease;
+}
+.home-calm .home-details[open] > summary::before { transform: rotate(45deg); }
+
+/* Modo oscuro: superficies traslúcidas para que el cielo se vea a través. */
+html:root[data-theme="dark"] .home-calm .header { background: #0a0c1fb8; border-color: #ffffff14; }
+html:root[data-theme="dark"] .home-calm .crisis-bar { background: transparent; border-color: #ffffff10; }
+html:root[data-theme="dark"] .home-calm .portrait { box-shadow: 0 0 0 1px #ffffff14, 0 0 70px #a58bff33, 0 30px 70px #0006; }
+html:root[data-theme="dark"] .home-calm .hero h1 em { background-image: linear-gradient(100deg, #f4bfdc, #c9b0ff 75%); }
+html:root[data-theme="dark"] .home-calm .home-page .topics li { background: transparent; border-color: #ffffff17; }
+html:root[data-theme="dark"] .home-calm .home-page .nature > span { background: transparent; }
+html:root[data-theme="dark"] .home-calm .home-page .contact,
+html:root[data-theme="dark"] .home-calm .home-page .first-session { background: transparent; }
+html:root[data-theme="dark"] .home-calm .home-page .contact-info {
+  background: #ffffff08; border: 1px solid #ffffff14; border-radius: 18px; padding: 28px;
+  backdrop-filter: blur(6px);
+}
+html:root[data-theme="dark"] .home-calm .about::before,
+html:root[data-theme="dark"] .home-calm .first-session::before,
+html:root[data-theme="dark"] .home-calm .contact::before {
+  background: linear-gradient(90deg, transparent, #c9b0ff33 20%, #f4bfdc33 80%, transparent);
+}
+html:root[data-theme="dark"] .home-calm .booking-cta.button { box-shadow: 0 0 0 1px #ffffff1a, 0 8px 30px #9a6fd640; }
