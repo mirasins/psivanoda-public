@@ -82,15 +82,18 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
 // Faint background (stars at nightfall in dark mode): a sparse, still dot mesh. In dark mode the stars nearest
 // the cursor only brighten a touch, with no halo, links or movement. Calm by design; disabled on touch, reduced motion and on
 // pages marked data-calm (the crisis page), where any extra movement is unwelcome.
+// A calm page marked data-cursor-rays (the home page, which has its own night sky) keeps only the cursor rays.
 (() => {
-  if (document.body.hasAttribute('data-calm') ||
+  const calm = document.body.hasAttribute('data-calm');
+  const raysOnly = calm && document.body.hasAttribute('data-cursor-rays');
+  if ((calm && !raysOnly) ||
       matchMedia('(prefers-reduced-motion: reduce), (hover: none)').matches) return;
 
   const canvas = document.createElement('canvas');
   canvas.id = 'gesture-trail';
   canvas.setAttribute('aria-hidden', 'true');
   canvas.style.cssText = 'position:fixed;inset:0;z-index:1;pointer-events:none';
-  document.body.prepend(canvas);
+  if (!raysOnly) document.body.prepend(canvas);
   const ctx = canvas.getContext('2d');
   const target = { x: -1000, y: -1000 };
   const glow = { x: -1000, y: -1000, alpha: 0 };
@@ -138,7 +141,7 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
     if (settled) { running = false; return; }
     requestAnimationFrame(draw);
   };
-  const wake = () => { if (!running) { running = true; requestAnimationFrame(draw); } };
+  const wake = () => { if (!running && !raysOnly) { running = true; requestAnimationFrame(draw); } };
 
   addEventListener('resize', () => { resize(); wake(); }, { passive: true });
   // Only in dark mode: in light mode the cursor leaves a fairy-dust trail instead (below).
