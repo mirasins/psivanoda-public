@@ -9,3 +9,55 @@ html:root[data-theme="dark"] .learning>.wrap:not(.learn-grid){border-color:#3a33
 html:root[data-theme="dark"] .learning>.wrap:not(.learn-grid)::before,html:root[data-theme="dark"] .learning>.wrap:not(.learn-grid)::after{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 220' preserveAspectRatio='none'%3E%3Cpath d='M0 0C60 120 200 160 320 180V0Z' fill='%237d4fb0' fill-opacity='0.14'/%3E%3Cpath d='M60 0C110 90 220 110 320 120V0Z' fill='%23b0457f' fill-opacity='0.13'/%3E%3Cpath d='M130 0C170 55 235 68 320 58V0Z' fill='%23f0a08c' fill-opacity='0.18'/%3E%3Cpath d='M0 0C60 120 200 160 320 180' fill='none' stroke='%23b0457f' stroke-opacity='0.32000000000000006' stroke-width='1.4'/%3E%3C/svg%3E")}
 .learning>.learn-opening{padding-block:44px 40px}
 @media(max-width:720px){.learning>.wrap:not(.learn-grid){width:calc(100% - 20px);margin:16px auto 24px;padding-inline:20px;border-radius:20px}.learning>.wrap:not(.learn-grid)::before,.learning>.wrap:not(.learn-grid)::after{width:200px;height:136px}.learning>.learn-opening{padding-block:32px 28px}}
+
+/* Árbol conceptual: la idea central es la raíz (abajo), el tronco sube y se abre en ramas.
+   Cada nodo tiene un brillo que recorre su borde y estrellitas que titilan (ver concept-tree.js). */
+@property --ct-a{syntax:'<angle>';inherits:false;initial-value:0deg}
+.concept-tree{--ct-line:#d9a9cf;--ct-bg:#fffafd;--ct-root:#fbeff7;--ct-glow:#f7b6d6;--ct-gold:#ffd89a;--ct-violet:#b99bf0;--ct-star-core:#fff6d8;--ct-star-mid:#f0a52c;--ct-star-edge:#d4538f;--ct-gap:30px;container-type:inline-size;position:relative;margin:0 0 48px;padding:30px 26px 26px;border-radius:22px;background:radial-gradient(120% 90% at 50% 100%,#fbe7f2 0,transparent 60%),linear-gradient(180deg,#fdf8fc,#f6f0fb);border:1px solid #f0dcec}
+html:root[data-theme="dark"] .concept-tree{--ct-line:#8a6aa8;--ct-bg:#1d1934;--ct-root:#2a2045;--ct-glow:#f2a7cf;--ct-gold:#ffd89a;--ct-violet:#a98ff0;--ct-star-core:#fff;--ct-star-mid:#ffd89a;--ct-star-edge:#f2a7cf;background:radial-gradient(120% 90% at 50% 100%,#2c1f3f 0,transparent 60%),linear-gradient(180deg,#191630,#141226);border-color:#3a3354}
+.concept-tree figcaption{margin:0 0 22px;text-align:center}
+.concept-tree figcaption .eyebrow{margin:0 0 6px}
+.learn-article .concept-tree figcaption p:not(.eyebrow){margin:0;font-size:.9rem;line-height:1.6}
+.ct-tree{display:flex;flex-direction:column-reverse;align-items:center}
+.ct-node{position:relative;isolation:isolate;border:1.5px solid transparent;border-radius:16px;background:linear-gradient(var(--ct-bg),var(--ct-bg)) padding-box,conic-gradient(from var(--ct-a),var(--ct-line) 0 62%,var(--ct-violet) 72%,#fff 78%,var(--ct-gold) 82%,var(--ct-glow) 88%,var(--ct-line) 97%) border-box;animation:ct-orbit 7s linear infinite;transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s}
+.ct-node:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px var(--ct-glow)}
+.ct-root{padding:14px 26px;text-align:center;background:linear-gradient(var(--ct-root),var(--ct-root)) padding-box,conic-gradient(from var(--ct-a),var(--ct-line) 0 55%,var(--ct-violet) 68%,#fff 76%,var(--ct-gold) 82%,var(--ct-glow) 90%,var(--ct-line) 98%) border-box;border-width:2px;border-radius:999px;box-shadow:0 10px 30px -16px var(--ct-glow)}
+.ct-root strong{display:block;font-family:'Bodoni Moda',Georgia,serif;font-size:1.3rem;line-height:1.25;color:var(--ink)}
+.ct-root span:not(.ct-star){display:block;margin-top:2px;font-size:.85rem;color:var(--muted)}
+.ct-trunk{width:4px;height:44px;border-radius:4px;background:linear-gradient(0deg,var(--ct-line),var(--ct-glow));transform-origin:bottom}
+.learn-article .ct-canopy{--n:3;position:relative;display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));gap:16px;width:100%;margin:0;padding:0 0 var(--ct-gap);list-style:none}
+.ct-canopy::after{content:'';position:absolute;bottom:0;left:calc(50% / var(--n));right:calc(50% / var(--n));height:3px;border-radius:3px;background:linear-gradient(90deg,var(--ct-line),var(--ct-glow),var(--ct-line));transform-origin:center}
+.learn-article .ct-branch{position:relative;display:flex;margin:0;padding:0}
+.ct-branch::after{content:'';position:absolute;left:50%;bottom:calc(-1 * var(--ct-gap));width:3px;height:var(--ct-gap);margin-left:-1.5px;background:var(--ct-line)}
+.ct-branch>.ct-node{flex:1;padding:16px 16px 14px}
+.learn-article .ct-branch h3{margin:0 0 10px;font-family:'Bodoni Moda',Georgia,serif;font-size:1.08rem;line-height:1.3;color:var(--ink)}
+.ct-branch h3 small{display:block;margin-top:2px;font-family:'Figtree',Arial,sans-serif;font-size:.78rem;font-weight:500;color:var(--muted)}
+.learn-article .ct-leaves{margin:0;padding:0;list-style:none}
+.learn-article .ct-leaves li{position:relative;margin:0 0 7px;padding:0 0 0 18px;font-size:.88rem;line-height:1.5}
+.ct-leaves li::before{content:'';position:absolute;left:0;top:.42em;width:9px;height:9px;border-radius:0 70%;background:linear-gradient(135deg,var(--ct-glow),var(--ct-violet));transform:rotate(-8deg)}
+.learn-article .ct-leaves li:last-child{margin-bottom:0}
+.ct-leaves a{text-decoration:underline;text-underline-offset:3px}
+.ct-star{position:absolute;z-index:2;width:var(--s,10px);height:var(--s,10px);margin:calc(var(--s,10px) / -2) 0 0 calc(var(--s,10px) / -2);pointer-events:none;background:radial-gradient(circle,var(--ct-star-core,#fff) 0 22%,var(--ct-star-mid,var(--ct-gold)) 45%,var(--ct-star-edge,var(--ct-glow)) 75%);clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);filter:drop-shadow(0 0 3px var(--ct-star-mid,var(--ct-gold)));opacity:0;animation:ct-twinkle var(--d,3.2s) ease-in-out var(--w,0s) infinite}
+.ct-node:hover .ct-star{animation-duration:1.4s}
+@keyframes ct-orbit{to{--ct-a:360deg}}
+@keyframes ct-twinkle{0%,100%{opacity:0;transform:scale(.2) rotate(0)}45%{opacity:1;transform:scale(1) rotate(45deg)}70%{opacity:.6;transform:scale(.7) rotate(70deg)}}
+/* Crecimiento al entrar en pantalla (solo si concept-tree.js lo activa) */
+.concept-tree.ct-ready .ct-root,.concept-tree.ct-ready .ct-branch{opacity:0;transform:translateY(16px) scale(.96);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.concept-tree.ct-ready .ct-trunk{transform:scaleY(0);transition:transform .6s cubic-bezier(.16,1,.3,1) .25s}
+.concept-tree.ct-ready .ct-canopy::after{transform:scaleX(0);transition:transform .6s cubic-bezier(.16,1,.3,1) .6s}
+.concept-tree.ct-ready .ct-branch{transition-delay:calc(.8s + var(--i,0) * .14s)}
+.concept-tree.ct-grown .ct-root,.concept-tree.ct-grown .ct-branch{opacity:1;transform:none}
+.concept-tree.ct-grown .ct-trunk,.concept-tree.ct-grown .ct-canopy::after{transform:none}
+/* Columna angosta: el árbol se vuelve una enredadera que sube por la izquierda */
+@container (max-width:620px){
+.ct-tree{align-items:stretch}
+.ct-root{align-self:flex-start;text-align:left}
+.ct-trunk{margin-left:24px;height:30px}
+.learn-article .ct-canopy{display:flex;flex-direction:column-reverse;gap:14px;padding:0 0 0 46px}
+.ct-canopy::after{top:0;bottom:0;left:24px;right:auto;width:4px;height:auto;background:linear-gradient(0deg,var(--ct-line),var(--ct-glow));transform-origin:bottom}
+.concept-tree.ct-ready .ct-canopy::after{transform:scaleY(0)}
+.concept-tree.ct-grown .ct-canopy::after{transform:none}
+.ct-branch::after{left:-22px;bottom:auto;top:26px;width:22px;height:3px;margin-left:0}
+}
+@media(max-width:720px){.concept-tree{padding:24px 14px 18px;margin-bottom:36px}.ct-root{padding:12px 20px}}
+@media(prefers-reduced-motion:reduce){.ct-node{animation:none;transition:none}.ct-node:hover{transform:none}.ct-star{animation:none;opacity:.75;transform:rotate(45deg) scale(.8)}}
