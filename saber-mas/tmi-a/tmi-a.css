@@ -234,26 +234,74 @@ html:root[data-theme="dark"] .tmia{--t-lilac:#b9a2ee;--t-rose:#f2a7cf;--t-peach:
 @keyframes tmia-sway{0%,100%{transform:rotate(var(--r)) scale(1)}50%{transform:rotate(calc(var(--r) + 14deg)) scale(1.06)}}
 @media(prefers-reduced-motion:reduce){.tmia-steps li::after,.tmia-steps li strong::after{animation:none!important}}
 
-/* Sinapsis: el impulso sale de la persona, se detiene en el terapeuta y luego sigue hacia la otredad */
+/* Sinapsis tipo ping pong: el impulso sale de la persona, frena en el terapeuta, se devuelve
+   y luego salta por arriba, desde la persona, hacia la otredad */
 .tmia-syn{position:relative;display:block;width:calc(100% + 20px);height:46px;margin:0 -10px}
 .tmia-syn-line{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;border-radius:2px;background:linear-gradient(90deg,var(--t-lilac),var(--t-rose) 50%,var(--t-peach));opacity:.45}
-.tmia-syn-node{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:2px solid var(--t-rose);background:var(--t-card);box-shadow:0 0 0 0 var(--t-rose);animation:tmia-syn-hold 5s ease-in-out infinite}
-.tmia-syn-pulse{position:absolute;left:0;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:radial-gradient(circle,#fff 0 25%,var(--t-gold) 45%,var(--t-rose) 70%,transparent 72%);box-shadow:0 0 12px 3px var(--t-rose);opacity:0;animation:tmia-syn-go 5s cubic-bezier(.45,0,.3,1) infinite}
+.tmia-syn-jump{position:absolute;left:0;right:0;top:-14px;height:37px;border:1.5px dashed var(--t-gold);border-bottom:0;border-radius:50% 50% 0 0/100% 100% 0 0;opacity:0;animation:tmia-syn-arc 7s linear infinite}
+.tmia-syn-node{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:2px solid var(--t-rose);background:var(--t-card);box-shadow:0 0 0 0 var(--t-rose);animation:tmia-syn-hold 7s ease-in-out infinite}
+.tmia-syn-pulse{position:absolute;left:0;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:radial-gradient(circle,#fff 0 25%,var(--t-gold) 45%,var(--t-rose) 70%,transparent 72%);box-shadow:0 0 12px 3px var(--t-rose);opacity:0;animation:tmia-syn-go 7s linear infinite}
 .tmia-syn-pulse:nth-child(3){width:8px;height:8px;margin:-4px 0 0 -4px;animation-delay:.09s}
 .tmia-syn-pulse:nth-child(4){width:5px;height:5px;margin:-2.5px 0 0 -2.5px;animation-delay:.18s}
-@keyframes tmia-syn-go{0%{left:0;opacity:0}6%{opacity:1}36%{left:50%;opacity:1}40%,64%{left:50%;opacity:0}68%{left:50%;opacity:1}94%{left:100%;opacity:1}100%{left:100%;opacity:0}}
-@keyframes tmia-syn-hold{0%,34%{transform:scale(1);box-shadow:0 0 0 0 transparent}40%{transform:scale(1.35);background:var(--t-rose);box-shadow:0 0 0 8px color-mix(in srgb,var(--t-rose) 30%,transparent)}52%{transform:scale(1.2);box-shadow:0 0 0 14px transparent}64%{transform:scale(1.3);background:var(--t-rose)}74%,100%{transform:scale(1);background:var(--t-card);box-shadow:0 0 0 0 transparent}}
-.tmia-bridge-a{animation:tmia-syn-from 5s ease-in-out infinite}
-.tmia-bridge-b{animation:tmia-syn-to 5s ease-in-out infinite}
-@keyframes tmia-syn-from{0%,8%{border-color:var(--t-rose);box-shadow:0 0 18px -4px var(--t-rose)}20%,100%{border-color:var(--t-line);box-shadow:none}}
-@keyframes tmia-syn-to{0%,90%{border-color:var(--t-line);box-shadow:none}96%{border-color:var(--t-rose);box-shadow:0 0 18px -4px var(--t-rose)}100%{border-color:var(--t-line);box-shadow:none}}
+@keyframes tmia-syn-go{
+0%{left:0;top:50%;opacity:0;animation-timing-function:cubic-bezier(.2,.6,.3,1)}
+4%{opacity:1}
+22%{left:50%;top:50%}
+25%{left:48%}
+28%,34%{left:50%;animation-timing-function:cubic-bezier(.45,0,.3,1)}
+48%,56%{left:0;top:50%;animation-timing-function:linear}
+57%{left:3%;top:23%}
+60.25%{left:12.5%;top:-3%}
+64.5%{left:25%;top:-20%}
+73%{left:50%;top:-30%}
+81.5%{left:75%;top:-20%}
+85.75%{left:87.5%;top:-3%}
+89%{left:97%;top:23%}
+90%{left:100%;top:50%;opacity:1}
+97%,100%{left:100%;top:50%;opacity:0}}
+@keyframes tmia-syn-hold{0%,20%{transform:scale(1);background:var(--t-card);box-shadow:0 0 0 0 transparent}24%{transform:scale(1.35);background:var(--t-rose);box-shadow:0 0 0 8px color-mix(in srgb,var(--t-rose) 30%,transparent)}31%{transform:scale(1.2);box-shadow:0 0 0 14px transparent}38%,100%{transform:scale(1);background:var(--t-card);box-shadow:0 0 0 0 transparent}}
+@keyframes tmia-syn-arc{0%,54%{opacity:0}60%,88%{opacity:.6}96%,100%{opacity:0}}
+.tmia-bridge-a{animation:tmia-syn-from 7s ease-in-out infinite}
+.tmia-bridge-b{animation:tmia-syn-to 7s ease-in-out infinite}
+@keyframes tmia-syn-from{0%,5%{border-color:var(--t-rose);box-shadow:0 0 18px -4px var(--t-rose)}14%,42%{border-color:var(--t-line);box-shadow:none}48%,56%{border-color:var(--t-rose);box-shadow:0 0 18px -4px var(--t-rose)}64%,100%{border-color:var(--t-line);box-shadow:none}}
+@keyframes tmia-syn-to{0%,86%{border-color:var(--t-line);box-shadow:none}91%,95%{border-color:var(--t-rose);box-shadow:0 0 18px -4px var(--t-rose)}100%{border-color:var(--t-line);box-shadow:none}}
 .tmia-bridge-arc b{margin-top:6px}
 @media(max-width:560px){
 .tmia-bridge-arc::before,.tmia-bridge-arc::after{content:none}
 .tmia-syn{width:46px;height:96px;margin:4px auto}
 .tmia-syn-line{left:50%;right:auto;top:0;bottom:0;width:2px;height:auto;margin:0 0 0 -1px;background:linear-gradient(var(--t-lilac),var(--t-rose) 50%,var(--t-peach))}
+.tmia-syn-jump{left:50%;right:auto;top:0;bottom:0;width:37px;height:auto;border:1.5px dashed var(--t-gold);border-left:0;border-radius:0 100% 100% 0/0 50% 50% 0}
 .tmia-syn-pulse{left:50%;top:0;animation-name:tmia-syn-down}
-@keyframes tmia-syn-down{0%{top:0;opacity:0}6%{opacity:1}36%{top:50%;opacity:1}40%,64%{top:50%;opacity:0}68%{top:50%;opacity:1}94%{top:100%;opacity:1}100%{top:100%;opacity:0}}
+@keyframes tmia-syn-down{
+0%{top:0;left:50%;opacity:0;animation-timing-function:cubic-bezier(.2,.6,.3,1)}
+4%{opacity:1}
+22%{top:50%;left:50%}
+25%{top:48%}
+28%,34%{top:50%;animation-timing-function:cubic-bezier(.45,0,.3,1)}
+48%,56%{top:0;left:50%;animation-timing-function:linear}
+57%{top:3%;left:77%}
+60.25%{top:12.5%;left:103%}
+64.5%{top:25%;left:120%}
+73%{top:50%;left:130%}
+81.5%{top:75%;left:120%}
+85.75%{top:87.5%;left:103%}
+89%{top:97%;left:77%}
+90%{top:100%;left:50%;opacity:1}
+97%,100%{top:100%;left:50%;opacity:0}}
 }
-@media(prefers-reduced-motion:reduce){.tmia-syn-pulse{display:none}.tmia-syn-node,.tmia-bridge-a,.tmia-bridge-b{animation:none}}
+@media(prefers-reduced-motion:reduce){.tmia-syn-pulse,.tmia-syn-jump{display:none}.tmia-syn-node,.tmia-bridge-a,.tmia-bridge-b{animation:none}}
 .learn-article .tmia-note .tmia-word{margin-top:12px;padding-top:12px;border-top:1px dashed var(--t-line)}
+
+/* Glosario: carrusel en escritorio, con flechas */
+.tmia-carousel-nav{display:none}
+@media(min-width:721px){
+#glosario .tmia-cards{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:calc((100% - 42px)/4);overflow-x:auto;overflow-y:hidden;padding:6px 2px 12px;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
+#glosario .tmia-cards::-webkit-scrollbar{display:none}
+#glosario .tmia-card{scroll-snap-align:start}
+.tmia-carousel-nav{display:flex;justify-content:flex-end;gap:10px;margin:-6px 0 8px}
+.tmia-carousel-nav button{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--t-line);background:var(--t-card);color:var(--ink);font-size:1.1rem;cursor:pointer;transition:border-color .25s,transform .25s,opacity .25s}
+.tmia-carousel-nav button:hover:not(:disabled){border-color:var(--t-rose);transform:translateY(-2px)}
+.tmia-carousel-nav button:disabled{opacity:.35;cursor:default}
+}
+@media(min-width:721px) and (max-width:1000px){#glosario .tmia-cards{grid-auto-columns:calc((100% - 28px)/3)}}
+@media(prefers-reduced-motion:reduce){#glosario .tmia-cards{scroll-behavior:auto}}

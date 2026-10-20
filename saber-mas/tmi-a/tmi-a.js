@@ -89,6 +89,21 @@
     });
   });
 
+  // Glosario: flechas del carrusel.
+  var deck = root.querySelector('#glosario .tmia-cards');
+  var prev = root.querySelector('.tmia-prev'), next = root.querySelector('.tmia-next');
+  if (deck && prev && next) {
+    var ends = function () {
+      prev.disabled = deck.scrollLeft < 4;
+      next.disabled = deck.scrollLeft + deck.clientWidth > deck.scrollWidth - 4;
+    };
+    prev.addEventListener('click', function () { deck.scrollBy({ left: -deck.clientWidth, behavior: still ? 'auto' : 'smooth' }); });
+    next.addEventListener('click', function () { deck.scrollBy({ left: deck.clientWidth, behavior: still ? 'auto' : 'smooth' }); });
+    deck.addEventListener('scroll', ends, { passive: true });
+    window.addEventListener('resize', ends);
+    ends();
+  }
+
   // Secuencias que se encienden en bucle mientras están en pantalla.
   var lightUp = function (selector, delay) {
     var box = root.querySelector(selector);
