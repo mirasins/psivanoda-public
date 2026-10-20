@@ -346,9 +346,8 @@ body > .skip{position:fixed;z-index:100}
 :root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article,.purpose-grid article,.evidence-grid article){--card-accent:var(--accent-lilac);--card-bg:var(--card-lilac);border-color:#f0cde0;border-top-color:var(--card-accent);box-shadow:0 7px 20px #6a2f7a0d}
 :root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article:nth-child(2),.purpose-grid article:nth-child(2n),.evidence-grid article:nth-child(2)){--card-accent:var(--accent-sky);--card-bg:var(--card-sky);border-color:#dccdf1;border-top-color:var(--card-accent)}
 :root:not([data-theme="dark"]) .therapy-page :is(.reflection-grid article:nth-child(3),.purpose-grid article:nth-child(3)){--card-accent:var(--accent-peach);--card-bg:var(--card-peach);border-color:#eacbe8;border-top-color:var(--card-accent)}
-:root:not([data-theme="dark"]) .therapy-page :is(.process-list li,.process-list li:last-child,.therapy-opening>p,.therapy-reading,.therapy-keywords span){background:#fbeef6;border-color:#f0d3e4}
-:root:not([data-theme="dark"]) .therapy-page :is(.process-list li:nth-child(even),.therapy-opening>p:last-child){background:var(--card-sky);border-color:#dccdf1}
-:root:not([data-theme="dark"]) .therapy-page .process-list li::before{background:#fdf8fd;border-color:#f0d3e4}
+:root:not([data-theme="dark"]) .therapy-page :is(.therapy-opening>p,.therapy-reading,.therapy-keywords span){background:#fbeef6;border-color:#f0d3e4}
+:root:not([data-theme="dark"]) .therapy-page :is(.therapy-opening>p:last-child){background:var(--card-sky);border-color:#dccdf1}
 :root:not([data-theme="dark"]) .therapy-page .evidence-context{background:var(--card-peach);border-color:#eacbe8;border-left-color:var(--accent-peach)}
 :root:not([data-theme="dark"]) .therapy-keywords span::before{background:#d49ac0}
 
@@ -445,9 +444,8 @@ html:root[data-theme="dark"] .rates-page .extra-prices details{background:var(--
 html:root[data-theme="dark"] .therapy-page :is(.reflection-grid article,.purpose-grid article,.evidence-grid article){border-color:#3d3560;border-top-color:var(--card-accent)}
 html:root[data-theme="dark"] .therapy-page :is(.reflection-grid article:nth-child(2),.purpose-grid article:nth-child(2n),.evidence-grid article:nth-child(2)){border-color:#2b3f6e;border-top-color:var(--card-accent)}
 html:root[data-theme="dark"] .therapy-page :is(.reflection-grid article:nth-child(3),.purpose-grid article:nth-child(3)){border-color:#5a3444;border-top-color:var(--card-accent)}
-html:root[data-theme="dark"] .therapy-page :is(.process-list li,.process-list li:last-child,.therapy-opening>p,.therapy-reading,.therapy-keywords span){background:var(--card-lilac);border-color:#3d3560}
-html:root[data-theme="dark"] .therapy-page :is(.process-list li:nth-child(even),.therapy-opening>p:last-child){background:var(--card-sky);border-color:#2b3f6e}
-html:root[data-theme="dark"] .therapy-page .process-list li::before{background:#0e0c1d;border-color:#3d3560}
+html:root[data-theme="dark"] .therapy-page :is(.therapy-opening>p,.therapy-reading,.therapy-keywords span){background:var(--card-lilac);border-color:#3d3560}
+html:root[data-theme="dark"] .therapy-page :is(.therapy-opening>p:last-child){background:var(--card-sky);border-color:#2b3f6e}
 html:root[data-theme="dark"] .therapy-page .evidence-context{background:var(--card-peach);border-color:#5a3444;border-left-color:var(--accent-peach)}
 
 /* ───────── Closing scene (both themes) ─────────

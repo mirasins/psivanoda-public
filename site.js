@@ -338,3 +338,139 @@ if(location.hash==='#valores'&&!location.pathname.includes('/valores')) location
   const begin = () => setTimeout(() => { ready = true; start(); }, 1500);
   if (document.readyState === 'complete') begin(); else addEventListener('load', begin, { once: true });
 })();
+
+// "Cómo trabajamos" concept map: draws the arrows between nodes and grows the tree on scroll.
+(() => {
+  const map = document.querySelector('[data-process-map]');
+  if (!map) return;
+  const svg = map.querySelector('.process-edges');
+  const NS = 'http://www.w3.org/2000/svg';
+  const node = id => map.querySelector(`[data-node="${id}"]`);
+  const narrow = matchMedia('(max-width: 720px)');
+  const tree = {
+    depth: { root: 0, p1: 1, p2: 2, p3: 2, p4: 2, p5: 3 },
+    edges: [
+      { from: 'root', to: 'p1', label: 'nos lleva a' },
+      { from: 'p1', to: 'p2', label: '¿qué significa?' },
+      { from: 'p1', to: 'p4', label: 'en la relación' },
+      { from: 'p1', to: 'p3', label: '¿cómo responder?' },
+      { from: 'p2', to: 'p4', side: true },
+      { from: 'p3', to: 'p4', side: true },
+      { from: 'p2', to: 'p5' },
+      { from: 'p4', to: 'p5', label: 'hacia tu autonomía' },
+      { from: 'p3', to: 'p5' },
+      { from: 'p5', to: 'root', loop: true, label: 'revisamos juntos el proceso' }
+    ]
+  };
+  const column = {
+    depth: { root: 0, p1: 1, p2: 2, p3: 3, p4: 4, p5: 5 },
+    edges: [
+      { from: 'root', to: 'p1', label: 'nos lleva a' },
+      { from: 'p1', to: 'p2', label: '¿qué significa?' },
+      { from: 'p2', to: 'p3', label: '¿cómo responder?' },
+      { from: 'p3', to: 'p4', label: 'en la relación' },
+      { from: 'p4', to: 'p5', label: 'hacia tu autonomía' }
+    ]
+  };
+  const STEP = .7;
+  const tone = id => getComputedStyle(node(id)).getPropertyValue('--node-accent').trim() || null;
+  const make = (tag, attrs) => {
+    const el = document.createElementNS(NS, tag);
+    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    return el;
+  };
+
+  const draw = () => {
+    const layout = narrow.matches ? column : tree;
+    // Offsets ignore transforms, so hover lifts and the growth animation don't skew the arrows.
+    const rect = id => {
+      const el = node(id), l = el.offsetLeft, t = el.offsetTop, w = el.offsetWidth, h = el.offsetHeight;
+      return { l, r: l + w, t, b: t + h, cx: l + w / 2, cy: t + h / 2 };
+    };
+    svg.replaceChildren();
+    map.querySelectorAll('.process-label').forEach(el => el.remove());
+    const last = Math.max(...Object.values(layout.depth));
+    Object.entries(layout.depth).forEach(([id, d]) => node(id).style.setProperty('--grow', `${d * STEP}s`));
+
+    layout.edges.forEach(edge => {
+      const a = rect(edge.from), b = rect(edge.to);
+      let d, end, angle, mid, delay, vertical = false;
+      if (edge.side) {
+        // Two-way dashed link: step 04 runs alongside 02 and 03.
+        const y = (Math.max(a.t, b.t) + Math.min(a.b, b.b)) / 2;
+        const [x1, x2] = a.cx < b.cx ? [a.r + 8, b.l - 8] : [a.l - 8, b.r + 8];
+        d = `M${x1} ${y}H${x2}`;
+        end = [[x2, y, x2 > x1 ? 0 : 180], [x1, y, x2 > x1 ? 180 : 0]];
+        delay = (layout.depth[edge.to] + .6) * STEP;
+      } else if (edge.loop) {
+        // Feedback loop back to the start, along the left margin.
+        const x = 18, r = 22, y1 = a.cy, y2 = b.cy, x2 = b.l - 10;
+        d = `M${a.l - 8} ${y1}H${x + r}Q${x} ${y1} ${x} ${y1 - r}V${y2 + r}Q${x} ${y2} ${x + r} ${y2}H${x2}`;
+        end = [[x2, y2, 0]];
+        mid = [x, (y1 + y2) / 2];
+        vertical = true;
+        delay = (last + .7) * STEP;
+      } else {
+        const x1 = a.cx, y1 = a.b + 6, x2 = b.cx, y2 = b.t - 6, k = (y2 - y1) * .55;
+        d = `M${x1} ${y1}C${x1} ${y1 + k} ${x2} ${y2 - k} ${x2} ${y2}`;
+        end = [[x2, y2, 90]];
+        mid = [(x1 + x2) / 2, (y1 + y2) / 2];
+        delay = (layout.depth[edge.from] + .45) * STEP;
+      }
+      const dashed = edge.side || edge.loop;
+      const color = tone(edge.loop ? edge.from : edge.to);
+      const g = make('g', { 'data-from': edge.from, 'data-to': edge.to });
+      if (color) g.style.setProperty('--edge', color);
+      const path = make('path', { d, class: 'process-edge' + (dashed ? ' is-dashed' : '') });
+      if (!dashed) path.setAttribute('pathLength', 1);
+      path.style.setProperty('--grow', `${delay}s`);
+      g.append(path);
+      end.forEach(([x, y, deg]) => {
+        const head = make('path', { d: 'M0 0L-10 -5.5Q-7.5 0 -10 5.5Z', class: 'process-head',
+          transform: `translate(${x} ${y}) rotate(${deg})` });
+        head.style.setProperty('--grow', `${delay + .55}s`);
+        g.append(head);
+      });
+      svg.append(g);
+      if (edge.label && mid) {
+        const label = document.createElement('span');
+        label.className = 'process-label' + (vertical ? ' is-vertical' : '');
+        label.textContent = edge.label;
+        label.setAttribute('aria-hidden', 'true');
+        label.dataset.from = edge.from;
+        label.dataset.to = edge.to;
+        label.style.left = `${mid[0]}px`;
+        label.style.top = `${mid[1]}px`;
+        label.style.setProperty('--grow', `${delay + .35}s`);
+        if (color) label.style.setProperty('--edge', color);
+        map.append(label);
+      }
+    });
+  };
+
+  // Hovering a step lights up the branches that touch it.
+  const light = (id, on) => map.querySelectorAll(`[data-from="${id}"], [data-to="${id}"]`).forEach(el =>
+    (el.matches('g') ? [...el.children] : [el]).forEach(part => part.classList.toggle('is-lit', on)));
+  ['root', 'p1', 'p2', 'p3', 'p4', 'p5'].forEach(id => {
+    node(id).addEventListener('pointerenter', () => light(id, true));
+    node(id).addEventListener('pointerleave', () => light(id, false));
+  });
+
+  let frame;
+  const redraw = () => { cancelAnimationFrame(frame); frame = requestAnimationFrame(draw); };
+  if ('ResizeObserver' in window) new ResizeObserver(redraw).observe(map); else addEventListener('resize', redraw);
+  narrow.addEventListener?.('change', redraw);
+  draw();
+
+  if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  map.classList.add('map-animate');
+  const finish = () => map.classList.remove('map-animate', 'is-grown');
+  const observer = new IntersectionObserver(entries => {
+    if (!entries.some(entry => entry.isIntersecting)) return;
+    observer.disconnect();
+    map.classList.add('is-grown');
+    setTimeout(finish, (Math.max(...Object.values((narrow.matches ? column : tree).depth)) + 2.2) * STEP * 1000);
+  }, { threshold: .18 });
+  observer.observe(map);
+  addEventListener('beforeprint', finish);
+})();

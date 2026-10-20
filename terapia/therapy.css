@@ -28,12 +28,6 @@
 .reflection-grid h3 { font-size: 1.5rem; margin-bottom: 16px; }
 .reflection-grid p { color: var(--muted); margin-bottom: 0; }
 .meta-caption { color: var(--muted); font-size: .9375rem; margin-top: 28px; max-width: 760px; }
-.therapy-process { gap: 80px; grid-template-columns: .85fr 1.15fr; }
-.process-title { align-self: start; }
-.process-title p:last-child { max-width: 360px; }
-.process-list li { padding-left: 58px; margin-bottom: 26px; padding-bottom: 26px; }
-.process-list li::before { font-size: 1.25rem; color: #8a6c94; }
-.process-list h3 { font-size: 1.5rem; }
 .therapy-purpose { background: #faf9fb; border-block: 1px solid var(--line); }
 .purpose-grid { gap: 36px 64px; margin-top: 40px; }
 .purpose-grid article { border-color: #ded4e4; padding-top: 24px; }
@@ -59,7 +53,7 @@
 .therapy-reading summary { color: var(--ink); font-size: 1rem; padding-block: 24px; }
 .therapy-reading[open] summary { margin-bottom: 16px; }
 @media (max-width: 1000px) {
-  .therapy-meta .section-heading, .therapy-process, .therapy-relationship { gap: 40px; }
+  .therapy-meta .section-heading, .therapy-relationship { gap: 40px; }
   .reflection-grid { gap: 16px; }
   .reflection-grid article { padding: 22px; }
 }
@@ -67,7 +61,7 @@
   .therapy-intro { padding-top: 26px; padding-bottom: 44px; }
   .therapy-intro h1 { font-size: clamp(2.45rem, 9.5vw, 3.35rem); }
   .therapy-page h2 { font-size: clamp(2rem, 7.8vw, 2.6rem); }
-  .therapy-opening, .therapy-meta .section-heading, .therapy-process, .therapy-relationship { grid-template-columns: 1fr; gap: 26px; }
+  .therapy-opening, .therapy-meta .section-heading, .therapy-relationship { grid-template-columns: 1fr; gap: 26px; }
   .therapy-opening { margin-top: 26px; }
   .therapy-opening .lead { font-size: 1.125rem; margin-bottom: 0; }
   .therapy-keywords { gap: 10px 22px; }
@@ -75,8 +69,6 @@
   .reflection-grid { grid-template-columns: 1fr; gap: 16px; margin-top: 30px; }
   .reflection-grid article { padding: 24px; }
   .reflection-grid .number { margin-bottom: 14px; }
-  .process-title p:last-child { max-width: none; }
-  .process-list li { padding-left: 42px; }
   .purpose-grid { gap: 28px; }
   .evidence-grid article { padding: 26px; }
   .therapy-relationship img { height: 365px; }
@@ -90,9 +82,6 @@
 .therapy-page .reflection-grid .number{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:#fff;color:var(--card-accent);border:1px solid currentColor}
 .therapy-page .purpose-grid{gap:24px}
 .therapy-page .purpose-grid article h3{padding-bottom:16px;border-bottom:1px solid #392d4220}
-.therapy-page .process-list li,.therapy-page .process-list li:last-child{padding:26px 26px 26px 80px;margin-bottom:18px;border:1px solid #ddd2e4;border-radius:14px;background:#f6f1f9}
-.therapy-page .process-list li:nth-child(even){background:#e7f4fe;border-color:#b9e0fb}
-.therapy-page .process-list li::before{left:23px;top:25px;background:#fff;border:1px solid #ddd2e4;border-radius:50%;width:36px;height:36px;display:grid;place-items:center;font-size:1rem}
 .therapy-page .evidence-context{max-width:none;padding:32px;background:#faf0e9;border:1px solid #ead7cb;border-left:5px solid #b37c68;border-radius:14px}
 .therapy-page .evidence-context p:last-child{margin-bottom:0}
 .therapy-page .therapy-opening>p{height:100%;max-width:none;margin:0;padding:28px;background:#f6f1f9;border:1px solid #e2d7e8;border-radius:14px}
@@ -100,16 +89,16 @@
 .therapy-page .therapy-opening{gap:24px;align-items:stretch}
 .therapy-page .therapy-reading{padding:0 26px 12px;border:1px solid #ddd2e4;border-radius:14px;background:#f7f4f9}
 .therapy-page .therapy-keywords span{padding:8px 14px;border:1px solid #ddd2e4;border-radius:30px;background:#f7f3fa}
-@media(max-width:720px){.therapy-page .reflection-grid article,.therapy-page .purpose-grid article,.therapy-page .evidence-grid article,.therapy-page .therapy-opening>p,.therapy-page .evidence-context{padding:24px}.therapy-page .process-list li,.therapy-page .process-list li:last-child{padding:68px 22px 24px}.therapy-page .process-list li::before{top:20px;left:22px}.therapy-page .therapy-reading{padding-inline:20px}}
+@media(max-width:720px){.therapy-page .reflection-grid article,.therapy-page .purpose-grid article,.therapy-page .evidence-grid article,.therapy-page .therapy-opening>p,.therapy-page .evidence-context{padding:24px}.therapy-page .therapy-reading{padding-inline:20px}}
 
 /* Dark-theme refinements for the therapy-specific card system. */
 :root[data-theme="dark"] .therapy-meta,:root[data-theme="dark"] .therapy-purpose{background:#201923;color:var(--ink);border-color:var(--line)}
 :root[data-theme="dark"] .therapy-page .reflection-grid article,:root[data-theme="dark"] .therapy-page .purpose-grid article,:root[data-theme="dark"] .therapy-page .evidence-grid article{background:var(--card-bg);border-color:#55445d;box-shadow:none}
 :root[data-theme="dark"] .therapy-page .reflection-grid article:nth-child(2),:root[data-theme="dark"] .therapy-page .purpose-grid article:nth-child(2n),:root[data-theme="dark"] .therapy-page .evidence-grid article:nth-child(2){border-color:#25557a}
 :root[data-theme="dark"] .therapy-page .reflection-grid article:nth-child(3),:root[data-theme="dark"] .therapy-page .purpose-grid article:nth-child(3){border-color:#694b3f}
-:root[data-theme="dark"] .therapy-page .reflection-grid .number,:root[data-theme="dark"] .therapy-page .process-list li::before{background:#18131c}
-:root[data-theme="dark"] .therapy-page .process-list li,:root[data-theme="dark"] .therapy-page .process-list li:last-child,:root[data-theme="dark"] .therapy-page .therapy-opening>p{background:#281f2e;border-color:#55445d}
-:root[data-theme="dark"] .therapy-page .process-list li:nth-child(even),:root[data-theme="dark"] .therapy-page .therapy-opening>p:last-child{background:#142a3b;border-color:#25557a}
+:root[data-theme="dark"] .therapy-page .reflection-grid .number{background:#18131c}
+:root[data-theme="dark"] .therapy-page .therapy-opening>p{background:#281f2e;border-color:#55445d}
+:root[data-theme="dark"] .therapy-page .therapy-opening>p:last-child{background:#142a3b;border-color:#25557a}
 :root[data-theme="dark"] .therapy-page .evidence-context{background:#372720;border-color:#694b3f;border-left-color:var(--accent-peach)}
 :root[data-theme="dark"] .therapy-page .therapy-reading,:root[data-theme="dark"] .therapy-page .therapy-keywords span{background:#251d2a;border-color:#55445d}
 :root[data-theme="dark"] .therapy-evidence{background:#18131c}
@@ -123,3 +112,45 @@
 .therapy-page .card-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
 .therapy-page .card-head .card-icon{margin:0}
 .therapy-page .card-num{font-family:'Bodoni Moda',Georgia,serif;font-size:1.3rem;line-height:1;color:var(--card-accent)}
+
+/* "Cómo trabajamos": concept map that grows like a tree. Arrows are drawn by site.js. */
+.therapy-page .therapy-process{display:block}
+.process-title{display:flex;align-items:end;justify-content:space-between;gap:60px;margin-bottom:52px}
+.process-title h2{margin-bottom:0}
+.process-title>p{max-width:420px;margin:0;color:var(--muted)}
+.process-map{--ease:cubic-bezier(.16,1,.3,1);position:relative;padding-inline:64px}
+.process-edges{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.process-root{position:relative;z-index:1;width:max-content;max-width:100%;margin:0 auto;padding:12px 28px 13px;text-align:center;border:1px solid var(--line);border-radius:999px;background:var(--paper);box-shadow:0 8px 24px #392d420d}
+.process-root span{display:block;font:500 1.25rem/1.3 'Bodoni Moda',Georgia,serif}
+.process-root small{display:block;margin-top:2px;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--purple)}
+.process-nodes{list-style:none;margin:84px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:"p1 p1 p1" "p2 p4 p3" "p5 p5 p5";gap:96px 64px;align-items:start}
+.process-nodes>li{--node-accent:var(--accent-lilac);--node-bg:var(--card-lilac);position:relative;z-index:1;padding:24px 26px 26px;border:1px solid color-mix(in srgb,var(--node-accent) 28%,transparent);border-radius:18px;background:var(--node-bg);box-shadow:0 10px 30px #392d420d;transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.process-nodes>li:hover{transform:translateY(-4px);box-shadow:0 18px 40px #392d421a}
+.process-nodes [data-node=p1]{grid-area:p1}.process-nodes [data-node=p2]{grid-area:p2}.process-nodes [data-node=p3]{grid-area:p3}.process-nodes [data-node=p4]{grid-area:p4}.process-nodes [data-node=p5]{grid-area:p5}
+.process-nodes [data-node=p1],.process-nodes [data-node=p5]{justify-self:center;max-width:540px;text-align:center}
+.process-nodes .tone-sky{--node-accent:var(--accent-sky);--node-bg:var(--card-sky)}
+.process-nodes .tone-peach{--node-accent:var(--accent-peach);--node-bg:var(--card-peach)}
+.process-nodes .tone-fruit{--node-accent:var(--rose);background:linear-gradient(135deg,var(--card-lilac),var(--card-sky))}
+.process-num{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;margin-bottom:14px;border:1px solid currentColor;border-radius:50%;background:var(--paper);color:var(--node-accent);font:1rem/1 'Bodoni Moda',Georgia,serif}
+.process-nodes h3{font-size:1.4rem;margin-bottom:10px}
+.process-nodes p{margin:0;color:var(--muted);font-size:.95rem;line-height:1.65}
+.process-edge{fill:none;stroke:var(--edge,var(--accent-lilac));stroke-width:1.6;stroke-opacity:.55;stroke-linecap:round;transition:stroke-opacity .3s,stroke-width .3s}
+.process-edge.is-dashed{stroke-dasharray:3 8;stroke-opacity:.7}
+.process-head{fill:var(--edge,var(--accent-lilac));opacity:.7;transition:opacity .3s}
+.process-edge.is-lit{stroke-opacity:1;stroke-width:2.4}
+.process-head.is-lit{opacity:1}
+.process-label{position:absolute;z-index:2;transform:translate(-50%,-50%);padding:3px 12px;white-space:nowrap;font-size:.74rem;font-style:italic;color:var(--purple);border:1px solid var(--line);border-radius:999px;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(6px);pointer-events:none;transition:color .3s,border-color .3s}
+.process-label.is-vertical{transform:translate(-50%,-50%) rotate(-90deg)}
+.process-label.is-lit{color:var(--ink);border-color:var(--edge,var(--accent-lilac))}
+/* Growth animation: only applied by site.js when motion is allowed, then removed. */
+.map-animate .process-root,.map-animate .process-nodes>li{opacity:0;transform:translateY(18px) scale(.94);transition:opacity .7s var(--ease),transform .9s var(--ease);transition-delay:var(--grow,0s)}
+.map-animate .process-edge:not(.is-dashed){stroke-dasharray:1 1;stroke-dashoffset:1;transition:stroke-dashoffset .7s cubic-bezier(.45,0,.2,1) var(--grow,0s)}
+.map-animate .process-edge.is-dashed,.map-animate .process-head,.map-animate .process-label{opacity:0;transition:opacity .5s ease var(--grow,0s)}
+.map-animate.is-grown .process-root,.map-animate.is-grown .process-nodes>li{opacity:1;transform:none}
+.map-animate.is-grown .process-edge:not(.is-dashed){stroke-dashoffset:0}
+.map-animate.is-grown .process-edge.is-dashed,.map-animate.is-grown .process-label{opacity:1}
+.map-animate.is-grown .process-head{opacity:.7}
+@media(prefers-reduced-motion:no-preference){@keyframes process-flow{to{stroke-dashoffset:-22}}.process-edge.is-dashed{animation:process-flow 1.8s linear infinite}}
+@media(max-width:1000px){.process-map{padding-inline:48px}.process-nodes{column-gap:30px}.process-nodes>li{padding:20px}.process-nodes h3{font-size:1.25rem}}
+@media(max-width:720px){.process-title{display:block;margin-bottom:36px}.process-title h2{margin-bottom:18px}.process-title>p{max-width:none}.process-map{padding-inline:0}.process-nodes{grid-template-columns:1fr;grid-template-areas:"p1" "p2" "p3" "p4" "p5";gap:66px;margin-top:66px}.process-nodes [data-node=p1],.process-nodes [data-node=p5]{max-width:none}.process-nodes>li{padding:22px}}
+:root[data-theme="dark"] .process-nodes>li,:root[data-theme="dark"] .process-root{box-shadow:none}
