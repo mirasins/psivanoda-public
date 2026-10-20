@@ -167,3 +167,11 @@ html:root[data-theme="dark"] .tmia{--t-lilac:#b9a2ee;--t-rose:#f2a7cf;--t-peach:
 @media(prefers-reduced-motion:reduce){.tmia-float{display:none}.tmia-ladder.is-in .tmia-4{animation:none}.tmia-card-in{transition:none}}
 
 @media(prefers-reduced-motion:reduce){.tmia-ring-dot{display:none}}
+.tmia-emotions{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:20px 0}
+.tmia-emotions span{padding:10px 20px;border-radius:999px;font-family:'Bodoni Moda',Georgia,serif;font-size:1.1rem;color:#fff;box-shadow:0 10px 22px -14px rgb(60 20 70/.6)}
+.tmia-emotions span:nth-child(1){background:linear-gradient(135deg,#d9637c,#b0457f)}
+.tmia-emotions span:nth-child(2){background:linear-gradient(135deg,#5d7a91,#3d8fd1)}
+.tmia-emotions span:nth-child(3){background:linear-gradient(135deg,#e9a93a,#e58c74)}
+.tmia-emotions span.is-in{animation:tmia-pulse 3.6s ease-in-out calc(1s + var(--i) * 1.2s) infinite}
+@keyframes tmia-pulse{0%,100%{transform:none}12%{transform:scale(1.08)}24%{transform:none}}
+@media(prefers-reduced-motion:reduce){.tmia-emotions span.is-in{animation:none}}
