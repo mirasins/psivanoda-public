@@ -85,3 +85,8 @@ html:root[data-theme="dark"] .concept-tree{--ct-line:#8a6aa8;--ct-bg:#1d1934;--c
 .learn-article .ct-branch h3{margin-bottom:6px}
 .ct-branch>.ct-node{padding:12px 14px}
 }
+
+/* Texto justificado, con guiones en español, para bordes limpios a ambos lados */
+@media(min-width:721px){.learn-lead,.learn-article :where(section>p:not([class*="tmia-"]),.tmia-band,section>ul>li,section>ol>li,.reflection p,.tmia-note p,.tmia-root li,.tmia-desc,.learn-caption){text-align:justify;text-align-last:left;hyphens:auto;-webkit-hyphens:auto;hyphenate-limit-chars:7 3 3}}
+/* Una sola columna con borde derecho común: texto y gráficos comparten el mismo ancho */
+@media(min-width:721px){.article-layout .learn-article>*,.article-layout .learn-article>section>*{max-width:820px}.article-layout .learn-article :where(section>p:not([class*="tmia-"]),section>h2,section>h3,section>ol:not([class*="tmia-"]),section>ul:not([class*="tmia-"]),.reflection,.learn-caption){max-width:820px}}
