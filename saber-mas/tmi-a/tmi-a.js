@@ -56,7 +56,7 @@
       nodes.forEach(function (n, k) { n.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
       var n = nodes[i];
       label.textContent = n.textContent;
-      text.textContent = n.dataset[cycle.dataset.mode === 'sano' ? 'sano' : 'herida'];
+      text.textContent = n.dataset[cycle.dataset.mode === 'otro' ? 'otro' : 'habitual'];
       panel.classList.remove('is-swap'); void panel.offsetWidth; panel.classList.add('is-swap');
     };
     var play = function () {
