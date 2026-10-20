@@ -119,3 +119,35 @@ html:root[data-theme="dark"] .home-calm .booking-cta.button { box-shadow: 0 0 0 
 .certplum-icon img { position: absolute; width: 274.286%; max-width: none; height: auto; left: -87.143%; top: -25.185%; }
 .certplum-access:hover { box-shadow: 0 0 0 2px var(--accent-lilac); }
 .certplum-access:focus-visible { outline: 3px solid var(--accent-lilac); outline-offset: 4px; }
+
+/* Portada: acceso destacado a «¿Qué es la TMI-A?» dentro de «Sobre mí». */
+.tmia-teaser {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 22px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1.5px solid transparent;
+  background: linear-gradient(var(--paper), var(--paper)) padding-box,
+    linear-gradient(120deg, #b99bf0, #f2a7cf, #ffd89a, #b99bf0) border-box;
+  background-size: 100% 100%, 300% 100%;
+  animation: tmia-teaser-sheen 8s linear infinite;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform .35s cubic-bezier(.16, 1, .3, 1), box-shadow .35s;
+}
+.tmia-teaser:hover { transform: translateY(-3px); box-shadow: 0 16px 30px -20px #b0457f; }
+.tmia-teaser-tree { flex: none; width: 44px; height: 44px; }
+.tmia-teaser-tree path { fill: none; stroke: #b0457f; stroke-width: 2.4; stroke-linecap: round; }
+.tmia-teaser-tree circle { fill: #b99bf0; opacity: .75; }
+.tmia-teaser-tree circle:first-of-type { fill: #ffd89a; opacity: 1; }
+.tmia-teaser-text { display: flex; flex-direction: column; gap: 2px; }
+.tmia-teaser-text small { font-size: .72rem; letter-spacing: .1em; color: var(--rose); }
+.tmia-teaser-text strong { font-family: 'Bodoni Moda', Georgia, serif; font-size: 1.2rem; }
+.about .tmia-teaser-text span { font-size: .88rem; line-height: 1.5; color: var(--muted); }
+.tmia-teaser-arrow { margin-left: auto; font-size: 1.2rem; color: var(--rose); transition: transform .35s; }
+.tmia-teaser:hover .tmia-teaser-arrow { transform: translateX(4px); }
+@keyframes tmia-teaser-sheen { to { background-position: 0 0, 300% 0; } }
+@media (prefers-reduced-motion: reduce) { .tmia-teaser { animation: none; transition: none; } }
