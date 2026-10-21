@@ -178,9 +178,8 @@ html:root[data-theme="dark"] .concept-tree{--ct-line:#8a6aa8;--ct-bg:#1d1934;--c
 @media(max-width:720px){.ct-emblem{align-self:flex-start;height:82px;margin:6px 0 0 -6px}.ct-emblem.em-brote{height:90px}}
 @media(prefers-reduced-motion:reduce){.ct-emblem,.ct-emblem *{animation:none!important}.em-diente .em-fly{display:none}}
 
-/* Título con arcoíris que sale desde detrás de las letras y se desvanece */
-.rainbow-title>span{position:relative;display:inline-block;isolation:isolate;background:linear-gradient(100deg,var(--ink) 0 36%,#ff6b8a 42%,#ffa35c 46%,#ffe27a 50%,#7fe0a2 54%,#6fb8ff 58%,#a98ff0 62%,var(--ink) 68% 100%) 100% 0/300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rb-text 9s ease-in-out 1s infinite}
-.rainbow-title>span::before{content:"";position:absolute;z-index:-1;left:-6%;right:-6%;bottom:.12em;height:1.55em;pointer-events:none;background:radial-gradient(50% 100% at 50% 100%,transparent 0 74%,#ff6b8a 74% 78%,#ffa35c 78% 82%,#ffe27a 82% 86%,#7fe0a2 86% 90%,#6fb8ff 90% 94%,#a98ff0 94% 98%,transparent 98.5%);filter:blur(2px);opacity:0;clip-path:circle(0 at 50% 100%);animation:rb-arc 9s cubic-bezier(.3,0,.2,1) 1s infinite}
-@keyframes rb-arc{0%{opacity:0;clip-path:circle(0 at 50% 100%);translate:0 8px}8%{opacity:.75}22%{clip-path:circle(75% at 50% 100%);translate:0 0}55%{opacity:.6;clip-path:circle(75% at 50% 100%)}75%,100%{opacity:0;clip-path:circle(75% at 50% 100%);translate:0 -10px}}
-@keyframes rb-text{0%,12%{background-position:100% 0}62%,100%{background-position:0 0}}
-@media(prefers-reduced-motion:reduce){.rainbow-title>span{animation:none;background:none;color:inherit}.rainbow-title>span::before{display:none}}
+/* Título con un arcoíris que sube dentro de las letras y se desvanece */
+@property --rb{syntax:"<percentage>";inherits:false;initial-value:0%}
+.rainbow-title>span{display:inline-block;background:radial-gradient(70% 190% at 50% 135%,var(--ink) 0 calc(var(--rb) - 39%),#a98ff0 calc(var(--rb) - 39%) calc(var(--rb) - 32.5%),#6fb8ff calc(var(--rb) - 32.5%) calc(var(--rb) - 26%),#7fe0a2 calc(var(--rb) - 26%) calc(var(--rb) - 19.5%),#ffe27a calc(var(--rb) - 19.5%) calc(var(--rb) - 13%),#ffa35c calc(var(--rb) - 13%) calc(var(--rb) - 6.5%),#ff6b8a calc(var(--rb) - 6.5%) var(--rb),var(--ink) var(--rb));-webkit-background-clip:text;background-clip:text;color:transparent;animation:rb-rise 9s cubic-bezier(.45,.05,.35,1) 1s infinite}
+@keyframes rb-rise{0%{--rb:0%}66%,100%{--rb:150%}}
+@media(prefers-reduced-motion:reduce){.rainbow-title>span{animation:none;background:none;color:inherit}}
